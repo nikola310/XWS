@@ -1,0 +1,165 @@
+<div class="containerbody">
+    <div class="container auth">
+        <h1 class="text-center">Find your perfect holiday destination
+            <span>It's nice!</span>
+        </h1>
+        <div id="big-form" class="well auth-box">
+            <form #data="ngForm">
+                <fieldset>
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class=" control-label" for="textinput">Destination</label>
+                        <div class="">
+                            <input id="textinput" [(ngModel)]="data.destination" name="destination" class="form-control input-md" type="text" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class=" control-label" for="textinput">Check-in date</label>
+                        <div class="">
+                            <input id="textinput" [(ngModel)]="data.checkin" name="checkin" class="form-control input-md" type="date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class=" control-label" for="textinput">Check-out date</label>
+                        <div class="">
+                            <input id="textinput" [(ngModel)]="data.checkout" name="checkout" class="form-control input-md" type="date" required>
+                        </div>
+                    </div>
+
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                        <label class=" control-label" for="selectbasic">Adults</label>
+                        <div class="">
+                            <select id="selectbasic" name="selectbasic" class="form-control" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+
+                    <hr>
+                    <div class="form-group">
+                        <label class="asearch-label" for="selectbasic" (click)="showAdvancedSearch()">Advanced search
+                            <img src='../../../assets/triangledownw.png' height="21" width="21" *ngIf="!advancedSearch" />
+                            <img src='../../../assets/triangleupw.png' height="21" width="21" *ngIf="advancedSearch" />
+                        </label>
+                    </div>
+
+                    <div class="form-group" *ngIf="advancedSearch">
+                        <label class=" control-label" for="selectbasic">Accommodation type</label>
+                        <div class="">
+                            <select id="selectbasic" name="selectbasic" class="form-control">
+                                <option value="1"></option>
+                                <option value="2">Hotel</option>
+                                <option value="3">Apartment</option>
+                                <option value="4">Bed&Breakfast</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" *ngIf="advancedSearch">
+                        <label class=" control-label" for="selectbasic">Accommodation category</label>
+                        <div class="">
+                            <select id="selectbasic" name="selectbasic" class="form-control">
+                                <option value="1"></option>
+                                <option value="2">No category</option>
+                                <option value="3">*</option>
+                                <option value="4">**</option>
+                                <option value="5">***</option>
+                                <option value="6">****</option>
+                                <option value="7">*****</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- File Button -->
+                    <div class="form-group" *ngIf="advancedSearch" [hidden]="true">
+                        <label class=" control-label" for="filebutton">Avatar</label>
+                        <div class="">
+                            <input id="filebutton" name="filebutton" class="input-file" type="file">
+                        </div>
+                    </div>
+
+                    <!-- Select Multiple -->
+                    <div class="form-group" *ngIf="advancedSearch" [hidden]="true">
+                        <label class=" control-label" for="selectmultiple">Category</label>
+                        <div class="">
+                            <select id="selectmultiple" name="selectmultiple" class="form-control" multiple="multiple">
+                                <option value="1">Option one</option>
+                                <option value="2">Option two</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Multiple Checkboxes -->
+                    <div class="form-group" *ngIf="advancedSearch">
+                        <label class=" control-label" for="checkboxes">Extra features</label>
+                        <div class="">
+
+                            <div class="checkbox">
+                                <label for="checkboxes-0">
+                                    <input name="checkboxes" id="checkboxes-0" value="1" type="checkbox"> Parking
+                                </label>
+                            </div>
+
+                            <div class="checkbox">
+                                <label for="checkboxes-1">
+                                    <input name="checkboxes" id="checkboxes-1" value="2" type="checkbox"> WiFi
+                                </label>
+                            </div>
+
+                            <div class="checkbox">
+                                <label for="checkboxes-1">
+                                    <input name="checkboxes" id="checkboxes-1" value="2" type="checkbox"> Breakfast
+                                </label>
+                            </div>
+
+                            <div class="checkbox">
+                                <label for="checkboxes-1">
+                                    <input name="checkboxes" id="checkboxes-1" value="2" type="checkbox"> Full board
+                                </label>
+                            </div>
+
+                            <div class="checkbox">
+                                <label for="checkboxes-1">
+                                    <input name="checkboxes" id="checkboxes-1" value="2" type="checkbox"> Half board
+                                </label>
+                            </div>
+
+                            <div class="checkbox">
+                                <label for="checkboxes-1">
+                                    <input name="checkboxes" id="checkboxes-1" value="2" type="checkbox"> TV
+                                </label>
+                            </div>
+
+                            <div class="checkbox">
+                                <label for="checkboxes-1">
+                                    <input name="checkboxes" id="checkboxes-1" value="2" type="checkbox"> Kitchen
+                                </label>
+                            </div>
+
+                            <div class="checkbox">
+                                <label for="checkboxes-1">
+                                    <input name="checkboxes" id="checkboxes-1" value="2" type="checkbox"> Private bathroom
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Button (Double) -->
+                    <hr>
+                    <div class="form-group">
+                        <div class="">
+                            <input type="submit" id="button1id" value="Search" name="button1id" class="btn btn-success" [disabled]="!data.valid" (click)="search(data)">
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
