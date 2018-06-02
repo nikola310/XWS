@@ -24,7 +24,8 @@ public class AccomodationType implements Serializable {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	//ako je veza bidirekciona onda ubacujemo obde listu accomodationa
+	@Column(name = "entity_version", nullable = false)
+	private int version;
 	
 	public AccomodationType() {}
 
@@ -43,5 +44,14 @@ public class AccomodationType implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
 	
 }

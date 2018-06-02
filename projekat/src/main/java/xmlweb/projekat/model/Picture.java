@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -23,10 +24,14 @@ public class Picture implements Serializable {
 	private long id;
 	
 	@ManyToOne(optional = false)
+	@JoinColumn(name="accomodation_id")
 	private Accomodation accomodation;
 	
 	@Column(name = "content", nullable = false)
 	private String content;
+	
+	@Column(name = "entity_version", nullable = false)
+	private int version;
 	
 	public Picture() {}
 
@@ -53,5 +58,14 @@ public class Picture implements Serializable {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
 	
 }

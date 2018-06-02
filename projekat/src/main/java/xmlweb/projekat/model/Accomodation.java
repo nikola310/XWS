@@ -37,7 +37,7 @@ public class Accomodation implements Serializable {
 	@ManyToMany(mappedBy = "accomodations")
 	private List<BonusService> bonusServices;
 	
-	@ManyToMany(mappedBy = "accomodation")
+	@OneToMany(mappedBy = "accomodation")
 	private List<Comment> comments;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "accomodation")
@@ -45,6 +45,16 @@ public class Accomodation implements Serializable {
 	
 	@Column(name = "capacity", nullable = false)
 	private int capacity;
+	
+	@OneToMany(mappedBy = "accomodation")
+	private List<AccomodationAgent> accomodationAgent;
+	
+	@ManyToOne
+    @JoinColumn(name = "location_id")
+	private Location location;
+	
+	@Column(name = "entity_version", nullable = false)
+	private int version;
 	
 	public Accomodation() {}
 
@@ -102,6 +112,30 @@ public class Accomodation implements Serializable {
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+	}
+
+	public List<AccomodationAgent> getAccomodationAgent() {
+		return accomodationAgent;
+	}
+
+	public void setAccomodationAgent(List<AccomodationAgent> accomodationAgent) {
+		this.accomodationAgent = accomodationAgent;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 	
 	

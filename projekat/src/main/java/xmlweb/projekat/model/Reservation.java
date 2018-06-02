@@ -41,6 +41,9 @@ public class Reservation implements Serializable {
 	@JoinColumn(name="accomodation")
 	private Accomodation accomodation;
 	
+	@Column(name = "entity_version", nullable = false)
+	private int version;
+	
 	public Reservation() {}
 
 	public long getId() {
@@ -89,6 +92,14 @@ public class Reservation implements Serializable {
 
 	public void setAccomodation(Accomodation accomodation) {
 		this.accomodation = accomodation;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 	
 }

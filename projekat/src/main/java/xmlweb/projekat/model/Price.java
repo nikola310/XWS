@@ -2,16 +2,14 @@ package xmlweb.projekat.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Price implements Serializable {
@@ -36,7 +34,11 @@ public class Price implements Serializable {
 	private Date endDate;
 
 	@ManyToOne(optional = false)
+	@JoinColumn(name="accomodation_id")
 	private Accomodation accomodation;
+	
+	@Column(name = "entity_version", nullable = false)
+	private int version;
 	
 	public Price() {}
 
@@ -78,6 +80,14 @@ public class Price implements Serializable {
 
 	public void setAccomodation(Accomodation accomodation) {
 		this.accomodation = accomodation;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 	
 	

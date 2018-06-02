@@ -1,7 +1,6 @@
 package xmlweb.projekat.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -36,14 +33,15 @@ public class Comment implements Serializable {
 	private String content;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name="author")
+	@JoinColumn(name = "author")
 	private User author;
 	
-	@ManyToMany
-    @JoinTable(name = "accomodation_comments",
-    joinColumns = @JoinColumn(name = "comment_id", nullable = false),
-    inverseJoinColumns = @JoinColumn(name = "accomodation_id", nullable = false))
-	private List<Accomodation> accomodation;
+	@ManyToOne
+    @JoinColumn(name = "acoomodation_id")
+	private Accomodation accomodation;
+	
+	@Column(name = "entity_version", nullable = false)
+	private int version;
 	
 	public Comment() {}
 
@@ -87,13 +85,23 @@ public class Comment implements Serializable {
 		this.author = author;
 	}
 
-	public List<Accomodation> getAccomodation() {
+	public Accomodation getAccomodation() {
 		return accomodation;
 	}
 
-	public void setAccomodation(List<Accomodation> accomodation) {
+	public void setAccomodation(Accomodation accomodation) {
 		this.accomodation = accomodation;
 	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+
 	
 	
 }

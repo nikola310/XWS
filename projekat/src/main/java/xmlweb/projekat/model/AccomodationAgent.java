@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Message implements Serializable {
+public class AccomodationAgent implements Serializable {
 
 	/**
 	 * 
@@ -20,24 +20,24 @@ public class Message implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "message_id", nullable = false)
+	@Column(name = "accomodation_id", nullable = false)
 	private long id;
+
+	@ManyToOne
+    @JoinColumn(name = "acoomodation_id")
+	private Accomodation accomodation;
+
+	@ManyToOne
+    @JoinColumn(name = "agent_id")
+	private User agent;
 	
-	@ManyToOne(optional = false)
-	@JoinColumn(name="sender_id")
-	private User sender;
-	
-	@ManyToOne(optional = false)
-	@JoinColumn(name="reciever_id")
-	private User reciever;
-	
-	@Column(name = "content", nullable = false)
-	private String content;
+	@Column(name = "main_agent", nullable = false)
+	private boolean mainAgent;
 	
 	@Column(name = "entity_version", nullable = false)
 	private int version;
 	
-	public Message() {}
+	public AccomodationAgent() {}
 
 	public long getId() {
 		return id;
@@ -47,28 +47,28 @@ public class Message implements Serializable {
 		this.id = id;
 	}
 
-	public User getSender() {
-		return sender;
+	public Accomodation getAccomodation() {
+		return accomodation;
 	}
 
-	public void setSender(User sender) {
-		this.sender = sender;
+	public void setAccomodation(Accomodation accomodation) {
+		this.accomodation = accomodation;
 	}
 
-	public User getReciever() {
-		return reciever;
+	public User getAgent() {
+		return agent;
 	}
 
-	public void setReciever(User reciever) {
-		this.reciever = reciever;
+	public void setAgent(User agent) {
+		this.agent = agent;
 	}
 
-	public String getContent() {
-		return content;
+	public boolean isMainAgent() {
+		return mainAgent;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setMainAgent(boolean mainAgent) {
+		this.mainAgent = mainAgent;
 	}
 
 	public int getVersion() {
@@ -77,6 +77,7 @@ public class Message implements Serializable {
 
 	public void setVersion(int version) {
 		this.version = version;
-	}
-
+	};
+	
+	
 }

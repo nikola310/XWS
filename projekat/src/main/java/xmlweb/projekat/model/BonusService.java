@@ -34,6 +34,9 @@ public class BonusService implements Serializable {
     inverseJoinColumns = @JoinColumn(name = "accomodation_id", nullable = false))
 	private List<Accomodation> accomodations;
 	
+	@Column(name = "entity_version", nullable = false)
+	private int version;
+	
 	public BonusService() {}
 
 	public long getId() {
@@ -58,6 +61,14 @@ public class BonusService implements Serializable {
 
 	public void setAccomodations(List<Accomodation> accomodations) {
 		this.accomodations = accomodations;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 	
 	
