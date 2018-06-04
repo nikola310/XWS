@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
 @Entity
 public class Comment implements Serializable {
@@ -40,6 +41,7 @@ public class Comment implements Serializable {
     @JoinColumn(name = "acoomodation_id")
 	private Accomodation accomodation;
 	
+	@Version
 	@Column(name = "entity_version", nullable = false)
 	private int version;
 	

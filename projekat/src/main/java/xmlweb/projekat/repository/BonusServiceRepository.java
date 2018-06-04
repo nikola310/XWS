@@ -8,6 +8,6 @@ import xmlweb.projekat.model.BonusService;
  * @author Nikola
  *
  */
-public interface BonusServiceRepository extends JpaRepository<BonusService, Integer> {
+public interface BonusServiceRepository extends JpaRepository<BonusService, Long> {
 
 }

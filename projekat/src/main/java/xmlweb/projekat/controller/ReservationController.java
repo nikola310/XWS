@@ -12,43 +12,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import xmlweb.projekat.model.dtos.UserDTO;
-import xmlweb.projekat.service.interfaces.UserServiceInterface;
+import xmlweb.projekat.model.dtos.ReservationDTO;
+import xmlweb.projekat.service.interfaces.ReservationServiceInterface;
 
 @RestController
-@RequestMapping(value = "/user")
-public class UserController {
+@RequestMapping(value = "/reservation")
+public class ReservationController {
 
-	private UserServiceInterface service;
+	private ReservationServiceInterface service;
 
 	@Autowired
-	public UserController(UserServiceInterface service) {
+	public ReservationController(ReservationServiceInterface service) {
+		super();
 		this.service = service;
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
-	public boolean createUser(@Validated @RequestBody UserDTO u) {
+	public boolean createReservation(@Validated @RequestBody ReservationDTO u) {
 		return service.Create(u);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
-	public UserDTO readUser(@PathVariable long id) {
+	public ReservationDTO readReservations(@PathVariable long id) {
 		return service.Read(id);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<UserDTO> readUsers() {
+	public List<ReservationDTO> readReservation() {
 		return service.ReadAll();
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public boolean updateUser(@Validated @RequestBody UserDTO u) {
+	public boolean updateReservation(@Validated @RequestBody ReservationDTO u) {
 		return service.Update(u);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public boolean deleteUser(@PathVariable long id) {
+	public boolean deleteReservation(@PathVariable long id) {
 		return service.Delete(id);
 	}
-
 }

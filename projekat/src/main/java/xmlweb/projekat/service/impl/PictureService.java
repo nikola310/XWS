@@ -7,28 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import xmlweb.projekat.model.User;
-import xmlweb.projekat.model.dtos.UserDTO;
-import xmlweb.projekat.repository.UserRepository;
-import xmlweb.projekat.service.interfaces.UserServiceInterface;
+import xmlweb.projekat.model.Picture;
+import xmlweb.projekat.model.dtos.PictureDTO;
+import xmlweb.projekat.repository.PictureRepository;
+import xmlweb.projekat.service.interfaces.PictureServiceInterface;
 
 @Service
 @Transactional
-public class UserService implements UserServiceInterface {
+public class PictureService implements PictureServiceInterface {
 
-	private UserRepository repository;
+	private PictureRepository repository;
 
 	@Autowired
-	public UserService(UserRepository repository) {
+	public PictureService(PictureRepository repository) {
+		super();
 		this.repository = repository;
 	}
 
 	@Override
-	public boolean Create(UserDTO dto) {
+	public boolean Create(PictureDTO dto) {
 		try {
 			ModelMapper mapper = new ModelMapper();
-			User user = mapper.map(dto, User.class);
-			repository.save(user);
+			Picture pic = mapper.map(dto, Picture.class);
+			repository.save(pic);
 
 			return true;
 		} catch (Exception exc) {
@@ -38,11 +39,11 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public UserDTO Read(long id) {
+	public PictureDTO Read(long id) {
 		try {
-			User user = repository.getOne(id);
+			Picture pic = repository.getOne(id);
 			ModelMapper mapper = new ModelMapper();
-			UserDTO dto = mapper.map(user, UserDTO.class);
+			PictureDTO dto = mapper.map(pic, PictureDTO.class);
 			return dto;
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -51,14 +52,14 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public ArrayList<UserDTO> ReadAll() {
+	public ArrayList<PictureDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = (ArrayList<User>) repository.findAll();
-		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
+		ArrayList<Picture> listEntities = (ArrayList<Picture>) repository.findAll();
+		ArrayList<PictureDTO> listDTO = new ArrayList<PictureDTO>();
 
-		for (User tmp : listEntities) {
+		for (Picture tmp : listEntities) {
 			try {
-				UserDTO dto = mapper.map(tmp, UserDTO.class);
+				PictureDTO dto = mapper.map(tmp, PictureDTO.class);
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -70,14 +71,14 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public boolean Update(UserDTO dto) {
-		User toUpdate = repository.getOne(dto.getId());
+	public boolean Update(PictureDTO dto) {
+		Picture toUpdate = repository.getOne(dto.getId());
 
 		try {
 			if (toUpdate.getVersion() != dto.getVersion()) {
 				return false;
 			}
-			toUpdate.setUserName(dto.getUserName());
+			toUpdate.setContent(dto.getContent());
 			repository.save(toUpdate);
 
 		} catch (Exception exc) {

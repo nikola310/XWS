@@ -8,6 +8,6 @@ import xmlweb.projekat.model.Comment;
  * @author Nikola
  *
  */
-public interface CommentRepository extends JpaRepository<Comment, Integer> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
 }

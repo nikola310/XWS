@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Version;
 
 @Entity
 public class BonusService implements Serializable {
@@ -34,6 +35,7 @@ public class BonusService implements Serializable {
     inverseJoinColumns = @JoinColumn(name = "accomodation_id", nullable = false))
 	private List<Accomodation> accomodations;
 	
+	@Version
 	@Column(name = "entity_version", nullable = false)
 	private int version;
 	

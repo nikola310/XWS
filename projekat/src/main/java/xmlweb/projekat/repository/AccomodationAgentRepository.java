@@ -8,6 +8,6 @@ import xmlweb.projekat.model.AccomodationAgent;
  * @author Nikola
  *
  */
-public interface AccomodationAgentRepository extends JpaRepository<AccomodationAgent, Integer> {
+public interface AccomodationAgentRepository extends JpaRepository<AccomodationAgent, Long> {
 
 }

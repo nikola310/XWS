@@ -8,6 +8,6 @@ import xmlweb.projekat.model.Picture;
  * @author Nikola
  *
  */
-public interface PictureRepository extends JpaRepository<Picture, Integer> {
+public interface PictureRepository extends JpaRepository<Picture, Long> {
 
 }

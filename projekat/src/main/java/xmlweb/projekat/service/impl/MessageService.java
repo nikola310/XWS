@@ -7,28 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import xmlweb.projekat.model.User;
-import xmlweb.projekat.model.dtos.UserDTO;
-import xmlweb.projekat.repository.UserRepository;
-import xmlweb.projekat.service.interfaces.UserServiceInterface;
+import xmlweb.projekat.model.Message;
+import xmlweb.projekat.model.dtos.MessageDTO;
+import xmlweb.projekat.repository.MessageRepository;
+import xmlweb.projekat.service.interfaces.MessageServiceInterface;
 
 @Service
 @Transactional
-public class UserService implements UserServiceInterface {
+public class MessageService implements MessageServiceInterface {
 
-	private UserRepository repository;
+	private MessageRepository repository;
 
 	@Autowired
-	public UserService(UserRepository repository) {
+	public MessageService(MessageRepository repository) {
+		super();
 		this.repository = repository;
 	}
 
 	@Override
-	public boolean Create(UserDTO dto) {
+	public boolean Create(MessageDTO dto) {
 		try {
 			ModelMapper mapper = new ModelMapper();
-			User user = mapper.map(dto, User.class);
-			repository.save(user);
+			Message msg = mapper.map(dto, Message.class);
+			repository.save(msg);
 
 			return true;
 		} catch (Exception exc) {
@@ -38,11 +39,11 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public UserDTO Read(long id) {
+	public MessageDTO Read(long id) {
 		try {
-			User user = repository.getOne(id);
+			Message msg = repository.getOne(id);
 			ModelMapper mapper = new ModelMapper();
-			UserDTO dto = mapper.map(user, UserDTO.class);
+			MessageDTO dto = mapper.map(msg, MessageDTO.class);
 			return dto;
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -51,14 +52,14 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public ArrayList<UserDTO> ReadAll() {
+	public ArrayList<MessageDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = (ArrayList<User>) repository.findAll();
-		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
+		ArrayList<Message> listEntities = (ArrayList<Message>) repository.findAll();
+		ArrayList<MessageDTO> listDTO = new ArrayList<MessageDTO>();
 
-		for (User tmp : listEntities) {
+		for (Message tmp : listEntities) {
 			try {
-				UserDTO dto = mapper.map(tmp, UserDTO.class);
+				MessageDTO dto = mapper.map(tmp, MessageDTO.class);
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -70,14 +71,14 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public boolean Update(UserDTO dto) {
-		User toUpdate = repository.getOne(dto.getId());
+	public boolean Update(MessageDTO dto) {
+		Message toUpdate = repository.getOne(dto.getId());
 
 		try {
 			if (toUpdate.getVersion() != dto.getVersion()) {
 				return false;
 			}
-			toUpdate.setUserName(dto.getUserName());
+			toUpdate.setContent(dto.getContent());
 			repository.save(toUpdate);
 
 		} catch (Exception exc) {

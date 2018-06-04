@@ -8,6 +8,6 @@ import xmlweb.projekat.model.Message;
  * @author Nikola
  *
  */
-public interface MessageRepository extends JpaRepository<Message, Integer> {
+public interface MessageRepository extends JpaRepository<Message, Long> {
 
 }

@@ -12,43 +12,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import xmlweb.projekat.model.dtos.UserDTO;
-import xmlweb.projekat.service.interfaces.UserServiceInterface;
+import xmlweb.projekat.model.dtos.PriceDTO;
+import xmlweb.projekat.service.interfaces.PriceServiceInterface;
 
 @RestController
-@RequestMapping(value = "/user")
-public class UserController {
+@RequestMapping(value = "/price")
+public class PriceController {
 
-	private UserServiceInterface service;
+	private PriceServiceInterface service;
 
 	@Autowired
-	public UserController(UserServiceInterface service) {
+	public PriceController(PriceServiceInterface service) {
+		super();
 		this.service = service;
 	}
-
+	
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
-	public boolean createUser(@Validated @RequestBody UserDTO u) {
+	public boolean createPrice(@Validated @RequestBody PriceDTO u) {
 		return service.Create(u);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
-	public UserDTO readUser(@PathVariable long id) {
+	public PriceDTO readPrice(@PathVariable long id) {
 		return service.Read(id);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<UserDTO> readUsers() {
+	public List<PriceDTO> readPrices() {
 		return service.ReadAll();
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public boolean updateUser(@Validated @RequestBody UserDTO u) {
+	public boolean updatePrice(@Validated @RequestBody PriceDTO u) {
 		return service.Update(u);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public boolean deleteUser(@PathVariable long id) {
+	public boolean deletePrice(@PathVariable long id) {
 		return service.Delete(id);
 	}
-
 }

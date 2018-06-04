@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 @Entity
 public class Location implements Serializable {
@@ -39,6 +40,7 @@ public class Location implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
 	private List<Accomodation> accomodations;
 	
+	@Version
 	@Column(name = "entity_version", nullable = false)
 	private int version;
 	

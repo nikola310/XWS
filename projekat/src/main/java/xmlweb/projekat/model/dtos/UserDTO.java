@@ -1,20 +1,35 @@
 package xmlweb.projekat.model.dtos;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import xmlweb.projekat.model.UserType;
 
 public class UserDTO {
 
+	private long id;
+	@Size(min = 1, max = 255)
 	@NotNull
 	private String firstName;
+	@Size(min = 1, max = 255)
 	private String lastName;
+	@Size(min = 1, max = 255)
 	@NotNull
 	private String userName;
+	@Size(min = 1, max = 255)
 	@NotNull
 	private String password;
 	private String pid;
 	private UserType userType;
+	private int version;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -62,6 +77,14 @@ public class UserDTO {
 
 	public void setUserType(UserType userType) {
 		this.userType = userType;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 }

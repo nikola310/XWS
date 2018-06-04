@@ -7,28 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import xmlweb.projekat.model.User;
-import xmlweb.projekat.model.dtos.UserDTO;
-import xmlweb.projekat.repository.UserRepository;
-import xmlweb.projekat.service.interfaces.UserServiceInterface;
+import xmlweb.projekat.model.Location;
+import xmlweb.projekat.model.dtos.LocationDTO;
+import xmlweb.projekat.repository.LocationRepository;
+import xmlweb.projekat.service.interfaces.LocationServiceInterface;
 
 @Service
 @Transactional
-public class UserService implements UserServiceInterface {
+public class LocationService implements LocationServiceInterface {
 
-	private UserRepository repository;
+	private LocationRepository repository;
 
 	@Autowired
-	public UserService(UserRepository repository) {
+	public LocationService(LocationRepository repository) {
+		super();
 		this.repository = repository;
 	}
 
 	@Override
-	public boolean Create(UserDTO dto) {
+	public boolean Create(LocationDTO dto) {
 		try {
 			ModelMapper mapper = new ModelMapper();
-			User user = mapper.map(dto, User.class);
-			repository.save(user);
+			Location loc = mapper.map(dto, Location.class);
+			repository.save(loc);
 
 			return true;
 		} catch (Exception exc) {
@@ -38,11 +39,11 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public UserDTO Read(long id) {
+	public LocationDTO Read(long id) {
 		try {
-			User user = repository.getOne(id);
+			Location loc = repository.getOne(id);
 			ModelMapper mapper = new ModelMapper();
-			UserDTO dto = mapper.map(user, UserDTO.class);
+			LocationDTO dto = mapper.map(loc, LocationDTO.class);
 			return dto;
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -51,14 +52,14 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public ArrayList<UserDTO> ReadAll() {
+	public ArrayList<LocationDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = (ArrayList<User>) repository.findAll();
-		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
+		ArrayList<Location> listEntities = (ArrayList<Location>) repository.findAll();
+		ArrayList<LocationDTO> listDTO = new ArrayList<LocationDTO>();
 
-		for (User tmp : listEntities) {
+		for (Location tmp : listEntities) {
 			try {
-				UserDTO dto = mapper.map(tmp, UserDTO.class);
+				LocationDTO dto = mapper.map(tmp, LocationDTO.class);
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -70,14 +71,17 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public boolean Update(UserDTO dto) {
-		User toUpdate = repository.getOne(dto.getId());
+	public boolean Update(LocationDTO dto) {
+		Location toUpdate = repository.getOne(dto.getId());
 
 		try {
 			if (toUpdate.getVersion() != dto.getVersion()) {
 				return false;
 			}
-			toUpdate.setUserName(dto.getUserName());
+			toUpdate.setCity(dto.getCity());
+			toUpdate.setState(dto.getState());
+			toUpdate.setStreetName(dto.getStreetName());
+			toUpdate.setStreetNumber(dto.getStreetNumber());
 			repository.save(toUpdate);
 
 		} catch (Exception exc) {

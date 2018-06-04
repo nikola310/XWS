@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Entity
 public class AccomodationType implements Serializable {
@@ -24,6 +25,7 @@ public class AccomodationType implements Serializable {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
+	@Version
 	@Column(name = "entity_version", nullable = false)
 	private int version;
 	

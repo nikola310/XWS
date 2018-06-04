@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 @Entity
 public class Accomodation implements Serializable {
@@ -53,6 +54,7 @@ public class Accomodation implements Serializable {
     @JoinColumn(name = "location_id")
 	private Location location;
 	
+	@Version
 	@Column(name = "entity_version", nullable = false)
 	private int version;
 	

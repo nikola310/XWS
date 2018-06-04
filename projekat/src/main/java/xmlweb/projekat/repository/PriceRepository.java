@@ -8,6 +8,6 @@ import xmlweb.projekat.model.Price;
  * @author Nikola
  *
  */
-public interface PriceRepository extends JpaRepository<Price, Integer> {
+public interface PriceRepository extends JpaRepository<Price, Long> {
 
 }

@@ -7,28 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import xmlweb.projekat.model.User;
-import xmlweb.projekat.model.dtos.UserDTO;
-import xmlweb.projekat.repository.UserRepository;
-import xmlweb.projekat.service.interfaces.UserServiceInterface;
+import xmlweb.projekat.model.Price;
+import xmlweb.projekat.model.dtos.PriceDTO;
+import xmlweb.projekat.repository.PriceRepository;
+import xmlweb.projekat.service.interfaces.PriceServiceInterface;
 
 @Service
 @Transactional
-public class UserService implements UserServiceInterface {
+public class PriceService implements PriceServiceInterface {
 
-	private UserRepository repository;
+	private PriceRepository repository;
 
 	@Autowired
-	public UserService(UserRepository repository) {
+	public PriceService(PriceRepository repository) {
+		super();
 		this.repository = repository;
 	}
 
 	@Override
-	public boolean Create(UserDTO dto) {
+	public boolean Create(PriceDTO dto) {
 		try {
 			ModelMapper mapper = new ModelMapper();
-			User user = mapper.map(dto, User.class);
-			repository.save(user);
+			Price price = mapper.map(dto, Price.class);
+			repository.save(price);
 
 			return true;
 		} catch (Exception exc) {
@@ -38,11 +39,11 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public UserDTO Read(long id) {
+	public PriceDTO Read(long id) {
 		try {
-			User user = repository.getOne(id);
+			Price pr = repository.getOne(id);
 			ModelMapper mapper = new ModelMapper();
-			UserDTO dto = mapper.map(user, UserDTO.class);
+			PriceDTO dto = mapper.map(pr, PriceDTO.class);
 			return dto;
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -51,14 +52,14 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public ArrayList<UserDTO> ReadAll() {
+	public ArrayList<PriceDTO> ReadAll() {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = (ArrayList<User>) repository.findAll();
-		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
+		ArrayList<Price> listEntities = (ArrayList<Price>) repository.findAll();
+		ArrayList<PriceDTO> listDTO = new ArrayList<PriceDTO>();
 
-		for (User tmp : listEntities) {
+		for (Price tmp : listEntities) {
 			try {
-				UserDTO dto = mapper.map(tmp, UserDTO.class);
+				PriceDTO dto = mapper.map(tmp, PriceDTO.class);
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -70,14 +71,16 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public boolean Update(UserDTO dto) {
-		User toUpdate = repository.getOne(dto.getId());
+	public boolean Update(PriceDTO dto) {
+		Price toUpdate = repository.getOne(dto.getId());
 
 		try {
 			if (toUpdate.getVersion() != dto.getVersion()) {
 				return false;
 			}
-			toUpdate.setUserName(dto.getUserName());
+			toUpdate.setEndDate(dto.getEndDate());
+			toUpdate.setPrice(dto.getPrice());
+			toUpdate.setStartDate(dto.getStartDate());
 			repository.save(toUpdate);
 
 		} catch (Exception exc) {

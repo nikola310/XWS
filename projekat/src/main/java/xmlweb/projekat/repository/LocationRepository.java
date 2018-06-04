@@ -8,6 +8,6 @@ import xmlweb.projekat.model.Location;
  * @author Nikola
  *
  */
-public interface LocationRepository extends JpaRepository<Location, Integer> {
+public interface LocationRepository extends JpaRepository<Location, Long> {
 
 }

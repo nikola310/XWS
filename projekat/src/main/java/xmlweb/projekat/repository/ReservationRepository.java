@@ -8,6 +8,6 @@ import xmlweb.projekat.model.Reservation;
  * @author Nikola
  *
  */
-public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
 }

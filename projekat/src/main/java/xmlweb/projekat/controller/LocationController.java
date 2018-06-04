@@ -12,43 +12,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import xmlweb.projekat.model.dtos.UserDTO;
-import xmlweb.projekat.service.interfaces.UserServiceInterface;
+import xmlweb.projekat.model.dtos.LocationDTO;
+import xmlweb.projekat.service.interfaces.LocationServiceInterface;
 
 @RestController
-@RequestMapping(value = "/user")
-public class UserController {
+@RequestMapping(value = "/location")
+public class LocationController {
 
-	private UserServiceInterface service;
+	private LocationServiceInterface service;
 
 	@Autowired
-	public UserController(UserServiceInterface service) {
+	public LocationController(LocationServiceInterface service) {
+		super();
 		this.service = service;
 	}
+	
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
-	public boolean createUser(@Validated @RequestBody UserDTO u) {
+	public boolean createLocation(@Validated @RequestBody LocationDTO u) {
 		return service.Create(u);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
-	public UserDTO readUser(@PathVariable long id) {
+	public LocationDTO readLocation(@PathVariable long id) {
 		return service.Read(id);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<UserDTO> readUsers() {
+	public List<LocationDTO> readLocations() {
 		return service.ReadAll();
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public boolean updateUser(@Validated @RequestBody UserDTO u) {
+	public boolean updateLocation(@Validated @RequestBody LocationDTO u) {
 		return service.Update(u);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public boolean deleteUser(@PathVariable long id) {
+	public boolean deleteLocation(@PathVariable long id) {
 		return service.Delete(id);
 	}
-
 }

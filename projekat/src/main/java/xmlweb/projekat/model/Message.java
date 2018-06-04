@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
 @Entity
 public class Message implements Serializable {
@@ -34,6 +35,7 @@ public class Message implements Serializable {
 	@Column(name = "content", nullable = false)
 	private String content;
 	
+	@Version
 	@Column(name = "entity_version", nullable = false)
 	private int version;
 	

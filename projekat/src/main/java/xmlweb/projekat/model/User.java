@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
+
 
 @Entity
 public class User implements Serializable {
@@ -61,6 +63,7 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "agent")
 	private List<AccomodationAgent> accomodationAgent;
 	
+	@Version
 	@Column(name = "entity_version", nullable = false)
 	private int version;
 	

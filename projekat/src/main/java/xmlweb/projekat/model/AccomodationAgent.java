@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
 @Entity
 public class AccomodationAgent implements Serializable {
@@ -34,6 +35,7 @@ public class AccomodationAgent implements Serializable {
 	@Column(name = "main_agent", nullable = false)
 	private boolean mainAgent;
 	
+	@Version
 	@Column(name = "entity_version", nullable = false)
 	private int version;
 	
