@@ -14,6 +14,16 @@ public class PriceDTO {
 	public PriceDTO() {
 	}
 
+	public PriceDTO(long id, int price, Date startDate, Date endDate, long accomodation, int version) {
+		super();
+		this.id = id;
+		this.price = price;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.accomodation = accomodation;
+		this.version = version;
+	}
+
 	public long getId() {
 		return id;
 	}

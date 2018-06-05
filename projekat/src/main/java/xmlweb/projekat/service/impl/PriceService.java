@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import xmlweb.projekat.model.Accomodation;
 import xmlweb.projekat.model.Price;
 import xmlweb.projekat.model.dtos.PriceDTO;
+import xmlweb.projekat.repository.AccomodationRepository;
 import xmlweb.projekat.repository.PriceRepository;
 import xmlweb.projekat.service.interfaces.PriceServiceInterface;
 
@@ -17,6 +19,9 @@ import xmlweb.projekat.service.interfaces.PriceServiceInterface;
 public class PriceService implements PriceServiceInterface {
 
 	private PriceRepository repository;
+
+	@Autowired
+	private AccomodationRepository accomodationRepo;
 
 	@Autowired
 	public PriceService(PriceRepository repository) {
@@ -29,6 +34,8 @@ public class PriceService implements PriceServiceInterface {
 		try {
 			ModelMapper mapper = new ModelMapper();
 			Price price = mapper.map(dto, Price.class);
+			Accomodation acc = accomodationRepo.getOne(dto.getAccomodation());
+			price.setAccomodation(acc);
 			repository.save(price);
 
 			return true;
@@ -42,8 +49,8 @@ public class PriceService implements PriceServiceInterface {
 	public PriceDTO Read(long id) {
 		try {
 			Price pr = repository.getOne(id);
-			ModelMapper mapper = new ModelMapper();
-			PriceDTO dto = mapper.map(pr, PriceDTO.class);
+			PriceDTO dto = new PriceDTO(pr.getId(), pr.getPrice(), pr.getStartDate(), pr.getEndDate(),
+					pr.getAccomodation().getId(), pr.getVersion());
 			return dto;
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -53,13 +60,13 @@ public class PriceService implements PriceServiceInterface {
 
 	@Override
 	public ArrayList<PriceDTO> ReadAll() {
-		ModelMapper mapper = new ModelMapper();
 		ArrayList<Price> listEntities = (ArrayList<Price>) repository.findAll();
 		ArrayList<PriceDTO> listDTO = new ArrayList<PriceDTO>();
 
-		for (Price tmp : listEntities) {
+		for (Price pr : listEntities) {
 			try {
-				PriceDTO dto = mapper.map(tmp, PriceDTO.class);
+				PriceDTO dto = new PriceDTO(pr.getId(), pr.getPrice(), pr.getStartDate(), pr.getEndDate(),
+						pr.getAccomodation().getId(), pr.getVersion());
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();

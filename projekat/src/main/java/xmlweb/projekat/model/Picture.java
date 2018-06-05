@@ -29,7 +29,8 @@ public class Picture implements Serializable {
 	private Accomodation accomodation;
 	
 	@Column(name = "content", nullable = false)
-	private String content;
+	private byte[] content;
+//	private String content;
 	
 	@Version
 	@Column(name = "entity_version", nullable = false)
@@ -53,11 +54,11 @@ public class Picture implements Serializable {
 		this.accomodation = accomodation;
 	}
 
-	public String getContent() {
+	public byte[] getContent() {
 		return content;
 	}
 
-	public void setContent(String content) {
+	public void setContent(byte[] content) {
 		this.content = content;
 	}
 

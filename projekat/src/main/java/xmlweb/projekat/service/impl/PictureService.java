@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import xmlweb.projekat.model.Accomodation;
 import xmlweb.projekat.model.Picture;
 import xmlweb.projekat.model.dtos.PictureDTO;
+import xmlweb.projekat.repository.AccomodationRepository;
 import xmlweb.projekat.repository.PictureRepository;
 import xmlweb.projekat.service.interfaces.PictureServiceInterface;
 
@@ -17,6 +19,9 @@ import xmlweb.projekat.service.interfaces.PictureServiceInterface;
 public class PictureService implements PictureServiceInterface {
 
 	private PictureRepository repository;
+
+	@Autowired
+	private AccomodationRepository accomodationRepo;
 
 	@Autowired
 	public PictureService(PictureRepository repository) {
@@ -28,7 +33,9 @@ public class PictureService implements PictureServiceInterface {
 	public boolean Create(PictureDTO dto) {
 		try {
 			ModelMapper mapper = new ModelMapper();
+			Accomodation acc = accomodationRepo.getOne(dto.getAccomodation());
 			Picture pic = mapper.map(dto, Picture.class);
+			pic.setAccomodation(acc);
 			repository.save(pic);
 
 			return true;
@@ -42,8 +49,8 @@ public class PictureService implements PictureServiceInterface {
 	public PictureDTO Read(long id) {
 		try {
 			Picture pic = repository.getOne(id);
-			ModelMapper mapper = new ModelMapper();
-			PictureDTO dto = mapper.map(pic, PictureDTO.class);
+			PictureDTO dto = new PictureDTO(pic.getId(), pic.getAccomodation().getId(), pic.getContent(),
+					pic.getVersion());
 			return dto;
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -53,13 +60,13 @@ public class PictureService implements PictureServiceInterface {
 
 	@Override
 	public ArrayList<PictureDTO> ReadAll() {
-		ModelMapper mapper = new ModelMapper();
 		ArrayList<Picture> listEntities = (ArrayList<Picture>) repository.findAll();
 		ArrayList<PictureDTO> listDTO = new ArrayList<PictureDTO>();
 
-		for (Picture tmp : listEntities) {
+		for (Picture pic : listEntities) {
 			try {
-				PictureDTO dto = mapper.map(tmp, PictureDTO.class);
+				PictureDTO dto = new PictureDTO(pic.getId(), pic.getAccomodation().getId(), pic.getContent(),
+						pic.getVersion());
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -96,7 +103,6 @@ public class PictureService implements PictureServiceInterface {
 			exc.printStackTrace();
 			return false;
 		}
-
 		return true;
 	}
 

@@ -7,8 +7,17 @@ public class MessageDTO {
 	private long receiver;
 	private String content;
 	private int version;
-	
+
 	public MessageDTO() {
+	}
+
+	public MessageDTO(long id, long sender, long receiver, String content, int version) {
+		super();
+		this.id = id;
+		this.sender = sender;
+		this.receiver = receiver;
+		this.content = content;
+		this.version = version;
 	}
 
 	public long getId() {

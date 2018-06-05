@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import xmlweb.projekat.model.Message;
+import xmlweb.projekat.model.User;
 import xmlweb.projekat.model.dtos.MessageDTO;
 import xmlweb.projekat.repository.MessageRepository;
+import xmlweb.projekat.repository.UserRepository;
 import xmlweb.projekat.service.interfaces.MessageServiceInterface;
 
 @Service
@@ -17,6 +19,9 @@ import xmlweb.projekat.service.interfaces.MessageServiceInterface;
 public class MessageService implements MessageServiceInterface {
 
 	private MessageRepository repository;
+
+	@Autowired
+	private UserRepository userRepo;
 
 	@Autowired
 	public MessageService(MessageRepository repository) {
@@ -29,6 +34,12 @@ public class MessageService implements MessageServiceInterface {
 		try {
 			ModelMapper mapper = new ModelMapper();
 			Message msg = mapper.map(dto, Message.class);
+			User sender = userRepo.getOne(dto.getSender());
+			User receiver = userRepo.getOne(dto.getReceiver());
+
+			msg.setSender(sender);
+			msg.setReciever(receiver);
+			System.out.println(msg.getSender());
 			repository.save(msg);
 
 			return true;
@@ -42,8 +53,10 @@ public class MessageService implements MessageServiceInterface {
 	public MessageDTO Read(long id) {
 		try {
 			Message msg = repository.getOne(id);
-			ModelMapper mapper = new ModelMapper();
-			MessageDTO dto = mapper.map(msg, MessageDTO.class);
+			if (msg == null)
+				return null;
+			MessageDTO dto = new MessageDTO(msg.getId(), msg.getSender().getId(), msg.getReciever().getId(),
+					msg.getContent(), msg.getVersion());
 			return dto;
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -53,13 +66,13 @@ public class MessageService implements MessageServiceInterface {
 
 	@Override
 	public ArrayList<MessageDTO> ReadAll() {
-		ModelMapper mapper = new ModelMapper();
 		ArrayList<Message> listEntities = (ArrayList<Message>) repository.findAll();
 		ArrayList<MessageDTO> listDTO = new ArrayList<MessageDTO>();
 
 		for (Message tmp : listEntities) {
 			try {
-				MessageDTO dto = mapper.map(tmp, MessageDTO.class);
+				MessageDTO dto = new MessageDTO(tmp.getId(), tmp.getSender().getId(), tmp.getReciever().getId(),
+						tmp.getContent(), tmp.getVersion());
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -96,7 +109,6 @@ public class MessageService implements MessageServiceInterface {
 			exc.printStackTrace();
 			return false;
 		}
-
 		return true;
 	}
 

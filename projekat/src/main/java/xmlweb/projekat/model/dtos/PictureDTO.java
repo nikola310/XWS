@@ -4,10 +4,18 @@ public class PictureDTO {
 
 	private long id;
 	private long accomodation;
-	private String content;
+	private byte[] content;
 	private int version;
 
 	public PictureDTO() {
+	}
+
+	public PictureDTO(long id, long accomodation, byte[] content, int version) {
+		super();
+		this.id = id;
+		this.accomodation = accomodation;
+		this.content = content;
+		this.version = version;
 	}
 
 	public long getId() {
@@ -26,11 +34,11 @@ public class PictureDTO {
 		this.accomodation = accomodation;
 	}
 
-	public String getContent() {
+	public byte[] getContent() {
 		return content;
 	}
 
-	public void setContent(String content) {
+	public void setContent(byte[] content) {
 		this.content = content;
 	}
 

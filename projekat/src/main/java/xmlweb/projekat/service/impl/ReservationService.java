@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import xmlweb.projekat.model.Accomodation;
 import xmlweb.projekat.model.Reservation;
+import xmlweb.projekat.model.User;
 import xmlweb.projekat.model.dtos.ReservationDTO;
+import xmlweb.projekat.repository.AccomodationRepository;
 import xmlweb.projekat.repository.ReservationRepository;
+import xmlweb.projekat.repository.UserRepository;
 import xmlweb.projekat.service.interfaces.ReservationServiceInterface;
 
 /**
@@ -22,9 +26,16 @@ public class ReservationService implements ReservationServiceInterface {
 
 	private ReservationRepository repository;
 
+	private UserRepository userRepo;
+
+	private AccomodationRepository accRepo;
+
 	@Autowired
-	public ReservationService(ReservationRepository repository) {
+	public ReservationService(ReservationRepository repository, UserRepository userRepo,
+			AccomodationRepository accRepo) {
 		this.repository = repository;
+		this.userRepo = userRepo;
+		this.accRepo = accRepo;
 	}
 
 	@Override
@@ -32,6 +43,10 @@ public class ReservationService implements ReservationServiceInterface {
 		try {
 			ModelMapper mapper = new ModelMapper();
 			Reservation res = mapper.map(dto, Reservation.class);
+			User u = userRepo.getOne(dto.getUser());
+			Accomodation acc = accRepo.getOne(dto.getAccomodation());
+			res.setUser(u);
+			res.setAccomodation(acc);
 			repository.save(res);
 
 			return true;
@@ -45,8 +60,8 @@ public class ReservationService implements ReservationServiceInterface {
 	public ReservationDTO Read(long id) {
 		try {
 			Reservation res = repository.getOne(id);
-			ModelMapper mapper = new ModelMapper();
-			ReservationDTO dto = mapper.map(res, ReservationDTO.class);
+			ReservationDTO dto = new ReservationDTO(res.getId(), res.getUser().getId(), res.getAccomodation().getId(),
+					res.getNumberOfPersons(), res.getStartDate(), res.getEndDate(), res.getVersion());
 			return dto;
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -56,13 +71,14 @@ public class ReservationService implements ReservationServiceInterface {
 
 	@Override
 	public ArrayList<ReservationDTO> ReadAll() {
-		ModelMapper mapper = new ModelMapper();
 		ArrayList<Reservation> listEntities = (ArrayList<Reservation>) repository.findAll();
 		ArrayList<ReservationDTO> listDTO = new ArrayList<ReservationDTO>();
 
-		for (Reservation tmp : listEntities) {
+		for (Reservation res : listEntities) {
 			try {
-				ReservationDTO dto = mapper.map(tmp, ReservationDTO.class);
+				ReservationDTO dto = new ReservationDTO(res.getId(), res.getUser().getId(),
+						res.getAccomodation().getId(), res.getNumberOfPersons(), res.getStartDate(), res.getEndDate(),
+						res.getVersion());
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -81,11 +97,11 @@ public class ReservationService implements ReservationServiceInterface {
 			if (toUpdate.getVersion() != dto.getVersion()) {
 				return false;
 			}
-			
+
 			toUpdate.setNumberOfPersons(dto.getNumberOfPersons());
 			toUpdate.setStartDate(dto.getStartDate());
 			toUpdate.setEndDate(dto.getEndDate());
-			
+
 			repository.save(toUpdate);
 
 		} catch (Exception exc) {

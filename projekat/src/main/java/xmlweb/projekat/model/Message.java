@@ -29,7 +29,7 @@ public class Message implements Serializable {
 	private User sender;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name="reciever_id")
+	@JoinColumn(name="receiver_id")
 	private User reciever;
 	
 	@Column(name = "content", nullable = false)
