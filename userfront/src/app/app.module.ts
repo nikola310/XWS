@@ -10,12 +10,14 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ResultsComponent } from './components/results/results.component';
 import { DataService } from './services/data.service';
+import { AccomodationsComponent } from './components/accomodations/accomodations.component';
 
 const appRoutes: Routes = [
   { path: '', component: SearchComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'results', component: ResultsComponent }
+  { path: 'results', component: ResultsComponent },
+  { path: 'accomodations', component: AccomodationsComponent}
 ];
 
 
@@ -26,7 +28,8 @@ const appRoutes: Routes = [
     SearchComponent,
     LoginComponent,
     RegisterComponent,
-    ResultsComponent
+    ResultsComponent,
+    AccomodationsComponent
   ],
   imports: [
     BrowserModule,

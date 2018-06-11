@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class BonusService implements Serializable {
 
@@ -33,6 +35,7 @@ public class BonusService implements Serializable {
     @JoinTable(name = "accomodation_bonus_services",
     joinColumns = @JoinColumn(name = "bonus_service_id", nullable = false),
     inverseJoinColumns = @JoinColumn(name = "accomodation_id", nullable = false))
+	@JsonIgnore
 	private List<Accomodation> accomodations;
 	
 	@Version

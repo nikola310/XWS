@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class User implements Serializable {
@@ -28,10 +30,10 @@ public class User implements Serializable {
 	@Column(name = "user_id", nullable = false)
 	private long id;
 	
-	@Column(name = "first_name", nullable = false)
+	@Column(name = "first_name", nullable = true)
 	private String firstName;
 	
-	@Column(name = "last_name", nullable = false)
+	@Column(name = "last_name", nullable = true)
 	private String lastName;
 	
 	@Column(name = "user_name", nullable = false)
@@ -41,7 +43,7 @@ public class User implements Serializable {
 	private String password;
 	
 	//poslovni maticni broj
-	@Column(name = "pid", nullable = false)
+	@Column(name = "pid", nullable = true)
 	private String pid;
 
 	@Column(nullable = false)
@@ -49,18 +51,23 @@ public class User implements Serializable {
 	private UserType userType;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "reciever")
+	@JsonIgnore
 	private List<Message> recievedMessages;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sender")
+	@JsonIgnore
 	private List<Message> sentMessages;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
+	@JsonIgnore
 	private List<Comment> comments;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@JsonIgnore
 	private List<Reservation> reservations;
 	
 	@OneToMany(mappedBy = "agent")
+	@JsonIgnore
 	private List<AccomodationAgent> accomodationAgent;
 	
 	@Version

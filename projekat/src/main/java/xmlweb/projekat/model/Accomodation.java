@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Accomodation implements Serializable {
 
@@ -36,18 +38,22 @@ public class Accomodation implements Serializable {
 	private int category;
 	
 	@ManyToMany(mappedBy = "accomodations")
+	@JsonIgnore
 	private List<BonusService> bonusServices;
 	
 	@OneToMany(mappedBy = "accomodation")
+	@JsonIgnore
 	private List<Comment> comments;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "accomodation")
+	@JsonIgnore
 	private List<Price> prices;
 	
 	@Column(name = "capacity", nullable = false)
 	private int capacity;
 	
 	@OneToMany(mappedBy = "accomodation")
+	@JsonIgnore
 	private List<AccomodationAgent> accomodationAgent;
 	
 	@ManyToOne

@@ -12,14 +12,14 @@ public class ReservationDTO {
 	private long user;
 	private long accomodation;
 	private int numberOfPersons;
-	private Date startDate;
-	private Date endDate;
+	private long startDate;
+	private long endDate;
 	private int version;
 
 	public ReservationDTO() {
 	}
 
-	public ReservationDTO(long id, long user, long accomodation, int numberOfPersons, Date startDate, Date endDate,
+	public ReservationDTO(long id, long user, long accomodation, int numberOfPersons, long startDate, long endDate,
 			int version) {
 		super();
 		this.id = id;
@@ -47,19 +47,19 @@ public class ReservationDTO {
 		this.numberOfPersons = numberOfPersons;
 	}
 
-	public Date getStartDate() {
+	public long getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(long startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public long getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(long endDate) {
 		this.endDate = endDate;
 	}
 

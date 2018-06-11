@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Location implements Serializable {
 
@@ -38,6 +40,7 @@ public class Location implements Serializable {
 	private String streetNumber;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
+	@JsonIgnore
 	private List<Accomodation> accomodations;
 	
 	@Version

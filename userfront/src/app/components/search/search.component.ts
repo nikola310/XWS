@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-search',
@@ -11,7 +12,7 @@ export class SearchComponent implements OnInit {
   minCheckInDate: string;
   s: string;
   str: string;
-  constructor() {
+  constructor(private dataService:DataService) {
     this.advancedSearch = false;
     this.minCheckInDate = new Date().toJSON().split('T')[0];
   }
@@ -33,26 +34,43 @@ export class SearchComponent implements OnInit {
     console.log(data);
    // console.log("destination:"+data.destination+",check-in+date:"+data.checkin+",check-out+date:"+data.checkout+",guests:"+data.guests);
 
-    this.s = 'destination:'+data.destination+',check-in+date:'+data.checkin+',check-out+date:'+data.checkout+',guests:'+data.guests;
+    this.s = 'http://localhost:8089/booking/search?destination='+data.destination+'&checkin='+data.checkin+'&checkout='+data.checkout+'&guests='+data.guests;
     console.log(this.s);
     if(data.atype !=undefined){
-      this.s = 'destination:'+data.destination+',check-in+date:'+data.checkin+',check-out+date:'+data.checkout+',guests:'+data.guests+',atype:'+data.atype;
+      this.s = this.s +'&type='+data.atype;
     }
     if(data.acategory !=undefined){
-      this.s = this.s+',acategory:'+data.acategory;
+      this.s = this.s+'&category='+data.acategory;
     }
    
-
     if(data.parking != undefined && data.parking != false){
-      this.s = this.s+',parking';
+      this.s = this.s+'&parking=true';
+    }
+    if(data.wifi != undefined && data.wifi != false){
+      this.s = this.s+'&wifi=true';
+    }
+    if(data.breakfast != undefined && data.breakfast != false){
+      this.s = this.s+'&breakfast=true';
+    }
+    if(data.fullboard != undefined && data.fullboard != false){
+      this.s = this.s+'&fullboard=true';
+    }
+    if(data.halfboard != undefined && data.halfboard != false){
+      this.s = this.s+'&halfboard=true';
+    }
+    if(data.tv != undefined && data.tv != false){
+      this.s = this.s+'&tv=true';
+    }
+    if(data.kitchen != undefined && data.kitchen != false){
+      this.s = this.s+'&kitchen=true';
+    }
+    if(data.bathroom != undefined && data.bathroom != false){
+      this.s = this.s+'&bathroom=true';
     }
 
     this.str = this.s.replace(/\s+/g,'+');
     
-    console.log(this.str);
-    
-    console.log(data.parking);
-    console.log(data.wifi);
+    this.dataService.search(this.str);
   }
 
 }

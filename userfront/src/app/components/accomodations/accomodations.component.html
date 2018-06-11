@@ -1,0 +1,23 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Type</th>
+      <th>Category</th>
+      <th>Capacity</th>
+      <th colspan="4" >Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let a of accomodations">
+      <td>{{a.id}}</td>
+      <td>{{a.type}}</td>
+      <td>{{a.category}}*</td>
+      <td>{{a.capacity}}</td>
+      <td>{{a.location.state}}</td>
+      <td>{{a.location.city}}</td>
+      <td>{{a.location.streetName}}</td>
+      <td>{{a.location.streetNumber}}</td>
+    </tr>
+  </tbody>
+  </table>

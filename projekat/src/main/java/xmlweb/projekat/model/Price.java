@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Price implements Serializable {
 
@@ -36,6 +38,7 @@ public class Price implements Serializable {
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name="accomodation_id")
+	@JsonIgnore
 	private Accomodation accomodation;
 	
 	@Version

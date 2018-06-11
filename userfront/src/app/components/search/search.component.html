@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label class=" control-label" for="textinput">Check-in date:</label>
                         <div class="">
-                            <input id="textinput" [(ngModel)]="data.checkin" #dataCheckin="ngModel" name="checkin" class="form-control input-md" type="date" [min] = "minCheckInDate" onkeydown="return false" required>
+                            <input id="textinput" [(ngModel)]="data.checkin" #dataCheckin="ngModel" name="checkin" class="form-control input-md" type="date" [min] = "minCheckInDate " [max]="data.checkout" onkeydown="return false" required>
                         </div>
                     </div>
                     <div *ngIf="dataCheckin.errors?.required && dataCheckin.touched"  class="alert alert-danger">
@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label class=" control-label" for="textinput">Check-out date:</label>
                         <div class="">
-                            <input id="textinput" [(ngModel)]="data.checkout" #dataCheckout="ngModel" name="checkout" class="form-control input-md" type="date" [min] = "data.checkin" onkeydown="return false" required>
+                            <input id="textinput" [(ngModel)]="data.checkout" #dataCheckout="ngModel" name="checkout" class="form-control input-md" type="date" [min] = "data.checkin || minCheckInDate" onkeydown="return false" required>
                         </div>
                     </div>
                     <div *ngIf="dataCheckout.errors?.required && dataCheckout.touched"  class="alert alert-danger">
@@ -78,13 +78,13 @@
                         <label class=" control-label" for="selectbasic">Accommodation category:</label>
                         <div class="">
                             <select id="selectbasic" [(ngModel)]="data.acategory" name="selectbasic" class="form-control">
-                                <option value="1"></option>
-                                <option value="2">No category</option>
-                                <option value="3">*</option>
-                                <option value="4">**</option>
-                                <option value="5">***</option>
-                                <option value="6">****</option>
-                                <option value="7">*****</option>
+                                <option></option>
+                                <option>No category</option>
+                                <option>*</option>
+                                <option>**</option>
+                                <option>***</option>
+                                <option>****</option>
+                                <option>*****</option>
                             </select>
                         </div>
                     </div>
