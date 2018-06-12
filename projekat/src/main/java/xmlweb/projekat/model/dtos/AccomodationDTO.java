@@ -11,6 +11,7 @@ import xmlweb.projekat.model.Price;
 public class AccomodationDTO {
 	
 	private long id;
+	private String name;
 	private String type;
 	private int category;
 	private List<BonusService> bonusServices;
@@ -20,10 +21,11 @@ public class AccomodationDTO {
 	private Location location;
 	
 	
-	public AccomodationDTO(long id, AccomodationType type, int category, List<BonusService> bonusServices,
+	public AccomodationDTO(long id, String name, AccomodationType type, int category, List<BonusService> bonusServices,
 			List<Comment> comments, List<Price> prices, int capacity, Location location) {
 		super();
 		this.id = id;
+		this.name = name;
 		this.type = type.getName();
 		this.category = category;
 		this.bonusServices = bonusServices;
@@ -79,6 +81,12 @@ public class AccomodationDTO {
 	}
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

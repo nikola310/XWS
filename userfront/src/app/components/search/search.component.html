@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label class=" control-label" for="textinput">Check-in date:</label>
                         <div class="">
-                            <input id="textinput" [(ngModel)]="data.checkin" #dataCheckin="ngModel" name="checkin" class="form-control input-md" type="date" [min] = "minCheckInDate " [max]="data.checkout" onkeydown="return false" required>
+                            <input id="textinput" [(ngModel)]="data.checkin" #dataCheckin="ngModel" name="checkin" class="form-control input-md" type="date" (focus) = "maxDate(data.checkout)" [min] = "minCheckInDate " [max]="maxCheckInDate" onkeydown="return false" required>
                         </div>
                     </div>
                     <div *ngIf="dataCheckin.errors?.required && dataCheckin.touched"  class="alert alert-danger">
@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label class=" control-label" for="textinput">Check-out date:</label>
                         <div class="">
-                            <input id="textinput" [(ngModel)]="data.checkout" #dataCheckout="ngModel" name="checkout" class="form-control input-md" type="date" [min] = "data.checkin || minCheckInDate" onkeydown="return false" required>
+                            <input id="textinput" [(ngModel)]="data.checkout" #dataCheckout="ngModel" name="checkout" class="form-control input-md" type="date" (focus)="minDate(data.checkin)" [min] = "minCheckOutDateIfCheckIn || minCheckOutDate" onkeydown="return false" required>
                         </div>
                     </div>
                     <div *ngIf="dataCheckout.errors?.required && dataCheckout.touched"  class="alert alert-danger">
@@ -65,11 +65,12 @@
                     <div class="form-group" *ngIf="advancedSearch">
                         <label class=" control-label" for="selectbasic">Accommodation type:</label>
                         <div class="">
-                            <select id="selectbasic" [(ngModel)]="data.atype" name="selectbasic" class="form-control">
+                            <select id="selectbasic" [(ngModel)]="data.type" name="selectbasic" class="form-control">
                                 <option></option>
-                                <option>Hotel</option>
+                                <option *ngFor="let type of accomodationTypes" value={{type.id}}>{{type.name}}</option>
+                               <!--  <option>Hotel</option>
                                 <option>Apartment</option>
-                                <option>Bed&Breakfast</option>
+                                <option>Bed&Breakfast</option> -->
                             </select>
                         </div>
                     </div>
@@ -77,14 +78,14 @@
                     <div class="form-group" *ngIf="advancedSearch">
                         <label class=" control-label" for="selectbasic">Accommodation category:</label>
                         <div class="">
-                            <select id="selectbasic" [(ngModel)]="data.acategory" name="selectbasic" class="form-control">
+                            <select id="selectbasic" [(ngModel)]="data.category" name="selectbasic" class="form-control">
                                 <option></option>
-                                <option>No category</option>
-                                <option>*</option>
-                                <option>**</option>
-                                <option>***</option>
-                                <option>****</option>
-                                <option>*****</option>
+                                <option value="0">No category</option>
+                                <option value="1">*</option>
+                                <option value="2">**</option>
+                                <option value="3">***</option>
+                                <option value="4">****</option>
+                                <option value="5">*****</option>
                             </select>
                         </div>
                     </div>
@@ -114,56 +115,16 @@
                     <!-- Multiple Checkboxes -->
                     <div class="form-group" *ngIf="advancedSearch">
                         <label class=" control-label" for="checkboxes">Extra features:</label>
-                        <div class="">
+                        <div *ngIf="bonusServices">
+                        <div class="" *ngFor="let bs of bonusServices">
 
                             <div class="checkbox">
                                 <label for="checkboxes-0">
-                                    <input name="checkboxes" [(ngModel)]="data.parking" id="checkboxes-0" value="1" type="checkbox"> Parking
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label for="checkboxes-1">
-                                    <input name="checkboxes" [(ngModel)]="data.wifi" id="checkboxes-1" value="2" type="checkbox"> WiFi
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label for="checkboxes-1">
-                                    <input name="checkboxes" [(ngModel)]="data.breakfast" id="checkboxes-1" value="2" type="checkbox"> Breakfast
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label for="checkboxes-1">
-                                    <input name="checkboxes" [(ngModel)]="data.fullboard" id="checkboxes-1" value="2" type="checkbox"> Full board
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label for="checkboxes-1">
-                                    <input name="checkboxes" [(ngModel)]="data.halfboard" id="checkboxes-1" value="2" type="checkbox"> Half board
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label for="checkboxes-1">
-                                    <input name="checkboxes" [(ngModel)]="data.tv" id="checkboxes-1" value="2" type="checkbox"> TV
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label for="checkboxes-1">
-                                    <input name="checkboxes" [(ngModel)]="data.kitchen" id="checkboxes-1" value="2" type="checkbox"> Kitchen
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label for="checkboxes-1">
-                                    <input name="checkboxes" [(ngModel)]="data.bathroom" id="checkboxes-1" value="2" type="checkbox"> Private bathroom
+                                    <input name="checkboxes" [(ngModel)]="data[bs.name]" id="checkboxes-0" value={{bs.id}} type="checkbox"> {{bs.name}}
                                 </label>
                             </div>
                         </div>
+                    </div>
                     </div>
                     
                     <!-- Button (Double) -->

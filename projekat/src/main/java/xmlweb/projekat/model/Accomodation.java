@@ -30,6 +30,9 @@ public class Accomodation implements Serializable {
 	@Column(name = "accomodation_id", nullable = false)
 	private long id;
 	
+	@Column(name = "accomodation_name", nullable = false)
+	private String accomodationName;
+	
 	@ManyToOne(optional = false)
 	@JoinColumn(name="accomodation_type")
 	private AccomodationType accomodationType;
@@ -144,6 +147,14 @@ public class Accomodation implements Serializable {
 
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+
+	public String getAccomodationName() {
+		return accomodationName;
+	}
+
+	public void setAccomodationName(String accomodationName) {
+		this.accomodationName = accomodationName;
 	}
 	
 	

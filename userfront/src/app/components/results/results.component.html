@@ -1,17 +1,23 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">User id</th>
       <th scope="col">Id</th>
-      <th scope="col">Title</th>
-      <th scope="col">Body</th>
+      <th scope="col">Type</th>
+      <th scope="col">Name</th>
+      <th scope="col" colspan="4">Location</th>
+
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let post of posts">
-      <td>{{post.userId}}</td>
-      <td>{{post.id}}</td>
-      <td>{{post.title}}</td>
-      <td>{{post.body}}</td>
+    <tr *ngFor="let accomodation of accomodations">
+      <td>{{accomodation.id}}</td>
+      <td>{{accomodation.type}}</td>
+      <td>{{accomodation.name}}</td>
+      <td>{{accomodation.location.state}}</td>
+      <td>{{accomodation.location.city}}</td>
+      <td>{{accomodation.location.streetName}}</td>
+      <td>{{accomodation.location.streetNumber}}</td>
+
+
     </tr>
   </tbody>

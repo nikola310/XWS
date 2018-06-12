@@ -11,5 +11,5 @@ import xmlweb.projekat.model.dtos.ReservationDTO;
  */
 public interface ReservationServiceInterface extends ServiceInterface<ReservationDTO> {
 	
-
+	List<ReservationDTO> findReservationsBetweenDates(long checkInDate, long checkOutDate);
 }

@@ -1,6 +1,7 @@
 package xmlweb.projekat.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +122,20 @@ public class ReservationService implements ReservationServiceInterface {
 		}
 
 		return true;
+	}
+
+	@Override
+	public List<ReservationDTO> findReservationsBetweenDates(long checkInDate, long checkOutDate) {
+		// TODO Auto-generated method stub
+		List<Reservation> reservations =  repository.findReservationsBetweenDates(checkInDate, checkOutDate);
+		List<ReservationDTO> reservationsDTO = new ArrayList<ReservationDTO>();
+		
+		for(Reservation r : reservations){
+			ReservationDTO rdto = new ReservationDTO(r.getId(), r.getUser().getId(), r.getAccomodation().getId(), r.getNumberOfPersons(), r.getStartDate(), r.getEndDate(), r.getVersion());
+			reservationsDTO.add(rdto);
+		}
+		
+		return reservationsDTO;
 	}
 
 }

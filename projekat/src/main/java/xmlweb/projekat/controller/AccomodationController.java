@@ -1,7 +1,9 @@
 package xmlweb.projekat.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
@@ -14,15 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import xmlweb.projekat.model.Reservation;
 import xmlweb.projekat.model.dtos.AccomodationDTO;
+import xmlweb.projekat.model.dtos.ReservationDTO;
 import xmlweb.projekat.service.interfaces.AccomodationServiceInterface;
+import xmlweb.projekat.service.interfaces.ReservationServiceInterface;
 
 @RestController
 public class AccomodationController {
 
 	@Autowired
 	private AccomodationServiceInterface service;
+	
+	@Autowired
+	private ReservationServiceInterface reservationService;
 
-
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
 	public List<AccomodationDTO> findAccomodationsByParameters(
 			@RequestParam(value = "destination", required = true) String destination,
@@ -124,6 +131,79 @@ public class AccomodationController {
 		}
 		//=====================kraj provjere kategorije smjestaja=====================
 		
+		//=====================provjera slobodnih smjestaja===========================
+		long checkInDate = Long.parseLong(checkin);
+		long checkOutDate = Long.parseLong(checkout);
+		
+		List<ReservationDTO> reservations = reservationService.findReservationsBetweenDates(checkInDate, checkOutDate);
+		Map<AccomodationDTO, List<ReservationDTO>> accomodationReservations = new HashMap<AccomodationDTO, List<ReservationDTO>>();
+		
+		for(AccomodationDTO a:accomodations){
+			List<ReservationDTO> res = new ArrayList<ReservationDTO>();
+			for(int i = 0; i < reservations.size(); i++){		
+				if(a.getId() == reservations.get(i).getAccomodation()){
+					res.add(reservations.get(i));
+				}
+			}
+			
+			accomodationReservations.put(a, res);
+		}
+		
+		
+		List<AccomodationDTO> freeAccomodations = new ArrayList<AccomodationDTO>();
+		
+		for(Map.Entry<AccomodationDTO, List<ReservationDTO>> entry : accomodationReservations.entrySet()){
+			boolean flag = true;
+			for(long i = checkInDate; i < checkOutDate; i+=86400000){
+				int capacity = entry.getKey().getCapacity();
+				List<ReservationDTO> validReservations = new ArrayList<ReservationDTO>();
+				
+				for(ReservationDTO r : entry.getValue()){
+					if(r.getStartDate() <= i && r.getEndDate() > i){
+						validReservations.add(r);
+					}
+				}
+				
+				int reserved = 0;
+				for(ReservationDTO r:validReservations){
+					reserved+=r.getNumberOfPersons();
+				}
+				
+				int free = capacity - reserved;
+				
+				if(free < Integer.parseInt(guests)){
+					flag = false;
+				}
+			}
+			if(flag==true){
+				freeAccomodations.add(entry.getKey());
+			}
+			
+		}
+		
+		System.out.println("Koliko ima slobodnih smjestaja? " + freeAccomodations.size());
+		for(int i = 0; i < freeAccomodations.size(); i++){
+			System.out.println("Smjestaj " + freeAccomodations.get(i).getId());
+		}
+		
+		
+		for (int i = accomodations.size() - 1; i >= 0; i--) {
+			boolean flag3 = false;
+			for (int j = 0; j < freeAccomodations.size(); j++) {
+				if (freeAccomodations.get(j).getId() == accomodations.get(i).getId()) {
+					flag3 = true;
+					break;
+				}
+			}
+
+			if (flag3 == false) {
+				System.out.println("Brisem: " + accomodations.get(i).getId());
+				accomodations.remove(i);
+			}
+		}
+		
+		//=====================kraj provjere slobodnih smjestaja==========================
+		
 		return accomodations;
 
 	}
@@ -175,5 +255,19 @@ public class AccomodationController {
 			}
 		}
 		return accomodations;
+	}
+	
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(value = "/reservationsdates", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+	public List<ReservationDTO> findAllReservationsBetweenDates(
+			@RequestParam(value = "checkin", required = false) String checkin,
+			@RequestParam(value = "checkout", required = false) String checkout) {
+		
+		long checkInDate = Long.parseLong(checkin);
+		long checkOutDate = Long.parseLong(checkout);
+		
+		return reservationService.findReservationsBetweenDates(checkInDate, checkOutDate);
+		
 	}
 }

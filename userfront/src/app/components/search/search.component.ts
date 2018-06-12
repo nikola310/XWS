@@ -10,14 +10,33 @@ export class SearchComponent implements OnInit {
 
   advancedSearch: boolean;
   minCheckInDate: string;
-  s: string;
-  str: string;
-  constructor(private dataService:DataService) {
+  maxCheckInDate: string;
+  minCheckOutDate: string;
+  minCheckOutDateIfCheckIn: string;
+  checkIn: Date;
+  checkOut: Date;
+  today: Date;
+  tomorrow: Date;
+  bonusServices = [];
+  accomodationTypes = [];
+  url: string;
+  urlNoSpaces: string;
+
+  constructor(private _dataService:DataService) {
     this.advancedSearch = false;
     this.minCheckInDate = new Date().toJSON().split('T')[0];
+    this.today = new Date();
+    this.tomorrow = new Date();
+    this.tomorrow.setDate(this.today.getDate() +1);
+    this.minCheckOutDate = this.tomorrow.toJSON().split('T')[0];
   }
 
   ngOnInit() {
+    this._dataService.getAllBonusServices()
+        .subscribe(data => this.bonusServices = data);
+   
+    this._dataService.getAllAccomodationTypes()
+        .subscribe(data => this.accomodationTypes = data);
   }
 
   showAdvancedSearch() {
@@ -29,48 +48,55 @@ export class SearchComponent implements OnInit {
     }
   }
 
+  minDate(checkInDate){ 
+    if(checkInDate != null && checkInDate != undefined){
+       var comp = checkInDate.split('-');
+       var date = new Date(comp[0], comp[1]-1, comp[2]);    
+       date.setUTCDate(date.getDate() + 1); 
+       this.minCheckOutDateIfCheckIn = date.toJSON().split('T')[0];      
+    }    
+  }
+
+  maxDate(checkOutDate){
+    if(checkOutDate != null && checkOutDate != undefined){
+        var comp = checkOutDate.split('-');
+        var date = new Date(comp[0], comp[1]-1, comp[2]);    
+        date.setUTCDate(date.getDate() -1); 
+        this.maxCheckInDate = date.toJSON().split('T')[0];     
+    }
+  }
+
   search(data) {
     console.log("searching ...");
     console.log(data);
-   // console.log("destination:"+data.destination+",check-in+date:"+data.checkin+",check-out+date:"+data.checkout+",guests:"+data.guests);
+  
+    this.checkIn = new Date(data.checkin);
+    this.checkOut = new Date(data.checkout);
+    this.url = 'http://localhost:8089/booking/search?destination='+data.destination+'&checkin='+this.checkIn.valueOf()+'&checkout='+this.checkOut.valueOf()+'&guests='+data.guests;
+    
 
-    this.s = 'http://localhost:8089/booking/search?destination='+data.destination+'&checkin='+data.checkin+'&checkout='+data.checkout+'&guests='+data.guests;
-    console.log(this.s);
-    if(data.atype !=undefined){
-      this.s = this.s +'&type='+data.atype;
+    if(data.type !=undefined && data.type != ""){
+      this.url = this.url +'&type='+data.type;
     }
-    if(data.acategory !=undefined){
-      this.s = this.s+'&category='+data.acategory;
+    if(data.category != undefined){
+      this.url = this.url+'&category='+data.category;
     }
    
-    if(data.parking != undefined && data.parking != false){
-      this.s = this.s+'&parking=true';
-    }
-    if(data.wifi != undefined && data.wifi != false){
-      this.s = this.s+'&wifi=true';
-    }
-    if(data.breakfast != undefined && data.breakfast != false){
-      this.s = this.s+'&breakfast=true';
-    }
-    if(data.fullboard != undefined && data.fullboard != false){
-      this.s = this.s+'&fullboard=true';
-    }
-    if(data.halfboard != undefined && data.halfboard != false){
-      this.s = this.s+'&halfboard=true';
-    }
-    if(data.tv != undefined && data.tv != false){
-      this.s = this.s+'&tv=true';
-    }
-    if(data.kitchen != undefined && data.kitchen != false){
-      this.s = this.s+'&kitchen=true';
-    }
-    if(data.bathroom != undefined && data.bathroom != false){
-      this.s = this.s+'&bathroom=true';
-    }
+    for(var i = 0; i < this.bonusServices.length; i++){
+      if(i == 0){
+        if(data[this.bonusServices[i].name] != undefined && (data[this.bonusServices[i].name] != false)){
+          this.url = this.url+'&bonus='+this.bonusServices[i].id;
+        }
+      }else{
+        if(data[this.bonusServices[i].name] != undefined && (data[this.bonusServices[i].name] != false)){
+          this.url = this.url+','+this.bonusServices[i].id;
+        }
+      }
+    } 
 
-    this.str = this.s.replace(/\s+/g,'+');
-    
-    this.dataService.search(this.str);
+    this.urlNoSpaces = this.url.replace(/\s+/g,'+');
+    console.log(this.urlNoSpaces);
+    this._dataService.setUrl(this.urlNoSpaces);
   }
 
 }

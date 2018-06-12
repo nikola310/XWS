@@ -8,13 +8,13 @@ import { DataService } from '../../services/data.service';
 })
 export class ResultsComponent implements OnInit {
 
-  public posts = [];
+  public accomodations = [];
   
   constructor(private _dataService:DataService) { }
 
   ngOnInit() {
-    this._dataService.getPosts()
-        .subscribe(data => this.posts = data);
+    this._dataService.search()
+        .subscribe(data => this.accomodations = data);
   }
 
 }

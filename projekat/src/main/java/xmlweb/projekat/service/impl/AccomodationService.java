@@ -30,7 +30,7 @@ public class AccomodationService implements AccomodationServiceInterface {
 		List<AccomodationDTO> accomodationDTOList = new ArrayList<AccomodationDTO>();
 
 		for (Accomodation a : accomodationList) {
-			AccomodationDTO aDTO = new AccomodationDTO(a.getId(), a.getAccomodationType(), a.getCategory(),
+			AccomodationDTO aDTO = new AccomodationDTO(a.getId(), a.getAccomodationName(), a.getAccomodationType(), a.getCategory(),
 					a.getBonusServices(), a.getComments(), a.getPrices(), a.getCapacity(), a.getLocation());
 			accomodationDTOList.add(aDTO);
 		}
@@ -44,7 +44,7 @@ public class AccomodationService implements AccomodationServiceInterface {
 		List<AccomodationDTO> accomodationDTOList = new ArrayList<AccomodationDTO>();
 
 		for (Accomodation a : accomodationList) {
-			AccomodationDTO aDTO = new AccomodationDTO(a.getId(), a.getAccomodationType(), a.getCategory(),
+			AccomodationDTO aDTO = new AccomodationDTO(a.getId(), a.getAccomodationName(), a.getAccomodationType(), a.getCategory(),
 					a.getBonusServices(), a.getComments(), a.getPrices(), a.getCapacity(), a.getLocation());
 			accomodationDTOList.add(aDTO);
 		}
@@ -67,7 +67,7 @@ public class AccomodationService implements AccomodationServiceInterface {
 
 		if (accomodationList.get(0) != null) {
 			for (Accomodation a : accomodationList) {
-				AccomodationDTO aDTO = new AccomodationDTO(a.getId(), a.getAccomodationType(), a.getCategory(),
+				AccomodationDTO aDTO = new AccomodationDTO(a.getId(), a.getAccomodationName(), a.getAccomodationType(), a.getCategory(),
 						a.getBonusServices(), a.getComments(), a.getPrices(), a.getCapacity(), a.getLocation());
 				accomodationDTOList.add(aDTO);
 			}
@@ -83,7 +83,7 @@ public class AccomodationService implements AccomodationServiceInterface {
 		List<AccomodationDTO> accomodationDTOList = new ArrayList<AccomodationDTO>();
 
 		for (Accomodation a : accomodationList) {
-			AccomodationDTO aDTO = new AccomodationDTO(a.getId(), a.getAccomodationType(), a.getCategory(),
+			AccomodationDTO aDTO = new AccomodationDTO(a.getId(), a.getAccomodationName(), a.getAccomodationType(), a.getCategory(),
 					a.getBonusServices(), a.getComments(), a.getPrices(), a.getCapacity(), a.getLocation());
 			accomodationDTOList.add(aDTO);
 		}
@@ -99,7 +99,7 @@ public class AccomodationService implements AccomodationServiceInterface {
 		List<AccomodationDTO> accomodationDTOList = new ArrayList<AccomodationDTO>();
 
 		for (Accomodation a : accomodationList) {
-			AccomodationDTO aDTO = new AccomodationDTO(a.getId(), a.getAccomodationType(), a.getCategory(),
+			AccomodationDTO aDTO = new AccomodationDTO(a.getId(), a.getAccomodationName(), a.getAccomodationType(), a.getCategory(),
 					a.getBonusServices(), a.getComments(), a.getPrices(), a.getCapacity(), a.getLocation());
 			accomodationDTOList.add(aDTO);
 		}

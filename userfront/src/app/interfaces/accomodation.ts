@@ -1,5 +1,6 @@
 export interface IAccomodation {
     id: number,
+    name: string,
     type: string,
     category: number,
     bonusServices: Array<any>,
