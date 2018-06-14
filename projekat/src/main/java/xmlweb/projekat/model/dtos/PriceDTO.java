@@ -6,15 +6,15 @@ public class PriceDTO {
 
 	private long id;
 	private int price;
-	private Date startDate;
-	private Date endDate;
+	private long startDate;
+	private long endDate;
 	private long accomodation;
 	private int version;
 
 	public PriceDTO() {
 	}
 
-	public PriceDTO(long id, int price, Date startDate, Date endDate, long accomodation, int version) {
+	public PriceDTO(long id, int price, long startDate, long endDate, long accomodation, int version) {
 		super();
 		this.id = id;
 		this.price = price;
@@ -40,19 +40,19 @@ public class PriceDTO {
 		this.price = price;
 	}
 
-	public Date getStartDate() {
+	public long getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(long startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public long getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(long endDate) {
 		this.endDate = endDate;
 	}
 

@@ -31,10 +31,10 @@ public class Price implements Serializable {
 	private int price;
 	
 	@Column(name = "start_date", nullable = false)
-	private Date startDate;
+	private long startDate;
 	
 	@Column(name = "end_date", nullable = false)
-	private Date endDate;
+	private long endDate;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name="accomodation_id")
@@ -63,19 +63,19 @@ public class Price implements Serializable {
 		this.price = price;
 	}
 
-	public Date getStartDate() {
+	public long getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(long startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public long getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(long endDate) {
 		this.endDate = endDate;
 	}
 

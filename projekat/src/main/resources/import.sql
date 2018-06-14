@@ -26,7 +26,8 @@ INSERT INTO accomodation(accomodation_id, accomodation_name, accomodation_type, 
 INSERT INTO picture(picture_id, content, accomodation_id, entity_version) VALUES (1, LOAD_FILE('C:\\Users\\Nikola\\Desktop\\test.png'), 1, 0)*/
 
 /*! CENE */
-INSERT INTO price(price_id, accomodation_id, start_date, end_date, price, entity_version) VALUES(1, 1, '1514764800000', '1546128000000', 300, 0)
+INSERT INTO price(price_id, accomodation_id, start_date, end_date, price, entity_version) VALUES(1, 1, '1514764800000', '1529193600000', 300, 0)
+INSERT INTO price(price_id, accomodation_id, start_date, end_date, price, entity_version) VALUES(2, 1, '1529193600000', '1546214400000', 200, 0)
 
 /*! REZERVACIJE */
 INSERT INTO reservation(reservation_id, accomodation, start_date, end_date, number_of_persons, user_id, entity_version) VALUES(1, 1, '1528588800000 ', '1529020800000 ', 3, 1, 0)
