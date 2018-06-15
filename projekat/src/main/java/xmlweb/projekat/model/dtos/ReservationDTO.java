@@ -1,7 +1,5 @@
 package xmlweb.projekat.model.dtos;
 
-import java.util.Date;
-
 /**
  * @author Nikola
  *
@@ -15,12 +13,13 @@ public class ReservationDTO {
 	private long startDate;
 	private long endDate;
 	private int version;
+	private Boolean realized;
 
 	public ReservationDTO() {
 	}
 
 	public ReservationDTO(long id, long user, long accomodation, int numberOfPersons, long startDate, long endDate,
-			int version) {
+			Boolean realized, int version) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -28,6 +27,7 @@ public class ReservationDTO {
 		this.numberOfPersons = numberOfPersons;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.realized = realized;
 		this.version = version;
 	}
 
@@ -85,6 +85,14 @@ public class ReservationDTO {
 
 	public void setAccomodation(long accomodation) {
 		this.accomodation = accomodation;
+	}
+
+	public Boolean getRealized() {
+		return realized;
+	}
+
+	public void setRealized(Boolean realized) {
+		this.realized = realized;
 	}
 
 }

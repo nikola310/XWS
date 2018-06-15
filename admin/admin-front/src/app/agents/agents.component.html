@@ -22,43 +22,99 @@
     <a routerLink="../comments">Comments</a>
   </li>
   <li>
-    <a routerLink="../codebook">Codeboo</a>
+    <a routerLink="../codebook">Codebook</a>
   </li>
 </ul>
 
 <div class="table100 ver3 m-b-110">
+<div class="table100-head">
+	<table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th> Action</th>
+		  <!--th class="cell100 column2">Action</th-->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let agent of agents">
+          <td> {{ agent.userName }} </td>
+          <td>
+            <input type="button" value="BLOCK">
+            <input type="button" value="REMOVE">
+            <input type="button" value="ACTIVATE">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+	</div>
+</div>
+
+
+<!--div class="table100 ver3 m-b-110">
   <div class="table100-head">
     <table>
       <thead>
         <tr class="row100 head">
           <th class="cell100 column1">User</th>
           <th class="cell100 column2">Action</th>
+		  <th class="cell100 column2">Action</th>
         </tr>
       </thead>
+      <tbody>
+        <tr class="row100 body" *ngFor="let agent of agents">
+          <td class="cell100 column1"> {{ agent.userName }} </td>
+          <!--td class="cell100 column2"> {{ user.userType }} </td-->
+          <!--td class="cell100 column3">
+            <input type="button" value="BLOCK">
+            <input type="button" value="REMOVE">
+            <input type="button" value="ACTIVATE">
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
+</div-->
 
   <div class="table100-body js-pscroll">
-    <table>
-      <form #data="ngForm" class="login-form">
+    <form #data="ngForm" class="login-form">
+	<table>
+      
       <tbody>
+          <tr class="row100 body">
+              <td class="cell100 column1">UserName</td>
+              <td class="cell100 column2"><input type="text" [(ngModel)]="data.userName" name="userName"></td>
+            </tr>
+            <tr class="row100 body">
+          <td class="cell100 column1">Password</td>
+          <td class="cell100 column2"><input type="text" [(ngModel)]="data.password" name="password"></td>
+        </tr>
         <tr class="row100 body">
           <td class="cell100 column1">Name</td>
-          <td class="cell100 column2"><input type="text"></td>
+          <td class="cell100 column2"><input type="text" [(ngModel)]="data.firstName" name="firstName"></td>
         </tr>
         <tr class="row100 body">
           <td class="cell100 column1">Surname</td>
-          <td class="cell100 column2"><input type="text"></td>
+          <td class="cell100 column2"><input type="text" [(ngModel)]="data.surName" name="surName"></td>
         </tr>
         <tr class="row100 body">
           <td class="cell100 column1">Adress</td>
-          <td class="cell100 column2"><input type="text">
+          <td class="cell100 column2"><input type="text" [(ngModel)]="data.adress" name="address">
         </tr>
         <tr class="row100 body">
           <td class="cell100 column1">Number</td>
-          <td class="cell100 column2"><input type="number"></td>
+          <td class="cell100 column2"><input type="number" [(ngModel)]="data.pid" name="pid"></td>
+        </tr>
+        <tr class="row100 body">
+            <td class="cell100 column1">UserType</td>
+            <td class="cell100 column2"><input type="number" [(ngModel)]="data.userType" name="userType"></td>
+          </tr>
+        <tr>
+          <td></td>
+          <td><input type="submit" (click)="registerAgent(data)"></td>
         </tr>
       </tbody>
-    </form>
+    
     </table>
+	</form>
   </div>

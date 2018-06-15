@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UsersService } from '../users.service';
+import { UserInterface } from "../user-interface";
+import { Observable } from "rxjs/Rx";
 
 @Component({
   selector: 'app-users',
@@ -7,9 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService: UsersService) { }
+
+  private baseUrl = "localhost:8089/booking";
+  private foods;
+  private products = [];
+  users: UserInterface[];
 
   ngOnInit() {
+    this.userService.getUsers().subscribe(data => this.users = data);
+    console.log(this.users);
   }
 
 }

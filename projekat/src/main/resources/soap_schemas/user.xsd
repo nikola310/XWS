@@ -1,0 +1,28 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlweb/projekat/booking/soap"
+           targetNamespace="http://xmlweb/projekat/booking/soap" elementFormDefault="qualified">
+
+    <xs:element name="getUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ime" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="korisnik" type="tns:userProbni"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="userProbni">
+        <xs:sequence>
+            <xs:element name="ime" type="xs:string"/>
+			<xs:element name="prezime" type="xs:string"/>
+			<xs:element name="sifra" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

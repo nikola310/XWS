@@ -22,7 +22,7 @@
     <a routerLink="../comments">Comments</a>
   </li>
   <li>
-    <a routerLink="../codebook">Codeboo</a>
+    <a routerLink="../codebook">Codebook</a>
   </li>
 </ul>
 
@@ -32,7 +32,8 @@
       <thead>
         <tr class="row100 head">
           <th class="cell100 column1">User</th>
-          <th class="cell100 column2">Action</th>
+          <th class="cell100 column2">Type</th>
+          <th class="cell100 column3">Action</th>
         </tr>
       </thead>
     </table>
@@ -41,14 +42,15 @@
   <div class="table100-body js-pscroll">
     <table>
       <tbody>
-        <tr class="row100 body">
-          <td class="cell100 column1">Like a butterfly</td>
-          <td class="cell100 column2">Boxing</td>
-        </tr>
 
-        <tr class="row100 body">
-          <td class="cell100 column1">Mind & Body</td>
-          <td class="cell100 column2">Yoga</td>
+        <tr class="row100 body" *ngFor="let user of users; ">
+          <td class="cell100 column1"> {{ user.userName }} </td>
+          <!--td class="cell100 column2"> {{ user.userType }} </td-->
+          <td class="cell100 column3">
+            <input type="button" value="BLOCK">
+            <input type="button" value="REMOVE">
+            <input type="button" value="ACTIVATE">
+          </td>
         </tr>
       </tbody>
     </table>

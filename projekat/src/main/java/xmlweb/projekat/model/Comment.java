@@ -38,7 +38,7 @@ public class Comment implements Serializable {
 	private User author;
 	
 	@ManyToOne
-    @JoinColumn(name = "acoomodation_id")
+    @JoinColumn(name = "accomodation_id")
 	private Accomodation accomodation;
 	
 	@Version

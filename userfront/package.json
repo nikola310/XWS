@@ -27,7 +27,7 @@
     "core-js": "^2.4.1",
     "ng-datepicker": "^1.0.2",
     "npm-install-peers": "^1.2.1",
-    "rxjs": "^5.5.6",
+    "rxjs": "^5.5.11",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {

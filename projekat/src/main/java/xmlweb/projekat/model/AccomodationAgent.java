@@ -21,11 +21,11 @@ public class AccomodationAgent implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "accomodation_id", nullable = false)
+	@Column(name = "accomodation_agent_id", nullable = false)
 	private long id;
 
 	@ManyToOne
-    @JoinColumn(name = "acoomodation_id")
+    @JoinColumn(name = "accomodation_id")
 	private Accomodation accomodation;
 
 	@ManyToOne

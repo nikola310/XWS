@@ -1,6 +1,7 @@
 package xmlweb.projekat.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import xmlweb.projekat.model.User;
+import xmlweb.projekat.model.UserType;
 import xmlweb.projekat.model.dtos.UserDTO;
 import xmlweb.projekat.repository.UserRepository;
 import xmlweb.projekat.service.interfaces.UserServiceInterface;
@@ -97,6 +99,44 @@ public class UserService implements UserServiceInterface {
 		}
 
 		return true;
+	}
+
+	@Override
+	public List<UserDTO> getNormalUsers() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<User> listEntities = (ArrayList<User>) repository.getUserByUserType(UserType.USER);
+		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
+
+		for (User tmp : listEntities) {
+			try {
+				UserDTO dto = mapper.map(tmp, UserDTO.class);
+				listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
+	}
+
+	@Override
+	public List<UserDTO> getAgents() {
+		ModelMapper mapper = new ModelMapper();
+		ArrayList<User> listEntities = (ArrayList<User>) repository.getUserByUserType(UserType.AGENT);
+		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
+
+		for (User tmp : listEntities) {
+			try {
+				UserDTO dto = mapper.map(tmp, UserDTO.class);
+				listDTO.add(dto);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+				return null;
+			}
+		}
+
+		return listDTO;
 	}
 
 }

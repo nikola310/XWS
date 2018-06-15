@@ -48,6 +48,7 @@ public class ReservationService implements ReservationServiceInterface {
 			Accomodation acc = accRepo.getOne(dto.getAccomodation());
 			res.setUser(u);
 			res.setAccomodation(acc);
+			res.setRealized(null);
 			repository.save(res);
 
 			return true;
@@ -62,7 +63,8 @@ public class ReservationService implements ReservationServiceInterface {
 		try {
 			Reservation res = repository.getOne(id);
 			ReservationDTO dto = new ReservationDTO(res.getId(), res.getUser().getId(), res.getAccomodation().getId(),
-					res.getNumberOfPersons(), res.getStartDate(), res.getEndDate(), res.getVersion());
+					res.getNumberOfPersons(), res.getStartDate(), res.getEndDate(), res.getRealized(),
+					res.getVersion());
 			return dto;
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -79,7 +81,7 @@ public class ReservationService implements ReservationServiceInterface {
 			try {
 				ReservationDTO dto = new ReservationDTO(res.getId(), res.getUser().getId(),
 						res.getAccomodation().getId(), res.getNumberOfPersons(), res.getStartDate(), res.getEndDate(),
-						res.getVersion());
+						res.getRealized(), res.getVersion());
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -102,6 +104,7 @@ public class ReservationService implements ReservationServiceInterface {
 			toUpdate.setNumberOfPersons(dto.getNumberOfPersons());
 			toUpdate.setStartDate(dto.getStartDate());
 			toUpdate.setEndDate(dto.getEndDate());
+			toUpdate.setRealized(dto.getRealized());
 
 			repository.save(toUpdate);
 
@@ -126,15 +129,15 @@ public class ReservationService implements ReservationServiceInterface {
 
 	@Override
 	public List<ReservationDTO> findReservationsBetweenDates(long checkInDate, long checkOutDate) {
-		// TODO Auto-generated method stub
-		List<Reservation> reservations =  repository.findReservationsBetweenDates(checkInDate, checkOutDate);
+		List<Reservation> reservations = repository.findReservationsBetweenDates(checkInDate, checkOutDate);
 		List<ReservationDTO> reservationsDTO = new ArrayList<ReservationDTO>();
-		
-		for(Reservation r : reservations){
-			ReservationDTO rdto = new ReservationDTO(r.getId(), r.getUser().getId(), r.getAccomodation().getId(), r.getNumberOfPersons(), r.getStartDate(), r.getEndDate(), r.getVersion());
+
+		for (Reservation r : reservations) {
+			ReservationDTO rdto = new ReservationDTO(r.getId(), r.getUser().getId(), r.getAccomodation().getId(),
+					r.getNumberOfPersons(), r.getStartDate(), r.getEndDate(), r.getRealized(), r.getVersion());
 			reservationsDTO.add(rdto);
 		}
-		
+
 		return reservationsDTO;
 	}
 

@@ -1,7 +1,6 @@
 package xmlweb.projekat.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,6 +40,9 @@ public class Reservation implements Serializable {
 	@ManyToOne(optional = false)
 	@JoinColumn(name="accomodation")
 	private Accomodation accomodation;
+	
+	@Column(name="realized")
+	private Boolean realized;
 	
 	@Version
 	@Column(name = "entity_version", nullable = false)
@@ -94,6 +96,14 @@ public class Reservation implements Serializable {
 
 	public void setAccomodation(Accomodation accomodation) {
 		this.accomodation = accomodation;
+	}
+
+	public Boolean getRealized() {
+		return realized;
+	}
+
+	public void setRealized(Boolean realized) {
+		this.realized = realized;
 	}
 
 	public int getVersion() {
