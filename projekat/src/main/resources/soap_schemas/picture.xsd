@@ -1,37 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="http://xmlweb/projekat/soap/models"
-    targetNamespace="http://xmlweb/projekat/soap/models" elementFormDefault="qualified">
-    <xs:element name="getUserRequest">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlweb/projekat/model/soap"
+    targetNamespace="http://xmlweb/projekat/model/soap" elementFormDefault="qualified">
+    <xs:element name="getPictureResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="user" type="tns:UserRequest"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="entity" type="tns:PictureSOAP"
+                />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="UserSOAP">
+    <xs:complexType name="PictureSOAP">
         <xs:sequence>
-            <xs:element name="user_id">
+            <xs:element name="picture_id">
                 <xs:simpleType>
                     <xs:restriction base="xs:int">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="first_name" type="xs:string"/>
-            <xs:element name="last_name" type="xs:string"/>
-            <xs:element name="password" type="xs:string"/>
-            <xs:element name="pid" type="xs:string"/>
-            <xs:element name="user_name" type="xs:string"/>
-            <xs:element name="user_type">
-                <xs:simpleType>
-                    <xs:restriction base="xs:int">
-                        <xs:minInclusive value="0"/>
-                        <xs:maxInclusive value="2"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="content" type="xs:base64Binary"/>
             <xs:element name="entity_version">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="accomodation_id">
                 <xs:simpleType>
                     <xs:restriction base="xs:int">
                         <xs:minInclusive value="0"/>
@@ -40,8 +35,15 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="UserRequest">
+    <xs:complexType name="PictureRequest">
         <xs:sequence>
+            <xs:element name="entity_version">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
             <xs:element name="entity_id">
                 <xs:simpleType>
                     <xs:restriction base="xs:int">
@@ -49,19 +51,13 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="entity_version">
-                <xs:simpleType>
-                    <xs:restriction base="xs:int">
-                        <xs:minInclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
         </xs:sequence>
     </xs:complexType>
-    <xs:element name="getUserResponse">
+    <xs:element name="getPictureRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="user" type="tns:UserSOAP"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="picture_request"
+                    type="tns:PictureRequest"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -1,7 +1,5 @@
 package xmlweb.projekat.model.dtos;
 
-import java.util.Date;
-
 public class PriceDTO {
 
 	private long id;

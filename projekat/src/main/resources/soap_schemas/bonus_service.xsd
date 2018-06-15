@@ -2,32 +2,28 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:tns="http://xmlweb/projekat/soap/models"
     targetNamespace="http://xmlweb/projekat/soap/models" elementFormDefault="qualified">
-    <xs:element name="getUserRequest">
+    <xs:element name="getBonusServiceRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="user" type="tns:UserRequest"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="bonus_service_request"
+                    type="tns:BonusServiceRequest"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="UserSOAP">
+    <xs:element name="getBonusServiceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="entity"
+                    type="tns:BonusServiceSOAP"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="BonusServiceSOAP">
         <xs:sequence>
-            <xs:element name="user_id">
+            <xs:element name="bonus_service_id">
                 <xs:simpleType>
                     <xs:restriction base="xs:int">
                         <xs:minInclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="first_name" type="xs:string"/>
-            <xs:element name="last_name" type="xs:string"/>
-            <xs:element name="password" type="xs:string"/>
-            <xs:element name="pid" type="xs:string"/>
-            <xs:element name="user_name" type="xs:string"/>
-            <xs:element name="user_type">
-                <xs:simpleType>
-                    <xs:restriction base="xs:int">
-                        <xs:minInclusive value="0"/>
-                        <xs:maxInclusive value="2"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
@@ -38,10 +34,18 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element name="name" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="UserRequest">
+    <xs:complexType name="BonusServiceRequest">
         <xs:sequence>
+            <xs:element name="entity_version">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
             <xs:element name="entity_id">
                 <xs:simpleType>
                     <xs:restriction base="xs:int">
@@ -49,20 +53,6 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="entity_version">
-                <xs:simpleType>
-                    <xs:restriction base="xs:int">
-                        <xs:minInclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
         </xs:sequence>
     </xs:complexType>
-    <xs:element name="getUserResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="user" type="tns:UserSOAP"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
 </xs:schema>

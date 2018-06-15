@@ -1,22 +1,25 @@
 package xmlweb.projekat.soap;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import xmlweb.projekat.booking.soap.GetUserRequest;
-import xmlweb.projekat.booking.soap.GetUserResponse;
-import xmlweb.projekat.booking.soap.UserProbni;
 import xmlweb.projekat.model.dtos.UserDTO;
-import xmlweb.projekat.repository.UserRepository;
 import xmlweb.projekat.service.interfaces.UserServiceInterface;
+import xmlweb.projekat.soap.models.GetUserRequest;
+import xmlweb.projekat.soap.models.GetUserResponse;
+import xmlweb.projekat.soap.models.UserRequest;
+import xmlweb.projekat.soap.models.UserSOAP;
 
 @Endpoint
 public class UserEndpoint {
 
-	private static final String NAMESPACE_URI = "http://xmlweb/projekat/booking/soap";
+	private static final String NAMESPACE_URI = "http://xmlweb/projekat/soap/models";
 
 	@Autowired
 	private UserServiceInterface service;
@@ -30,12 +33,33 @@ public class UserEndpoint {
 	@ResponsePayload
 	public GetUserResponse getUser(@RequestPayload GetUserRequest request) {
 		GetUserResponse response = new GetUserResponse();
-		UserDTO dto = service.Read(1);
-		UserProbni upr = new UserProbni();
-		upr.setIme(dto.getFirstName());
-		upr.setPrezime(dto.getLastName());
-		response.setKorisnik(upr);
+		ArrayList<UserDTO> listaDTO = service.ReadAll();
+		ArrayList<UserSOAP> retVal = new ArrayList<>();
+		for (UserDTO dto : listaDTO) {
+			UserSOAP sp = new UserSOAP();
+			sp.setEntityVersion(dto.getVersion());
+			sp.setFirstName(dto.getFirstName());
+			sp.setLastName(dto.getLastName());
+			sp.setPassword(dto.getPassword());
+			sp.setPid(dto.getPid());
+			sp.setUserId((int) dto.getId());
+			sp.setUserName(dto.getUserName());
+			sp.setUserType(dto.getUserType().ordinal());
+			retVal.add(sp);
+		}
 
+		for (UserRequest req : request.getUser()) {
+			Iterator<UserSOAP> listItr = retVal.iterator();
+			while (listItr.hasNext()) {
+				UserSOAP u = listItr.next();
+				if (req.getEntityId() == u.getUserId() && req.getEntityVersion() == u.getEntityVersion()) {
+					listItr.remove();
+					break;
+				}
+			}
+		}
+
+		response.getUser().addAll(retVal);
 		return response;
 	}
 
