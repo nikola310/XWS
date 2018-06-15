@@ -1,23 +1,22 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">Id</th>
       <th scope="col">Type</th>
       <th scope="col">Name</th>
+      <th scope="col">Price</th>
       <th scope="col" colspan="4">Location</th>
-
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let accomodation of accomodations">
-      <td>{{accomodation.id}}</td>
       <td>{{accomodation.type}}</td>
       <td>{{accomodation.name}}</td>
+      <td>{{accomodation.price}}</td>
       <td>{{accomodation.location.state}}</td>
       <td>{{accomodation.location.city}}</td>
       <td>{{accomodation.location.streetName}}</td>
       <td>{{accomodation.location.streetNumber}}</td>
-
-
+      <td><button (click)="book(accomodation.id)">Book</button></td>
     </tr>
   </tbody>

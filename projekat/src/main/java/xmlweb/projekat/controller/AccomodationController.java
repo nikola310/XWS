@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import xmlweb.projekat.model.Price;
 import xmlweb.projekat.model.Reservation;
 import xmlweb.projekat.model.dtos.AccomodationDTO;
+import xmlweb.projekat.model.dtos.AvailableAccomodationDTO;
 import xmlweb.projekat.model.dtos.ReservationDTO;
 import xmlweb.projekat.service.interfaces.AccomodationServiceInterface;
 import xmlweb.projekat.service.interfaces.ReservationServiceInterface;
@@ -31,7 +33,7 @@ public class AccomodationController {
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
-	public List<AccomodationDTO> findAccomodationsByParameters(
+	public List<AvailableAccomodationDTO> findAccomodationsByParameters(
 			@RequestParam(value = "destination", required = true) String destination,
 			@RequestParam(value = "checkin", required = false) String checkin,
 			@RequestParam(value = "checkout", required = false) String checkout,
@@ -204,7 +206,30 @@ public class AccomodationController {
 		
 		//=====================kraj provjere slobodnih smjestaja==========================
 		
-		return accomodations;
+		
+		//=====================racunanje cijene smjestaja=================================
+		List<AvailableAccomodationDTO> availableAccomodations = new ArrayList<AvailableAccomodationDTO>();
+		
+		for(AccomodationDTO a : accomodations){
+			int accPrice = 0;
+			for(long i = checkInDate; i < checkOutDate; i+=86400000){
+				for(Price p : a.getPrices()){
+					if(i >= p.getStartDate() && i < p.getEndDate()){
+						accPrice+=p.getPrice();
+						break;
+					}
+				}
+				
+			}
+			System.out.println("Cijena smjestaja: " + accPrice);
+			
+			AvailableAccomodationDTO aa = new AvailableAccomodationDTO(a.getId(), a.getName(), a.getType(), a.getCategory(), a.getBonusServices(), a.getComments(), accPrice, a.getLocation());
+			availableAccomodations.add(aa);
+		}
+		
+		
+	
+		return availableAccomodations;
 
 	}
 
