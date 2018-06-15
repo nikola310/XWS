@@ -22,14 +22,14 @@
         <xs:sequence>
             <xs:element name="bonus_service_id">
                 <xs:simpleType>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="accomodation_id">
                 <xs:simpleType>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>

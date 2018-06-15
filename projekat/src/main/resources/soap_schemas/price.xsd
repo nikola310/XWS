@@ -6,7 +6,7 @@
         <xs:sequence>
             <xs:element name="entity_version">
                 <xs:simpleType>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
@@ -39,7 +39,7 @@
         <xs:sequence>
             <xs:element name="price_id">
                 <xs:simpleType>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
@@ -54,21 +54,21 @@
             <xs:element name="price" type="xs:int"/>
             <xs:element name="start_date">
                 <xs:simpleType>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="end_date">
                 <xs:simpleType>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="accomodation_id">
                 <xs:simpleType>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>

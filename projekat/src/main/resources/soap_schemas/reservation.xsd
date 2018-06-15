@@ -4,16 +4,16 @@
     targetNamespace="http://xmlweb/projekat/soap/models" elementFormDefault="qualified">
     <xs:complexType name="ReservationSOAP">
         <xs:sequence>
-            <xs:element name="resrvation_id">
+            <xs:element name="reservation_id">
                 <xs:simpleType>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="end_date">
                 <xs:simpleType>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
@@ -27,7 +27,7 @@
             </xs:element>
             <xs:element name="start_date">
                 <xs:simpleType>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
@@ -41,7 +41,7 @@
             </xs:element>
             <xs:element name="accomodation">
                 <xs:simpleType>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
@@ -60,7 +60,7 @@
         <xs:sequence>
             <xs:element name="entity_id">
                 <xs:simpleType>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>

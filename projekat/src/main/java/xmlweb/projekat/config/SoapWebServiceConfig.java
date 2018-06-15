@@ -20,7 +20,7 @@ import org.springframework.xml.xsd.XsdSchema;
 @Configuration
 public class SoapWebServiceConfig extends WsConfigurerAdapter {
 
-	// private String namespace = "http://xmlweb/projekat/entities/soap";
+	private String namespace = "http://xmlweb/projekat/entities/soap"; // "http://spring.io/guides/gs-producing-web-service"
 
 	@Bean
 	public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(
@@ -36,7 +36,7 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
 		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
 		wsdl11Definition.setPortTypeName("UserPort");
 		wsdl11Definition.setLocationUri("/ws");
-		wsdl11Definition.setTargetNamespace("http://spring.io/guides/gs-producing-web-service");
+		wsdl11Definition.setTargetNamespace(namespace);
 		wsdl11Definition.setSchema(userSchema);
 		return wsdl11Definition;
 	}
@@ -45,4 +45,80 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
 	public XsdSchema userSchema() {
 		return new SimpleXsdSchema(new ClassPathResource("soap_schemas/user.xsd"));
 	}
+
+	@Bean(name = "reservation")
+	public DefaultWsdl11Definition defaultReservationDefinition(XsdSchema reservationSchema) {
+		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+		wsdl11Definition.setPortTypeName("ReservationPort");
+		wsdl11Definition.setLocationUri("/ws");
+		wsdl11Definition.setTargetNamespace(namespace);
+		wsdl11Definition.setSchema(reservationSchema);
+		return wsdl11Definition;
+	}
+
+	@Bean
+	public XsdSchema reservationSchema() {
+		return new SimpleXsdSchema(new ClassPathResource("soap_schemas/reservation.xsd"));
+	}
+
+	@Bean(name = "price")
+	public DefaultWsdl11Definition defaultPriceDefinition(XsdSchema priceSchema) {
+		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+		wsdl11Definition.setPortTypeName("PricePort");
+		wsdl11Definition.setLocationUri("/ws");
+		wsdl11Definition.setTargetNamespace(namespace);
+		wsdl11Definition.setSchema(priceSchema);
+		return wsdl11Definition;
+	}
+
+	@Bean
+	public XsdSchema priceSchema() {
+		return new SimpleXsdSchema(new ClassPathResource("soap_schemas/price.xsd"));
+	}
+
+	@Bean(name = "picture")
+	public DefaultWsdl11Definition defaultPictureDefinition(XsdSchema pictureSchema) {
+		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+		wsdl11Definition.setPortTypeName("PicturePort");
+		wsdl11Definition.setLocationUri("/ws");
+		wsdl11Definition.setTargetNamespace(namespace);
+		wsdl11Definition.setSchema(pictureSchema);
+		return wsdl11Definition;
+	}
+
+	@Bean
+	public XsdSchema pictureSchema() {
+		return new SimpleXsdSchema(new ClassPathResource("soap_schemas/picture.xsd"));
+	}
+
+	@Bean(name = "message")
+	public DefaultWsdl11Definition defaultMessageDefinition(XsdSchema messageSchema) {
+		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+		wsdl11Definition.setPortTypeName("MessagePort");
+		wsdl11Definition.setLocationUri("/ws");
+		wsdl11Definition.setTargetNamespace(namespace);
+		wsdl11Definition.setSchema(messageSchema);
+		return wsdl11Definition;
+	}
+
+	@Bean
+	public XsdSchema messageSchema() {
+		return new SimpleXsdSchema(new ClassPathResource("soap_schemas/message.xsd"));
+	}
+
+	@Bean(name = "location")
+	public DefaultWsdl11Definition defaultLocationDefinition(XsdSchema locationSchema) {
+		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+		wsdl11Definition.setPortTypeName("LocationPort");
+		wsdl11Definition.setLocationUri("/ws");
+		wsdl11Definition.setTargetNamespace(namespace);
+		wsdl11Definition.setSchema(locationSchema);
+		return wsdl11Definition;
+	}
+
+	@Bean
+	public XsdSchema locationSchema() {
+		return new SimpleXsdSchema(new ClassPathResource("soap_schemas/location.xsd"));
+	}
+
 }
