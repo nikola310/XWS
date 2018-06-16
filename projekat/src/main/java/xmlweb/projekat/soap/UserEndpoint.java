@@ -41,9 +41,10 @@ public class UserEndpoint {
 			sp.setLastName(dto.getLastName());
 			sp.setPassword(dto.getPassword());
 			sp.setPid(dto.getPid());
-			sp.setUserId((int) dto.getId());
+			sp.setUserId(dto.getId());
 			sp.setUserName(dto.getUserName());
-			sp.setUserType(dto.getUserType().ordinal());
+			sp.setUserType(dto.getUserType().toString());
+			sp.setAgentAddress(dto.getAgentLocation());
 			retVal.add(sp);
 		}
 

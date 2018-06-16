@@ -20,16 +20,27 @@ export class AgentsComponent implements OnInit {
 		console.log(this.agents);
 	}
 
-	registerAgent(data: any){
+	acceptAgent(data: any, id: number){
 		this.msg = "{"
-		+ " \"userName\":\"" + data.userName + "\","
-		+ " \"firstName\":\"" + data.firstName + "\","
-		+ " \"surName\":\"" + data.surName + "\","
-		+ " \"userType\":\"" + data.userType + "\","
+		+ " \"accept\":\"" + true + "\","
 		+ " \"pid\":\"" + data.pid + "\","
-		+ " \"password\":\"" + data.password +"\"}";
+		+ " \"address\":\"" + data.address +"\"}";
 		console.log(this.msg);
-		console.log('JEBEMU MATER!!!!!!!!!!!');
-		this.agentService.newAgent(this.msg);
+		this.agentService.newAgent(this.msg, id).subscribe(
+			response => console.log(response),
+    		err => console.log(err)
+		);
+  }
+  
+  rejectAgent(data: any, id: number){
+		this.msg = "{"
+		+ " \"accept\":\"" + false + "\","
+		+ " \"pid\":\"" + data.pid + "\","
+		+ " \"address\":\"" + data.address +"\"}";
+		console.log(this.msg);
+		this.agentService.newAgent(this.msg, id).subscribe(
+			response => console.log(response),
+    		err => console.log(err)
+		);
   }
 }

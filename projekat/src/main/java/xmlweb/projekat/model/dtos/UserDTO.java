@@ -21,6 +21,7 @@ public class UserDTO {
 	private String password;
 	private String pid;
 	private UserType userType;
+	private long agentLocation;
 	private int version;
 
 	public long getId() {
@@ -85,6 +86,14 @@ public class UserDTO {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	public long getAgentLocation() {
+		return agentLocation;
+	}
+
+	public void setAgentLocation(long agentLocation) {
+		this.agentLocation = agentLocation;
 	}
 
 }

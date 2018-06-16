@@ -31,51 +31,37 @@
 	<table>
       <thead>
         <tr>
+          <th>Manage agent requests</th>
+        </tr>
+        <tr>
           <th>User</th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Business number</th>
+          <th>Address</th>
           <th> Action</th>
-		  <!--th class="cell100 column2">Action</th-->
         </tr>
       </thead>
       <tbody>
+	  <form #data="ngForm" class="login-form">
         <tr *ngFor="let agent of agents">
           <td> {{ agent.userName }} </td>
+          <td> {{ agent.firstName }} </td>
+          <td> {{ agent.lastName }} </td>
+          <td> <input type="text" [(ngModel)]="data.pid" name="pid" ></td>
+          <td> <input type="number" [(ngModel)]="data.address" name="address"></td>
           <td>
-            <input type="button" value="BLOCK">
-            <input type="button" value="REMOVE">
-            <input type="button" value="ACTIVATE">
+            <input type="submit" value="ACCEPT" (click)="acceptAgent(data, agent.id)">
+            <input type="submit" value="DECLINE" (click)="rejectAgent(data, agent.id)">
           </td>
         </tr>
+	  </form>
       </tbody>
     </table>
 	</div>
 </div>
-
-
-<!--div class="table100 ver3 m-b-110">
-  <div class="table100-head">
-    <table>
-      <thead>
-        <tr class="row100 head">
-          <th class="cell100 column1">User</th>
-          <th class="cell100 column2">Action</th>
-		  <th class="cell100 column2">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="row100 body" *ngFor="let agent of agents">
-          <td class="cell100 column1"> {{ agent.userName }} </td>
-          <!--td class="cell100 column2"> {{ user.userType }} </td-->
-          <!--td class="cell100 column3">
-            <input type="button" value="BLOCK">
-            <input type="button" value="REMOVE">
-            <input type="button" value="ACTIVATE">
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div-->
-
+<br />
+<br />
   <div class="table100-body js-pscroll">
     <form #data="ngForm" class="login-form">
 	<table>

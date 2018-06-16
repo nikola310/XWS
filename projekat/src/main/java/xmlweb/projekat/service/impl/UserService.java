@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import xmlweb.projekat.model.Location;
 import xmlweb.projekat.model.User;
 import xmlweb.projekat.model.UserType;
+import xmlweb.projekat.model.dtos.AgentRequestDTO;
 import xmlweb.projekat.model.dtos.UserDTO;
+import xmlweb.projekat.repository.LocationRepository;
 import xmlweb.projekat.repository.UserRepository;
 import xmlweb.projekat.service.interfaces.UserServiceInterface;
 
@@ -19,6 +22,9 @@ import xmlweb.projekat.service.interfaces.UserServiceInterface;
 public class UserService implements UserServiceInterface {
 
 	private UserRepository repository;
+
+	@Autowired
+	private LocationRepository locationRepo;
 
 	@Autowired
 	public UserService(UserRepository repository) {
@@ -30,6 +36,8 @@ public class UserService implements UserServiceInterface {
 		try {
 			ModelMapper mapper = new ModelMapper();
 			User user = mapper.map(dto, User.class);
+			Location loc = locationRepo.getOne(dto.getAgentLocation());
+			user.setAgentLocation(loc);
 			repository.save(user);
 
 			return true;
@@ -42,9 +50,18 @@ public class UserService implements UserServiceInterface {
 	@Override
 	public UserDTO Read(long id) {
 		try {
-			User user = repository.getOne(id);
-			ModelMapper mapper = new ModelMapper();
-			UserDTO dto = mapper.map(user, UserDTO.class);
+			User tmp = repository.getOne(id);
+			UserDTO dto = new UserDTO();
+			dto.setFirstName(tmp.getFirstName());
+			dto.setId(tmp.getId());
+			dto.setLastName(tmp.getLastName());
+			dto.setPassword(tmp.getPassword());
+			dto.setPid(tmp.getPid());
+			dto.setUserName(tmp.getUserName());
+			dto.setUserType(tmp.getUserType());
+			dto.setVersion(tmp.getVersion());
+			if (tmp.getAgentLocation() != null)
+				dto.setAgentLocation(tmp.getAgentLocation().getId());
 			return dto;
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -54,13 +71,22 @@ public class UserService implements UserServiceInterface {
 
 	@Override
 	public ArrayList<UserDTO> ReadAll() {
-		ModelMapper mapper = new ModelMapper();
 		ArrayList<User> listEntities = (ArrayList<User>) repository.findAll();
 		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
 
 		for (User tmp : listEntities) {
 			try {
-				UserDTO dto = mapper.map(tmp, UserDTO.class);
+				UserDTO dto = new UserDTO();
+				dto.setFirstName(tmp.getFirstName());
+				dto.setId(tmp.getId());
+				dto.setLastName(tmp.getLastName());
+				dto.setPassword(tmp.getPassword());
+				dto.setPid(tmp.getPid());
+				dto.setUserName(tmp.getUserName());
+				dto.setUserType(tmp.getUserType());
+				dto.setVersion(tmp.getVersion());
+				if (tmp.getAgentLocation() != null)
+					dto.setAgentLocation(tmp.getAgentLocation().getId());
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -102,41 +128,47 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public List<UserDTO> getNormalUsers() {
+	public List<UserDTO> getUserByType(UserType type) {
 		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = (ArrayList<User>) repository.getUserByUserType(UserType.USER);
+		ArrayList<User> listEntities = (ArrayList<User>) repository.getUserByUserType(type);
 		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
 
-		for (User tmp : listEntities) {
-			try {
-				UserDTO dto = mapper.map(tmp, UserDTO.class);
-				listDTO.add(dto);
-			} catch (Exception exc) {
-				exc.printStackTrace();
-				return null;
-			}
-		}
+		try {
+			for (User tmp : listEntities) {
 
+				UserDTO dto = mapper.map(tmp, UserDTO.class);
+				if (tmp.getAgentLocation() != null)
+					dto.setAgentLocation(tmp.getAgentLocation().getId());
+				listDTO.add(dto);
+
+			}
+		} catch (Exception exc) {
+			exc.printStackTrace();
+			return null;
+		}
 		return listDTO;
 	}
 
 	@Override
-	public List<UserDTO> getAgents() {
-		ModelMapper mapper = new ModelMapper();
-		ArrayList<User> listEntities = (ArrayList<User>) repository.getUserByUserType(UserType.AGENT);
-		ArrayList<UserDTO> listDTO = new ArrayList<UserDTO>();
+	public boolean manageAgent(AgentRequestDTO dto, long id) {
 
-		for (User tmp : listEntities) {
-			try {
-				UserDTO dto = mapper.map(tmp, UserDTO.class);
-				listDTO.add(dto);
-			} catch (Exception exc) {
-				exc.printStackTrace();
-				return null;
+		try {
+			User u = repository.getOne(id);
+			if (dto.isAccept()) {
+				u.setUserType(UserType.AGENT);
+				Location loc = locationRepo.getOne(dto.getAddress());
+				u.setAgentLocation(loc);
+				u.setPid(dto.getPid());
+			} else {
+				u.setUserType(UserType.USER);
 			}
+			repository.save(u);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 
-		return listDTO;
+		return true;
 	}
 
 }

@@ -11,11 +11,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 @Entity
 public class User implements Serializable {
@@ -24,60 +25,62 @@ public class User implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", nullable = false)
 	private long id;
-	
+
 	@Column(name = "first_name", nullable = true)
 	private String firstName;
-	
+
 	@Column(name = "last_name", nullable = true)
 	private String lastName;
-	
+
 	@Column(name = "user_name", nullable = false, unique = true)
 	private String userName;
-	
+
 	@Column(name = "password", nullable = false)
 	private String password;
-	
-	//poslovni maticni broj
+
+	// poslovni maticni broj
 	@Column(name = "pid", nullable = true)
 	private String pid;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.ORDINAL)
 	private UserType userType;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "reciever")
 	@JsonIgnore
 	private List<Message> recievedMessages;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sender")
 	@JsonIgnore
 	private List<Message> sentMessages;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
 	@JsonIgnore
 	private List<Comment> comments;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	@JsonIgnore
 	private List<Reservation> reservations;
-	
+
 	@OneToMany(mappedBy = "agent")
 	@JsonIgnore
 	private List<AccomodationAgent> accomodationAgent;
-	
+
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "agent_address")
+	private Location agentLocation;
+
 	@Version
 	@Column(name = "entity_version", nullable = false)
 	private int version;
-	
-	@Column(name = "approved_agent", nullable = true)
-	private boolean approvedAgent;
-	
-	public User() {}
+
+	public User() {
+	}
 
 	public long getId() {
 		return id;
@@ -171,6 +174,14 @@ public class User implements Serializable {
 		return accomodationAgent;
 	}
 
+	public Location getAgentLocation() {
+		return agentLocation;
+	}
+
+	public void setAgentLocation(Location agentLocation) {
+		this.agentLocation = agentLocation;
+	}
+
 	public void setAccomodationAgent(List<AccomodationAgent> accomodationAgent) {
 		this.accomodationAgent = accomodationAgent;
 	}
@@ -183,13 +194,4 @@ public class User implements Serializable {
 		this.version = version;
 	}
 
-	public boolean isApprovedAgent() {
-		return approvedAgent;
-	}
-
-	public void setApprovedAgent(boolean approvedAgent) {
-		this.approvedAgent = approvedAgent;
-	};
-	
-	
 }

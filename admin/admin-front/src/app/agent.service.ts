@@ -14,20 +14,19 @@ const httpOptions = {
 })
 export class AgentService {
 
-  private baseUrl = "http://localhost:8089/booking/user";
+  private baseUrl = "http://localhost:8090/booking/user";
 
   constructor(private http: HttpClient) { }
 
   getAgents(): Observable<UserInterface[]> {
-    return this.http.get<UserInterface[]>(this.baseUrl + '/admins').catch(this.handleError);
+    return this.http.get<UserInterface[]>(this.baseUrl + '/by_type/AGENT_PENDING').catch(this.handleError);
   }
 
   private handleError(error: Response) {
     return Observable.throw(error.statusText);
   }
   
-  newAgent(data: any){
-    console.log("sadasdsdasdsdsadfsfdsgdsfg");
-	  this.http.post(this.baseUrl, data, httpOptions).catch(this.handleError);
+  newAgent(data: any, id: number){
+	  return this.http.post(this.baseUrl + '/agent?user=' + id, data, httpOptions).catch(this.handleError);
   }
 }
