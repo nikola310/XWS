@@ -74,6 +74,9 @@ public class User implements Serializable {
 	@Column(name = "entity_version", nullable = false)
 	private int version;
 	
+	@Column(name = "approved_agent", nullable = true)
+	private boolean approvedAgent;
+	
 	public User() {}
 
 	public long getId() {
@@ -178,8 +181,15 @@ public class User implements Serializable {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	public boolean isApprovedAgent() {
+		return approvedAgent;
+	}
+
+	public void setApprovedAgent(boolean approvedAgent) {
+		this.approvedAgent = approvedAgent;
 	};
-	
 	
 	
 }

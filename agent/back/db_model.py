@@ -46,6 +46,7 @@ class User(db.Model):
 	last_name = db.Column(db.String(255), unique=True, nullable=True)
 	pid = db.Column(db.String(255), unique=True, nullable=True)
 	user_type = db.Column(db.Enum('admin', 'user', 'agent', name='user_type'))
+	approved_agent = db.Column(db.Boolean, nullable=True)
 
 class Message(db.Model):
 	message_id = db.Column(db.BigInteger, primary_key=True)
