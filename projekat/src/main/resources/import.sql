@@ -48,3 +48,8 @@ INSERT INTO accomodation_bonus_services(bonus_service_id, accomodation_id) VALUE
 INSERT INTO accomodation_bonus_services(bonus_service_id, accomodation_id) VALUES (2,1);
 INSERT INTO accomodation_bonus_services(bonus_service_id, accomodation_id) VALUES (6,1);
 INSERT INTO accomodation_bonus_services(bonus_service_id, accomodation_id) VALUES (7,1);
+
+/* KOMENTARI */
+INSERT INTO comment(comment_id, approved, content, rating, entity_version, accomodation_id, author) VALUES (1, null, 'Nista ne valja.', 1, 1, 1, 2);
+INSERT INTO comment(comment_id, approved, content, rating, entity_version, accomodation_id, author) VALUES (2, null, 'Super.', 5, 1, 1, 3);
+INSERT INTO comment(comment_id, approved, content, rating, entity_version, accomodation_id, author) VALUES (3, 1, 'Super.', 5, 1, 2, 3);

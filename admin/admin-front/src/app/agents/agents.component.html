@@ -43,7 +43,7 @@
         </tr>
       </thead>
       <tbody>
-	  <form #data="ngForm" class="login-form">
+	  <form #data="ngForm" class="agent-form">
         <tr *ngFor="let agent of agents">
           <td> {{ agent.userName }} </td>
           <td> {{ agent.firstName }} </td>
@@ -65,7 +65,6 @@
   <div class="table100-body js-pscroll">
     <form #data="ngForm" class="login-form">
 	<table>
-      
       <tbody>
           <tr class="row100 body">
               <td class="cell100 column1">UserName</td>

@@ -31,32 +31,29 @@
     <table>
       <thead>
         <tr class="row100 head">
-          <th class="cell100 column1">Content</th>
-          <th class="cell100 column2">Where</th>
-          <th class="cell100 column3">User</th>
-          <th class="cell100 column4">Response</th>
+          <th>Content</th>
+          <th>Where</th>
+          <th>User</th>
+          <th>Response</th>
         </tr>
       </thead>
-    </table>
-  </div>
-
-  <div class="table100-body js-pscroll">
-    <table>
-      <tbody>
-        <tr class="row100 body">
-          <td class="cell100 column1">Like a butterfly</td>
-          <td class="cell100 column2">Boxing</td>
-          <td class="cell100 column3">9:00 AM - 11:00 AM</td>
-          <td class="cell100 column4">Aaron Chapman</td>
+	  </table>
+	 </div>
+	 <div>
+	 <table>
+	  <tbody>
+	  <form #data="ngForm" class="comment-form">
+        <tr *ngFor="let comm of comments">
+          <td class="cell100 column1">{{ comm.content }}</td>
+          <td class="cell100 column2">{{ comm.accomodationName }}</td>
+          <td class="cell100 column3">{{ comm.authorName }}</td>
+          <td class="cell100 column4">
+				<input type="submit" value="APPROVE" (click)="approveComment(comm.id, comm.version)">
+				<input type="submit" value="REJECT" (click)="rejectComment(comm.id, comm.version)">
+		  </td>
         </tr>
-
-        <tr class="row100 body">
-          <td class="cell100 column1">Mind & Body</td>
-          <td class="cell100 column2">Yoga</td>
-          <td class="cell100 column3">8:00 AM - 9:00 AM</td>
-          <td class="cell100 column4">Adam Stewart</td>
-        </tr>
+		</form>
       </tbody>
     </table>
-  </div>
+	</div>
 </div>

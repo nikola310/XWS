@@ -27,8 +27,8 @@ public class Comment implements Serializable {
 	@Column(name = "rating", nullable = false)
 	private int rating;
 	
-	@Column(name = "approved", nullable = false)
-	private boolean approved;
+	@Column(name = "approved", nullable = true)
+	private Boolean approved;
 	
 	@Column(name = "content", nullable = false)
 	private String content;
@@ -63,11 +63,11 @@ public class Comment implements Serializable {
 		this.rating = rating;
 	}
 
-	public boolean isApproved() {
+	public Boolean isApproved() {
 		return approved;
 	}
 
-	public void setApproved(boolean approved) {
+	public void setApproved(Boolean approved) {
 		this.approved = approved;
 	}
 
