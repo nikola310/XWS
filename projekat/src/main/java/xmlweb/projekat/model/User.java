@@ -74,6 +74,9 @@ public class User implements Serializable {
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "agent_address")
 	private Location agentLocation;
+	
+	@Column(name = "active", nullable = false)
+	private Boolean active;
 
 	@Version
 	@Column(name = "entity_version", nullable = false)
@@ -192,6 +195,14 @@ public class User implements Serializable {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 }

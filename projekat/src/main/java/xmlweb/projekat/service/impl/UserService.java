@@ -60,6 +60,7 @@ public class UserService implements UserServiceInterface {
 			dto.setUserName(tmp.getUserName());
 			dto.setUserType(tmp.getUserType());
 			dto.setVersion(tmp.getVersion());
+			dto.setActive(tmp.getActive());
 			if (tmp.getAgentLocation() != null)
 				dto.setAgentLocation(tmp.getAgentLocation().getId());
 			return dto;
@@ -79,6 +80,7 @@ public class UserService implements UserServiceInterface {
 				UserDTO dto = new UserDTO();
 				dto.setFirstName(tmp.getFirstName());
 				dto.setId(tmp.getId());
+				dto.setActive(tmp.getActive());
 				dto.setLastName(tmp.getLastName());
 				dto.setPassword(tmp.getPassword());
 				dto.setPid(tmp.getPid());
@@ -169,6 +171,24 @@ public class UserService implements UserServiceInterface {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean manageUser(long id, int version, boolean status) {
+		try {
+			User u = repository.getOne(id);
+			if (u.getVersion() != version)
+				return false;
+
+			u.setActive(status);
+
+			repository.save(u);
+
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }

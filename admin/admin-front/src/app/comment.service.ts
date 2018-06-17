@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Http, Response } from "@angular/http";
 import { Observable } from 'rxjs/Rx';
-//import 'rxjs/add/operator/map';
 import { CommentInterface } from "../app/comment-interface";
 
 @Injectable({
@@ -23,11 +22,14 @@ export class CommentService {
   }
   
   manageComment(id: number, version: number, op: boolean){
-	   const body = new HttpParams().set('id', id).set('version', version);
+     const body = new HttpParams().set('id', id.toString()).set('version', version.toString());
+     const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+    };
 	  if(op){
-			return this.http.post(this.baseUrl + '/accept', body, new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded'})).catch(this.handleError);
+			return this.http.post(this.baseUrl + '/accept', body, httpOptions).catch(this.handleError);
 	  }else{
-			return this.http.post(this.baseUrl + '/reject', body, new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded'})).catch(this.handleError);
+			return this.http.post(this.baseUrl + '/reject', body, httpOptions).catch(this.handleError);
 	  }
   }
 }

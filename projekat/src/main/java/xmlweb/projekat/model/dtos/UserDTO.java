@@ -19,6 +19,8 @@ public class UserDTO {
 	@Size(min = 1, max = 255)
 	@NotNull
 	private String password;
+	@NotNull
+	private boolean active;
 	private String pid;
 	private UserType userType;
 	private long agentLocation;
@@ -94,6 +96,14 @@ public class UserDTO {
 
 	public void setAgentLocation(long agentLocation) {
 		this.agentLocation = agentLocation;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

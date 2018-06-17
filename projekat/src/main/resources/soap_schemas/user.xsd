@@ -27,6 +27,7 @@
 			<xs:element name="user_name" type="xs:string" />
 			<xs:element name="user_type" type="xs:string" />
 			<xs:element name="agent_address" type="xs:long" />
+			<xs:element name="active" type="xs:boolean" />
 			<xs:element name="entity_version">
 				<xs:simpleType>
 					<xs:restriction base="xs:int">

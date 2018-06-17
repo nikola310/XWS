@@ -7,4 +7,5 @@ export interface UserInterface {
     pid: string;
     userType: string;
     version: number;
+    active: boolean;
 }

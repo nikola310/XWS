@@ -56,15 +56,25 @@ public class UserController {
 		return service.Delete(id);
 	}
 
-	@RequestMapping(value = "by_type/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+	@RequestMapping(value = "/by_type/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
 	public List<UserDTO> getUserByType(@PathVariable UserType type) {
 		return service.getUserByType(type);
 	}
 
-	@RequestMapping(value = "agent", method = RequestMethod.POST)
+	@RequestMapping(value = "/agent", method = RequestMethod.POST)
 	public boolean manageAgent(@RequestParam(name = "user", required = true) long user,
 			@Validated @RequestBody AgentRequestDTO agent) {
 		return service.manageAgent(agent, user);
+	}
+	
+	@RequestMapping(value = "/activate", method = RequestMethod.POST)
+	public boolean activateUser(@RequestParam("id") long id, @RequestParam("version") int version) {
+		return service.manageUser(id, version, true);
+	}
+	
+	@RequestMapping(value = "/block", method = RequestMethod.POST)
+	public boolean blockUser(@RequestParam("id") long id, @RequestParam("version") int version) {
+		return service.manageUser(id, version, false);
 	}
 
 }

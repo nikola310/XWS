@@ -1,7 +1,7 @@
 /* KORISNICI */
-INSERT INTO user(user_id, first_name, last_name, password, pid, user_name, user_type, entity_version) VALUES (1, 'nikola', 'stojanovic', 123, 123, 'nikola', 3, 1);
-INSERT INTO user(user_id, first_name, last_name, password, pid, user_name, user_type, entity_version) VALUES (2, 'milos', 'tepic', 123, 123, 'mitep', 1, 1);
-INSERT INTO user(user_id, first_name, last_name, password, pid, user_name, user_type, entity_version) VALUES (3, 'julija', 'mirkovic', 123, 123, 'masato', 0, 1);
+INSERT INTO user(user_id, first_name, last_name, password, pid, user_name, user_type, active, entity_version) VALUES (1, 'nikola', 'stojanovic', 123, 123, 'nikola', 3, false, 1);
+INSERT INTO user(user_id, first_name, last_name, password, pid, user_name, user_type, active, entity_version) VALUES (2, 'milos', 'tepic', 123, 123, 'mitep', 1, true, 1);
+INSERT INTO user(user_id, first_name, last_name, password, pid, user_name, user_type, active, entity_version) VALUES (3, 'julija', 'mirkovic', 123, 123, 'masato', 0, true, 1);
 
 /* PORUKE */
 INSERT INTO message(message_id, receiver_id, sender_id, content, entity_version) VALUES (1, 2, 1, 'Tepicu macane, nisi ti za bacanje!', 0);

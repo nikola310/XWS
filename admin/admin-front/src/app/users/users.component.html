@@ -1,8 +1,5 @@
 <head>
   <title>Users</title>
-  <!--link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css"-->
 </head>
 
 <ul>
@@ -33,7 +30,8 @@
         <tr class="row100 head">
           <th class="cell100 column1">User</th>
           <th class="cell100 column2">Type</th>
-          <th class="cell100 column3">Action</th>
+          <th class="cell100 column3">Status</th>
+          <th class="cell100 column4">Action</th>
         </tr>
       </thead>
     </table>
@@ -42,14 +40,14 @@
   <div class="table100-body js-pscroll">
     <table>
       <tbody>
-
         <tr class="row100 body" *ngFor="let user of users; ">
           <td class="cell100 column1"> {{ user.userName }} </td>
-          <!--td class="cell100 column2"> {{ user.userType }} </td-->
-          <td class="cell100 column3">
-            <input type="button" value="BLOCK">
-            <input type="button" value="REMOVE">
-            <input type="button" value="ACTIVATE">
+          <td class="cell100 column2"> {{ user.userType }} </td>
+          <td class="cell100 column3"> {{ user.active }} </td>
+          <td class="cell100 column4">
+            <input type="button" value="BLOCK" (click)="blockUser(user.id, user.version)">
+            <input type="button" value="REMOVE" (click)="deleteUser(user.id)">
+            <input type="button" value="ACTIVATE" (click)="activateUser(user.id, user.version)">
           </td>
         </tr>
       </tbody>

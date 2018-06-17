@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UsersService } from '../users.service';
 import { UserInterface } from "../user-interface";
 import { Observable } from "rxjs/Rx";
@@ -21,6 +20,18 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     this.userService.getUsers().subscribe(data => this.users = data);
     console.log(this.users);
+  }
+
+  activateUser(id: number, version: number){
+    this.userService.activate(id, version).subscribe(data => console.log(data));
+  }
+
+  blockUser(id: number, version: number){
+    this.userService.block(id, version).subscribe(data => console.log(data));
+  }
+
+  deleteUser(id: number){
+    this.userService.delete(id).subscribe(data => console.log(data));
   }
 
 }

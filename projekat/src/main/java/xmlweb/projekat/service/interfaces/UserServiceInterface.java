@@ -9,6 +9,9 @@ import xmlweb.projekat.model.dtos.UserDTO;
 public interface UserServiceInterface extends ServiceInterface<UserDTO> {
 
 	public List<UserDTO> getUserByType(UserType type);
-	
+
 	public boolean manageAgent(AgentRequestDTO dto, long id);
+
+	public boolean manageUser(long id, int version, boolean status);
+
 }
