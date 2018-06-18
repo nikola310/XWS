@@ -214,7 +214,7 @@ public class AccomodationController {
 			int accPrice = 0;
 			for(long i = checkInDate; i < checkOutDate; i+=86400000){
 				for(Price p : a.getPrices()){
-					if(i >= p.getStartDate() && i < p.getEndDate()){
+					if((i>=p.getStartDate()) && (i<p.getEndDate())){
 						accPrice+=p.getPrice();
 						break;
 					}

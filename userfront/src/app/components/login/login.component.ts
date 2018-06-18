@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -7,12 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  private data;
+  private token;
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
   }
 
-  login(data){
-    console.log("logging ...");
+  login(data) {
+    this.data = "{\"userName\":\"" + data.username + "\","
+      + " \"password\":\"" + data.password + "\"}";
+    this.dataService.login(this.data).subscribe((response) => {
+      console.log(response);
+      if (response.status == "success") {
+        this.token = response.info;
+      }
+    });
   }
 }

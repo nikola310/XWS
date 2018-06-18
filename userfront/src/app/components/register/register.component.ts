@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../../services/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  private data;
+  private registered = true;
+
+  constructor(private dataService:DataService, private router:Router) { }
 
   ngOnInit() {
   }
@@ -18,6 +23,18 @@ export class RegisterComponent implements OnInit {
     console.log('Your last name is ' + data.lastname);
     console.log('Your username is ' + data.username);
     console.log('Your password is ' + data.password);
-    console.log('Your email is ' + data.email);
+
+    this.data = "{\"userName\":\"" + data.username + "\","
+             + " \"password\":\"" + data.password + "\","
+             + " \"firstName\":\"" + data.firstname + "\"," 
+             + " \"lastName\":\"" + data.lastname + "\"," 
+             + " \"version\":1,"                    
+             + " \"userType\":\"USER\"}";
+    
+    this.dataService.register(this.data).subscribe((response: boolean) => 
+      {this.registered = response;
+      if(response==true) 
+        this.router.navigateByUrl('/login');
+      });
   }
 }

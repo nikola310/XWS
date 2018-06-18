@@ -37,10 +37,24 @@ public class UserService implements UserServiceInterface {
 			ModelMapper mapper = new ModelMapper();
 			User user = mapper.map(dto, User.class);
 			Location loc = locationRepo.getOne(dto.getAgentLocation());
-			user.setAgentLocation(loc);
-			repository.save(user);
+			user.setAgentLocation(loc);	
+			
+			String username = user.getUserName();
+			List<User> users = repository.findAll();
+			boolean flag = false;
+			for(User u : users){
+				if(u.getUserName().equals(username)){
+					flag = true;
+					break;
+				}
+			}
+			
+			if(flag==false){
+				repository.save(user);
+				return true;
+			}
+			
 
-			return true;
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -190,5 +204,13 @@ public class UserService implements UserServiceInterface {
 			return false;
 		}
 	}
+	
+	@Override
+	public User getRegularUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return repository.findRegularUserByUsername(username);
+	}
+	
+
 
 }
