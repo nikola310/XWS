@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AgentService } from "../agent.service";
 import { UserInterface } from "../user-interface";
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-agents',
@@ -13,7 +14,7 @@ export class AgentsComponent implements OnInit {
 
 	agents: UserInterface[];
 
-	constructor(private agentService: AgentService) { }
+	constructor(private agentService: AgentService, private _data: DataService) { }
 
 	ngOnInit() {
 		this.agentService.getAgents().subscribe(data => this.agents = data);
@@ -26,7 +27,7 @@ export class AgentsComponent implements OnInit {
 		+ " \"pid\":\"" + data.pid + "\","
 		+ " \"address\":\"" + data.address +"\"}";
 		console.log(this.msg);
-		this.agentService.newAgent(this.msg, id).subscribe(
+		this.agentService.newAgent(this.msg, id, this._data.getToken()).subscribe(
 			response => console.log(response),
     		err => console.log(err)
 		);
@@ -38,7 +39,7 @@ export class AgentsComponent implements OnInit {
 		+ " \"pid\":\"" + data.pid + "\","
 		+ " \"address\":\"" + data.address +"\"}";
 		console.log(this.msg);
-		this.agentService.newAgent(this.msg, id).subscribe(
+		this.agentService.newAgent(this.msg, id, this._data.getToken()).subscribe(
 			response => console.log(response),
     		err => console.log(err)
 		);

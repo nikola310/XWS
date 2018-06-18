@@ -2,9 +2,6 @@ package xmlweb.projekat.security;
 
 import java.util.Date;
 
-import javax.xml.bind.DatatypeConverter;
-
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;    

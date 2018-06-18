@@ -9,12 +9,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import xmlweb.projekat.model.dtos.CommentDTO;
+import xmlweb.projekat.security.TokenValidator;
 import xmlweb.projekat.service.interfaces.CommentServiceInterface;
 
 /**
@@ -65,12 +67,22 @@ public class CommentController {
 	}
 
 	@RequestMapping(value = "/accept", method = RequestMethod.POST)
-	public boolean accept(@RequestParam("id") long id, @RequestParam("version") int version) {
+	public boolean accept(@RequestParam("id") long id, @RequestParam("version") int version,
+			@RequestHeader(value = "User-Agent", required = true) String userAgent,
+			@RequestHeader(value = "Token", required = true) String token) {
+		if (!TokenValidator.validateAdmin(userAgent, token)) {
+			return false;
+		}
 		return service.acceptComment(id, version);
 	}
 
 	@RequestMapping(value = "/reject", method = RequestMethod.POST)
-	public boolean reject(@RequestParam("id") long id, @RequestParam("version") int version) {
+	public boolean reject(@RequestParam("id") long id, @RequestParam("version") int version,
+			@RequestHeader(value = "User-Agent", required = true) String userAgent,
+			@RequestHeader(value = "Token", required = true) String token) {
+		if (!TokenValidator.validateAdmin(userAgent, token)) {
+			return false;
+		}
 		return service.rejectComment(id, version);
 	}
 

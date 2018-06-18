@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { LoginService } from "../login.service";
+import { DataService } from "../data.service";
 
 @Component({
   selector: 'app-login',
@@ -8,32 +10,26 @@ import {Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  private msg; 
-  private router:Router;
-  //private ws:WebsocketService;
+  private data;
+  private token;
 
-  constructor(private rt:Router) { 
-    this.router = rt;
-  }
+  constructor(private router: Router, private loginService: LoginService, private dataService: DataService) { }
 
   ngOnInit() {
   }
 
-  submitForm(data){
-    this.msg = "{\"type\":\"login\","
-               + " \"data\":{"
-               + " \"username\":\"" + data.username + "\","
-               + " \"password\":\"" + data.password +"\"}"
-               + "}";
-      console.log(this.msg);
-      //this.ws["username"] = data.username;
-      //console.log(this.ws["username"]);
-      //this.ws.sendMsg(this.msg);
+  login(data) {
+    this.data = "{\"userName\":\"" + data.username + "\","
+      + " \"password\":\"" + data.password + "\"}";
+    this.loginService.login(this.data).subscribe((response) => {
+      console.log(response);
+      if (response.status == "success") {
+        this.token = response.info;
 
-      /**
-       * Slanje REST-a
-       */
-      this.router.navigate(['/home']);
+        this.dataService.setToken(this.token);
+        this.router.navigate(['/home']);
+      }
+    });
   }
 
 }

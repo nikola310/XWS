@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log('Token ==> '+ this._data.getToken());
   }
 
   addItem(){

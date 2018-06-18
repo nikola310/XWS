@@ -210,6 +210,11 @@ public class UserService implements UserServiceInterface {
 		// TODO Auto-generated method stub
 		return repository.findRegularUserByUsername(username);
 	}
+
+	@Override
+	public User getAdminByUsername(String username) {
+		return repository.findAdminByUsername(username);
+	}
 	
 
 

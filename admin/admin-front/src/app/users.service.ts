@@ -15,9 +15,6 @@ const httpOptions = {
 export class UsersService {
 
   private baseUrl = "http://localhost:8089/booking/user";
-  private options = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
-  };
 
   constructor(private http: HttpClient) { }
 
@@ -29,14 +26,20 @@ export class UsersService {
     return Observable.throw(error.statusText);
   }
 
-  activate(id: number, version: number){
+  activate(id: number, version: number, token: string){
     const body = new HttpParams().set('id', id.toString()).set('version', version.toString());
-    return this.http.post(this.baseUrl + '/activate', body, this.options).catch(this.handleError);
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded', 'Token' : token })
+    };
+    return this.http.post(this.baseUrl + '/activate', body, options).catch(this.handleError);
   }
 
-  block(id: number, version: number){
+  block(id: number, version: number, token: string){
     const body = new HttpParams().set('id', id.toString()).set('version', version.toString());
-    return this.http.post(this.baseUrl + '/block', body, this.options).catch(this.handleError);
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded', 'Token' : token })
+    };
+    return this.http.post(this.baseUrl + '/block', body, options).catch(this.handleError);
   }
 
   delete(id: number){

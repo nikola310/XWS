@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,10 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import xmlweb.projekat.model.UserType;
 import xmlweb.projekat.model.dtos.AgentRequestDTO;
 import xmlweb.projekat.model.dtos.UserDTO;
+import xmlweb.projekat.security.TokenValidator;
 import xmlweb.projekat.service.interfaces.UserServiceInterface;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4300"})
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4300" })
 @RequestMapping(value = "/user")
 public class UserController {
 
@@ -63,17 +65,33 @@ public class UserController {
 
 	@RequestMapping(value = "/agent", method = RequestMethod.POST)
 	public boolean manageAgent(@RequestParam(name = "user", required = true) long user,
+			@RequestHeader(value = "User-Agent", required = true) String userAgent,
+			@RequestHeader(value = "Token", required = true) String token,
 			@Validated @RequestBody AgentRequestDTO agent) {
+
+		if (!TokenValidator.validateAdmin(userAgent, token)) {
+			return false;
+		}
 		return service.manageAgent(agent, user);
 	}
-	
+
 	@RequestMapping(value = "/activate", method = RequestMethod.POST)
-	public boolean activateUser(@RequestParam("id") long id, @RequestParam("version") int version) {
+	public boolean activateUser(@RequestParam("id") long id, @RequestParam("version") int version,
+			@RequestHeader(value = "User-Agent", required = true) String userAgent,
+			@RequestHeader(value = "Token", required = true) String token) {
+		if (!TokenValidator.validateAdmin(userAgent, token)) {
+			return false;
+		}
 		return service.manageUser(id, version, true);
 	}
-	
+
 	@RequestMapping(value = "/block", method = RequestMethod.POST)
-	public boolean blockUser(@RequestParam("id") long id, @RequestParam("version") int version) {
+	public boolean blockUser(@RequestParam("id") long id, @RequestParam("version") int version,
+			@RequestHeader(value = "User-Agent", required = true) String userAgent,
+			@RequestHeader(value = "Token", required = true) String token) {
+		if (!TokenValidator.validateAdmin(userAgent, token)) {
+			return false;
+		}
 		return service.manageUser(id, version, false);
 	}
 

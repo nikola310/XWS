@@ -17,5 +17,5 @@ public interface UserServiceInterface extends ServiceInterface<UserDTO> {
 	
 	public User getRegularUserByUsername(String username);
 	
-
+	public User getAdminByUsername(String username);
 }

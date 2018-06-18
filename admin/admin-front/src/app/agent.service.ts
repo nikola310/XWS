@@ -2,12 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http, Response } from "@angular/http";
 import { Observable } from 'rxjs/Rx';
-//import 'rxjs/add/operator/map';
 import { UserInterface } from "../app/user-interface";
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +21,11 @@ export class AgentService {
     return Observable.throw(error.statusText);
   }
   
-  newAgent(data: any, id: number){
+  newAgent(data: any, id: number, token: string){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Token' : token})
+    };
+    console.log(httpOptions.toString());
 	  return this.http.post(this.baseUrl + '/agent?user=' + id, data, httpOptions).catch(this.handleError);
   }
 }
