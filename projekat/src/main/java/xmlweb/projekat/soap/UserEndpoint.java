@@ -19,7 +19,7 @@ import xmlweb.projekat.soap.models.UserSOAP;
 @Endpoint
 public class UserEndpoint {
 
-	public static final String NAMESPACE_URI = "http://xmlweb/projekat/soap/models";
+	public static final String NAMESPACE_URI = "http://xmlweb/projekat/model/soap";
 
 	private UserServiceInterface service;
 
