@@ -17,30 +17,49 @@ export class AgentsComponent implements OnInit {
 	constructor(private agentService: AgentService, private _data: DataService) { }
 
 	ngOnInit() {
+		console.log('sadasda');
 		this.agentService.getAgents().subscribe(data => this.agents = data);
 		console.log(this.agents);
 	}
 
-	acceptAgent(data: any, id: number){
+	acceptAgent(pid: any, address: any, id: number,  toRemove: any){
 		this.msg = "{"
 		+ " \"accept\":\"" + true + "\","
-		+ " \"pid\":\"" + data.pid + "\","
-		+ " \"address\":\"" + data.address +"\"}";
+		+ " \"pid\":\"" + pid + "\","
+		+ " \"address\":\"" + address +"\"}";
 		console.log(this.msg);
-		this.agentService.newAgent(this.msg, id, this._data.getToken()).subscribe(
-			response => console.log(response),
+		this.agentService.newAgent(this.msg, id, sessionStorage.getItem('Token')).subscribe(
+			response => {
+				console.log(response);
+				if (response) {
+					window.alert('Accepted.');
+					var i = this.agents.indexOf(toRemove);
+					this.agents.splice(i, 1);
+				  }else{
+					window.alert('Error occurred.');
+				  }
+			},
     		err => console.log(err)
 		);
   }
   
-  rejectAgent(data: any, id: number){
+  rejectAgent(pid: any, address: any, id: number,  toRemove: any){
 		this.msg = "{"
 		+ " \"accept\":\"" + false + "\","
-		+ " \"pid\":\"" + data.pid + "\","
-		+ " \"address\":\"" + data.address +"\"}";
+		+ " \"pid\":\"" + pid + "\","
+		+ " \"address\":\"" + address +"\"}";
 		console.log(this.msg);
-		this.agentService.newAgent(this.msg, id, this._data.getToken()).subscribe(
-			response => console.log(response),
+		this.agentService.newAgent(this.msg, id, sessionStorage.getItem('Token')).subscribe(
+			response => {
+				console.log(response);
+				if (response) {
+					window.alert('Rejected.');
+					var i = this.agents.indexOf(toRemove);
+					this.agents.splice(i, 1);
+				  }else{
+					window.alert('Error occurred.');
+				  }
+			},
     		err => console.log(err)
 		);
   }

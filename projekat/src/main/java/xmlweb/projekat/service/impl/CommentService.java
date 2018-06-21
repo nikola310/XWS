@@ -191,7 +191,7 @@ public class CommentService implements CommentServiceInterface {
 
 			repository.save(comm);
 
-			return false;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -211,7 +211,7 @@ public class CommentService implements CommentServiceInterface {
 
 			repository.save(comm);
 
-			return false;
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

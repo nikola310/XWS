@@ -7,24 +7,24 @@ import { DataService } from './data.service';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
 import { CommentsComponent } from './comments/comments.component';
 import { AgentsComponent } from './agents/agents.component';
 import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
-import { CodebookComponent } from './codebook/codebook.component';
+import { AccomodationTypeComponent } from './accomodation-type/accomodation-type.component';
+import { AccCategoryComponent } from './acc-category/acc-category.component';
+import { BonusTypesComponent } from './bonus-types/bonus-types.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    AboutComponent,
     CommentsComponent,
     AgentsComponent,
     UsersComponent,
     LoginComponent,
-    CodebookComponent
+    AccomodationTypeComponent,
+    AccCategoryComponent,
+    BonusTypesComponent
   ],
   imports: [
     BrowserModule,

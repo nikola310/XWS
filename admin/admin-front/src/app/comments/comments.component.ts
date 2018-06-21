@@ -10,22 +10,42 @@ import { DataService } from '../data.service';
 })
 export class CommentsComponent implements OnInit {
 
-	private msg;
+  private msg;
 
-	comments: CommentInterface[];
+  comments: CommentInterface[];
 
-  constructor(private commentService: CommentService, private _data: DataService) { }
+  constructor(private commentService: CommentService) { }
 
   ngOnInit() {
-		this.commentService.getComments().subscribe(data => this.comments = data);
-		console.log(this.comments);
-  }
-  
-  approveComment(id : number, version: number) : void {
-	  this.commentService.manageComment(id, version, true, this._data.getToken()).subscribe(data => console.log(data));
+    this.commentService.getComments().subscribe(data => this.comments = data);
+    console.log(this.comments);
   }
 
-  rejectComment(id : number, version: number) : void {
-	  this.commentService.manageComment(id, version, false, this._data.getToken()).subscribe(data => console.log(data));
+  approveComment(id: number, version: number, toRemove: any): void {
+    console.log(id);
+    console.log(version);
+    this.commentService.manageComment(id, version, true, sessionStorage.getItem('Token')).subscribe(data => {
+      console.log(data)
+      if (data) {
+        window.alert('Accepted.');
+        var i = this.comments.indexOf(toRemove);
+        this.comments.splice(i, 1);
+      }else{
+        window.alert('Error occurred.');
+      }
+    });
+  }
+
+  rejectComment(id: number, version: number, toRemove: any): void {
+    this.commentService.manageComment(id, version, false, sessionStorage.getItem('Token')).subscribe(data => {
+      console.log(data)
+      if (data) {
+        window.alert('Comment rejected.');
+        var i = this.comments.indexOf(toRemove);
+        this.comments.splice(i, 1);
+      }else{
+        window.alert('Error occurred.');
+      }
+    });
   }
 }

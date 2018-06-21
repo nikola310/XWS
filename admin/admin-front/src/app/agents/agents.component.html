@@ -1,17 +1,8 @@
 <head>
-  <title>Users</title>
-  <!--link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css"-->
+  <title>Manage agent requests</title>
 </head>
 
 <ul>
-  <li>
-    <a routerLink="">Home</a>
-  </li>
-  <li>
-    <a routerLink="../about/48">About</a>
-  </li>
   <li>
     <a routerLink="../users">Users</a>
   </li>
@@ -22,84 +13,36 @@
     <a routerLink="../comments">Comments</a>
   </li>
   <li>
-    <a routerLink="../codebook">Codebook</a>
+    <a routerLink="../acc-type">Accomodation Types</a>
   </li>
 </ul>
 
-<div class="table100 ver3 m-b-110">
-<div class="table100-head">
-	<table>
-      <thead>
-        <tr>
-          <th>Manage agent requests</th>
-        </tr>
-        <tr>
-          <th>User</th>
-          <th>First name</th>
-          <th>Last name</th>
-          <th>Business number</th>
-          <th>Address</th>
-          <th> Action</th>
-        </tr>
-      </thead>
-      <tbody>
-	  <form #data="ngForm" class="agent-form">
-        <tr *ngFor="let agent of agents">
-          <td> {{ agent.userName }} </td>
-          <td> {{ agent.firstName }} </td>
-          <td> {{ agent.lastName }} </td>
-          <td> <input type="text" [(ngModel)]="data.pid" name="pid" ></td>
-          <td> <input type="number" [(ngModel)]="data.address" name="address"></td>
-          <td>
-            <input type="submit" value="ACCEPT" (click)="acceptAgent(data, agent.id)">
-            <input type="submit" value="DECLINE" (click)="rejectAgent(data, agent.id)">
-          </td>
-        </tr>
-	  </form>
-      </tbody>
-    </table>
-	</div>
-</div>
-<br />
-<br />
-  <div class="table100-body js-pscroll">
-    <form #data="ngForm" class="login-form">
-	<table>
-      <tbody>
-          <tr class="row100 body">
-              <td class="cell100 column1">UserName</td>
-              <td class="cell100 column2"><input type="text" [(ngModel)]="data.userName" name="userName"></td>
-            </tr>
-            <tr class="row100 body">
-          <td class="cell100 column1">Password</td>
-          <td class="cell100 column2"><input type="text" [(ngModel)]="data.password" name="password"></td>
-        </tr>
-        <tr class="row100 body">
-          <td class="cell100 column1">Name</td>
-          <td class="cell100 column2"><input type="text" [(ngModel)]="data.firstName" name="firstName"></td>
-        </tr>
-        <tr class="row100 body">
-          <td class="cell100 column1">Surname</td>
-          <td class="cell100 column2"><input type="text" [(ngModel)]="data.surName" name="surName"></td>
-        </tr>
-        <tr class="row100 body">
-          <td class="cell100 column1">Adress</td>
-          <td class="cell100 column2"><input type="text" [(ngModel)]="data.adress" name="address">
-        </tr>
-        <tr class="row100 body">
-          <td class="cell100 column1">Number</td>
-          <td class="cell100 column2"><input type="number" [(ngModel)]="data.pid" name="pid"></td>
-        </tr>
-        <tr class="row100 body">
-            <td class="cell100 column1">UserType</td>
-            <td class="cell100 column2"><input type="number" [(ngModel)]="data.userType" name="userType"></td>
-          </tr>
-        <tr>
-          <td></td>
-          <td><input type="submit" (click)="registerAgent(data)"></td>
-        </tr>
-      </tbody>
-    
-    </table>
-	</form>
+<div class="table">
+  <div class="thead">
+    <div class="tr">
+      <div class="td">User</div>
+      <div class="td">First name</div>
+      <div class="td">Last name</div>
+      <div class="td">Business number</div>
+      <div class="td">Address</div>
+      <div class="td">Action</div>
+    </div>
   </div>
+  <div class="tbody" *ngFor="let agent of agents;">
+    <form class="tr" #data="ngForm">
+      <div class="td">{{ agent.userName }}</div>
+      <div class="td">{{ agent.firstName }}</div>
+      <div class="td">{{ agent.lastName }}</div>
+      <div class="td">
+        <input type="text" [(ngModel)]="data.pid" name="pid">
+      </div>
+      <div class="td">
+        <input type="number" [(ngModel)]="data.address" name="address">
+      </div>
+      <div class="td action">
+        <button (click)="acceptAgent(data.pid, data.address, agent.id, agent)">ACCEPT</button>&nbsp; &nbsp;
+        <button (click)="rejectAgent(data.pid, data.address, agent.id, agent)">DECLINE</button>
+      </div>
+    </form>
+  </div>
+</div>

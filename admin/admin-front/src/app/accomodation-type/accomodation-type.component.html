@@ -1,0 +1,70 @@
+<head>
+  <title>Manage agent requests</title>
+</head>
+
+<ul>
+  <li>
+    <a routerLink="../users">Users</a>
+  </li>
+  <li>
+    <a routerLink="../agents">Agents</a>
+  </li>
+  <li>
+    <a routerLink="../comments">Comments</a>
+  </li>
+  <li>
+    <a routerLink="../acc-type">Accomodation Types</a>
+  </li>
+</ul>
+
+<div class="table">
+  <div class="thead">
+    <div class="tr">
+      <div class="td">Name</div>
+      <div class="td">Change to</div>
+      <div class="td">Action</div>
+    </div>
+  </div>
+  <div class="tbody" *ngFor="let acc of accomodations; let i = index">
+    <form class="tr" #data="ngForm">
+      <div class="td">{{ acc.name }}</div>
+      <div class="td">
+        <input type="text" [(ngModel)]="data.accName" name="accName">
+      </div>
+      <div class="td action">
+        <button (click)="editAccType(acc.id, data.accName, acc.version)">EDIT</button>&nbsp; &nbsp;
+        <button (click)="deleteAccType(acc.id)">DELETE</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<br />
+<br />
+
+<form #myForm="ngForm">
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Add new accomodation type
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Name:</td>
+        <td>
+          <input type="text" [(ngModel)]="myForm.accTypeName" name="accTypeName">
+        </td>
+      </tr>
+      <tr>
+        <td>
+        </td>
+        <td>
+          <input type="submit" value="SUBMIT" (click)="createNewAccType(myForm.accTypeName); myForm.reset();">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>

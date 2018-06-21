@@ -22,7 +22,7 @@ import xmlweb.projekat.security.TokenValidator;
 import xmlweb.projekat.service.interfaces.UserServiceInterface;
 
 @RestController
-@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4300" })
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4300"})
 @RequestMapping(value = "/user")
 public class UserController {
 

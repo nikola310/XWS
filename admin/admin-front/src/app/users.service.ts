@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Http, Response } from "@angular/http";
 import { Observable } from 'rxjs/Rx';
-//import 'rxjs/add/operator/map';
 import { UserInterface } from "../app/user-interface";
 
 const httpOptions = {

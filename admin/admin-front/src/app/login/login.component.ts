@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from "../login.service";
-import { DataService } from "../data.service";
 
 @Component({
   selector: 'app-login',
@@ -11,9 +10,8 @@ import { DataService } from "../data.service";
 export class LoginComponent implements OnInit {
 
   private data;
-  private token;
 
-  constructor(private router: Router, private loginService: LoginService, private dataService: DataService) { }
+  constructor(private router: Router, private loginService: LoginService) { }
 
   ngOnInit() {
   }
@@ -24,10 +22,8 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.data).subscribe((response) => {
       console.log(response);
       if (response.status == "success") {
-        this.token = response.info;
-
-        this.dataService.setToken(this.token);
-        this.router.navigate(['/home']);
+        sessionStorage.setItem('Token', response.info);
+        this.router.navigate(['/users']);
       }
     });
   }

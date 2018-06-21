@@ -34,24 +34,7 @@ input.btn {
     cursor:pointer;
 }
 
-
-
-/*//////////////////////////////////////////////////////////////////
-[ FONT ]*/
-
-/*
-@font-face {
-    font-family: Lato-Regular;
-    src: url('../fonts/Lato/Lato-Regular.ttf'); 
-  }
-  
-  @font-face {
-    font-family: Lato-Bold;
-    src: url('../fonts/Lato/Lato-Bold.ttf'); 
-  }
-  */
-  /*//////////////////////////////////////////////////////////////////
-  [ RESTYLE TAG ]*/
+/*[ RESTYLE TAG ]*/
   * {
       margin: 0px; 
       padding: 0px; 
@@ -110,9 +93,10 @@ input.btn {
   
   /* ------------------------------------ */
   button {
-      outline: none !important;
+     /* outline: none !important;
       border: none;
-      background: transparent;
+      background: transparent;*/
+      padding: 2px;
   }
   
   button:hover {

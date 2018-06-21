@@ -1,17 +1,8 @@
 <head>
-  <title>Comments</title>
-  <!--link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css"-->
+  <title>Manage comments</title>
 </head>
 
 <ul>
-  <li>
-    <a routerLink="">Home</a>
-  </li>
-  <li>
-    <a routerLink="about/48">About</a>
-  </li>
   <li>
     <a routerLink="../users">Users</a>
   </li>
@@ -22,7 +13,7 @@
     <a routerLink="../comments">Comments</a>
   </li>
   <li>
-    <a routerLink="../codebook">Codeboo</a>
+    <a routerLink="../acc-type">Accomodation Types</a>
   </li>
 </ul>
 
@@ -31,29 +22,30 @@
     <table>
       <thead>
         <tr class="row100 head">
-          <th>Content</th>
-          <th>Where</th>
-          <th>User</th>
-          <th>Response</th>
+          <th class="cell100 column1">Content</th>
+          <th class="cell100 column2">Where</th>
+          <th class="cell100 column3">User</th>
+          <th class="cell100 column4">Response</th>
         </tr>
       </thead>
-	  </table>
-	 </div>
-	 <div>
-	 <table>
-	  <tbody>
-	  <form #data="ngForm" class="comment-form">
-        <tr *ngFor="let comm of comments">
+    </table>
+  </div>
+  <div class="table100-body js-pscroll">
+    <table>
+      <tbody>
+        <tr class="row100 body" *ngFor="let comm of comments">
           <td class="cell100 column1">{{ comm.content }}</td>
           <td class="cell100 column2">{{ comm.accomodationName }}</td>
           <td class="cell100 column3">{{ comm.authorName }}</td>
-          <td class="cell100 column4">
-				<input type="submit" value="APPROVE" (click)="approveComment(comm.id, comm.version)">
-				<input type="submit" value="REJECT" (click)="rejectComment(comm.id, comm.version)">
-		  </td>
+          <td class="cell100 column4" style='white-space: nowrap'>
+            <!--input type="submit" value="APPROVE" (click)="approveComment(comm.id, comm.version)"-->
+            <button (click)="approveComment(comm.id, comm.version, comm)">APPROVE</button>
+            &nbsp; &nbsp;
+            <button (click)="rejectComment(comm.id, comm.version, comm)">REJECT</button>
+            <!--input type="submit" value="REJECT" (click)="rejectComment(comm.id, comm.version)"-->
+          </td>
         </tr>
-		</form>
       </tbody>
     </table>
-	</div>
+  </div>
 </div>

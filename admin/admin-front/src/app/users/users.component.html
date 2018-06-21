@@ -1,14 +1,8 @@
 <head>
-  <title>Users</title>
+  <title>Manage users</title>
 </head>
 
 <ul>
-  <li>
-    <a routerLink="">Home</a>
-  </li>
-  <li>
-    <a routerLink="about/48">About</a>
-  </li>
   <li>
     <a routerLink="../users">Users</a>
   </li>
@@ -19,7 +13,7 @@
     <a routerLink="../comments">Comments</a>
   </li>
   <li>
-    <a routerLink="../codebook">Codebook</a>
+    <a routerLink="../acc-type">Accomodation Types</a>
   </li>
 </ul>
 
@@ -45,9 +39,11 @@
           <td class="cell100 column2"> {{ user.userType }} </td>
           <td class="cell100 column3"> {{ user.active }} </td>
           <td class="cell100 column4">
-            <input type="button" value="BLOCK" (click)="blockUser(user.id, user.version)">
-            <input type="button" value="REMOVE" (click)="deleteUser(user.id)">
-            <input type="button" value="ACTIVATE" (click)="activateUser(user.id, user.version)">
+            <button value="BLOCK" (click)="blockUser(user.id, user.version)">BLOCK</button>
+            &nbsp; &nbsp;
+            <button value="REMOVE" (click)="deleteUser(user.id, user)">REMOVE</button>
+            &nbsp; &nbsp;
+            <button value="ACTIVATE" (click)="activateUser(user.id, user.version)">ACTIVATE</button>
           </td>
         </tr>
       </tbody>

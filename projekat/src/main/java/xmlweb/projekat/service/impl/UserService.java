@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import xmlweb.projekat.model.Comment;
 import xmlweb.projekat.model.Location;
 import xmlweb.projekat.model.User;
 import xmlweb.projekat.model.UserType;
 import xmlweb.projekat.model.dtos.AgentRequestDTO;
 import xmlweb.projekat.model.dtos.UserDTO;
+import xmlweb.projekat.repository.CommentRepository;
 import xmlweb.projekat.repository.LocationRepository;
 import xmlweb.projekat.repository.UserRepository;
 import xmlweb.projekat.service.interfaces.UserServiceInterface;
@@ -27,6 +29,9 @@ public class UserService implements UserServiceInterface {
 	private LocationRepository locationRepo;
 
 	@Autowired
+	private CommentRepository commentRepo;
+
+	@Autowired
 	public UserService(UserRepository repository) {
 		this.repository = repository;
 	}
@@ -37,23 +42,22 @@ public class UserService implements UserServiceInterface {
 			ModelMapper mapper = new ModelMapper();
 			User user = mapper.map(dto, User.class);
 			Location loc = locationRepo.getOne(dto.getAgentLocation());
-			user.setAgentLocation(loc);	
-			
+			user.setAgentLocation(loc);
+
 			String username = user.getUserName();
 			List<User> users = repository.findAll();
 			boolean flag = false;
-			for(User u : users){
-				if(u.getUserName().equals(username)){
+			for (User u : users) {
+				if (u.getUserName().equals(username)) {
 					flag = true;
 					break;
 				}
 			}
-			
-			if(flag==false){
+
+			if (flag == false) {
 				repository.save(user);
 				return true;
 			}
-			
 
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -134,6 +138,10 @@ public class UserService implements UserServiceInterface {
 	@Override
 	public boolean Delete(long id) {
 		try {
+			User u = new User();
+			u.setId(id);
+			List<Comment> comms = commentRepo.getCommentByAuthor(u);
+			commentRepo.deleteInBatch(comms);
 			repository.deleteById(id);
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -204,10 +212,9 @@ public class UserService implements UserServiceInterface {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public User getRegularUserByUsername(String username) {
-		// TODO Auto-generated method stub
 		return repository.findRegularUserByUsername(username);
 	}
 
@@ -215,7 +222,5 @@ public class UserService implements UserServiceInterface {
 	public User getAdminByUsername(String username) {
 		return repository.findAdminByUsername(username);
 	}
-	
-
 
 }

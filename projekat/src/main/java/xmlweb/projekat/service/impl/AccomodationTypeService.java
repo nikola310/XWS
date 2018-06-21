@@ -14,11 +14,50 @@ public class AccomodationTypeService implements AccomodationTypeServiceInterface
 
 	@Autowired
 	private AccomodationTypeRepository repository;
-	
+
 	@Override
 	public List<AccomodationType> findAllAccomodationTypes() {
 		// TODO Auto-generated method stub
 		return repository.findAll();
+	}
+
+	@Override
+	public boolean Create(String name) {
+		try {
+			AccomodationType acc = new AccomodationType();
+			acc.setName(name);
+
+			repository.save(acc);
+
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean Update(AccomodationType acc) {
+		try {
+			AccomodationType toUpdate = repository.getOne(acc.getId());
+			if (toUpdate.getVersion() != acc.getVersion()) {
+				return false;
+			}
+			toUpdate.setName(acc.getName());
+			repository.save(toUpdate);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean Delete(long id) {
+		try {
+			repository.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 }
