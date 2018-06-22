@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlweb/projekat/model/soap"
-    targetNamespace="http://xmlweb/projekat/model/soap" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlweb/projekat/soap/models/message"
+    targetNamespace="http://xmlweb/projekat/soap/models/message" elementFormDefault="qualified">
 
     <xs:complexType name="MessageSOAP">
         <xs:sequence>

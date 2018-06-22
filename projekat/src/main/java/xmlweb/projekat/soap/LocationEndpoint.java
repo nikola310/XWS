@@ -10,11 +10,11 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import xmlweb.projekat.model.dtos.LocationDTO;
-import xmlweb.projekat.model.soap.GetLocationRequest;
-import xmlweb.projekat.model.soap.GetLocationResponse;
-import xmlweb.projekat.model.soap.LocationRequest;
-import xmlweb.projekat.model.soap.LocationSOAP;
 import xmlweb.projekat.service.interfaces.LocationServiceInterface;
+import xmlweb.projekat.soap.models.location.GetLocationRequest;
+import xmlweb.projekat.soap.models.location.GetLocationResponse;
+import xmlweb.projekat.soap.models.location.LocationRequest;
+import xmlweb.projekat.soap.models.location.LocationSOAP;
 
 /**
  * @author Nikola
@@ -31,7 +31,7 @@ public class LocationEndpoint {
 		this.service = service;
 	}
 	
-	@PayloadRoot(namespace = UserEndpoint.NAMESPACE_URI, localPart = "getLocationRequest")
+	@PayloadRoot(namespace = "http://xmlweb/projekat/soap/models/location", localPart = "getLocationRequest")
 	@ResponsePayload
 	public GetLocationResponse getLocation(@RequestPayload GetLocationRequest request) {
 		GetLocationResponse response = new GetLocationResponse();

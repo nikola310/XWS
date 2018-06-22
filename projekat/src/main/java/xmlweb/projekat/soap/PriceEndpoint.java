@@ -10,10 +10,10 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import xmlweb.projekat.model.dtos.PriceDTO;
 import xmlweb.projekat.service.interfaces.PriceServiceInterface;
-import xmlweb.projekat.soap.models.GetPriceRequest;
-import xmlweb.projekat.soap.models.GetPriceResponse;
-import xmlweb.projekat.soap.models.PriceRequest;
-import xmlweb.projekat.soap.models.PriceSOAP;
+import xmlweb.projekat.soap.models.price.GetPriceRequest;
+import xmlweb.projekat.soap.models.price.GetPriceResponse;
+import xmlweb.projekat.soap.models.price.PriceRequest;
+import xmlweb.projekat.soap.models.price.PriceSOAP;
 
 /**
  * @author Nikola
@@ -29,7 +29,7 @@ public class PriceEndpoint {
 		this.service = service;
 	}
 
-	@PayloadRoot(namespace = UserEndpoint.NAMESPACE_URI, localPart = "getPriceRequest")
+	@PayloadRoot(namespace = "http://xmlweb/projekat/soap/models/price", localPart = "getPriceRequest")
 	@ResponsePayload
 	public GetPriceResponse getPrice(@RequestPayload GetPriceRequest request) {
 		GetPriceResponse response = new GetPriceResponse();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="http://xmlweb/projekat/soap/models"
-    targetNamespace="http://xmlweb/projekat/soap/models" elementFormDefault="qualified">
+    xmlns:tns="http://xmlweb/projekat/soap/models/comment"
+    targetNamespace="http://xmlweb/projekat/soap/models/comment" elementFormDefault="qualified">
     <xs:element name="getCommentRequest">
         <xs:complexType>
             <xs:sequence>

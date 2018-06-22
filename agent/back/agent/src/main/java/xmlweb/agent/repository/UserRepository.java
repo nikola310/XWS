@@ -14,4 +14,8 @@ import xmlweb.agent.model.UserType;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	public List<User> getUserByUserType(UserType type);
+	public User findRegularUserByUserName(String username);
+	public User findAdminByUserName(String username);
+		
+	
 }

@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import xmlweb.projekat.model.Accomodation;
+import xmlweb.projekat.model.BonusService;
 import xmlweb.projekat.model.Reservation;
+import xmlweb.projekat.model.dtos.AccomodationBonusDTO;
 import xmlweb.projekat.model.dtos.AccomodationDTO;
 import xmlweb.projekat.repository.AccomodationRepository;
+import xmlweb.projekat.repository.BonusServiceRepository;
 import xmlweb.projekat.repository.ReservationRepository;
 import xmlweb.projekat.service.interfaces.AccomodationServiceInterface;
 
@@ -21,6 +24,9 @@ public class AccomodationService implements AccomodationServiceInterface {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
+	
+	@Autowired
+	private BonusServiceRepository bonusServiceRepository;
 
 	@Override
 	public List<AccomodationDTO> findAllAccomodation() {
@@ -104,6 +110,23 @@ public class AccomodationService implements AccomodationServiceInterface {
 		}
 
 		return accomodationDTOList;
+	}
+
+	@Override
+	public List<AccomodationBonusDTO> findAllAccomodationBonus() {
+		List<AccomodationBonusDTO> retVal = new ArrayList<AccomodationBonusDTO>();
+		
+		for(BonusService bs : bonusServiceRepository.findAll()) {
+			List<Accomodation> accList = accomodationRepository.findAccomodationByBonusService(bs.getId());
+			for(Accomodation a : accList) {
+				AccomodationBonusDTO ab = new AccomodationBonusDTO();
+				ab.setAccomodationId(a.getId());
+				ab.setBonusId(bs.getId());
+				retVal.add(ab);
+			}
+		}
+		
+		return retVal;
 	}
 
 }

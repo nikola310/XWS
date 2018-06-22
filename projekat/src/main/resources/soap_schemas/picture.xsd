@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlweb/projekat/model/soap"
-    targetNamespace="http://xmlweb/projekat/model/soap" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlweb/projekat/soap/models/picture"
+    targetNamespace="http://xmlweb/projekat/soap/models/picture" elementFormDefault="qualified">
     <xs:element name="getPictureResponse">
         <xs:complexType>
             <xs:sequence>

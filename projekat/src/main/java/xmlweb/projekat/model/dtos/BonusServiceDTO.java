@@ -4,6 +4,7 @@ public class BonusServiceDTO {
 	
 	private long id;
 	private String name;
+	private int version;
 	
 	public BonusServiceDTO(long id, String name) {
 		super();
@@ -23,6 +24,13 @@ public class BonusServiceDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 	
 }

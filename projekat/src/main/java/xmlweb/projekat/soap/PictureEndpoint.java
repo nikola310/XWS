@@ -10,11 +10,11 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import xmlweb.projekat.model.dtos.PictureDTO;
-import xmlweb.projekat.model.soap.GetPictureRequest;
-import xmlweb.projekat.model.soap.GetPictureResponse;
-import xmlweb.projekat.model.soap.PictureRequest;
-import xmlweb.projekat.model.soap.PictureSOAP;
 import xmlweb.projekat.service.interfaces.PictureServiceInterface;
+import xmlweb.projekat.soap.models.picture.GetPictureRequest;
+import xmlweb.projekat.soap.models.picture.GetPictureResponse;
+import xmlweb.projekat.soap.models.picture.PictureRequest;
+import xmlweb.projekat.soap.models.picture.PictureSOAP;
 
 /**
  * @author Nikola
@@ -31,7 +31,7 @@ public class PictureEndpoint {
 		this.service = service;
 	}
 	
-	@PayloadRoot(namespace = UserEndpoint.NAMESPACE_URI, localPart = "getPictureRequest")
+	@PayloadRoot(namespace = "http://xmlweb/projekat/soap/models/picture", localPart = "getPictureRequest")
 	@ResponsePayload
 	public GetPictureResponse getPicture(@RequestPayload GetPictureRequest request) {
 		GetPictureResponse response = new GetPictureResponse();
