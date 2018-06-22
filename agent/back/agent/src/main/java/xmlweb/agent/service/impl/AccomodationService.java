@@ -2,6 +2,7 @@ package xmlweb.agent.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -104,6 +105,30 @@ public class AccomodationService implements AccomodationServiceInterface {
 		}
 
 		return accomodationDTOList;
+	}
+
+	@Override
+	public Accomodation findOne(long id) {
+		Optional<Accomodation> a = accomodationRepository.findById(id);
+		
+		if(a.isPresent())
+			return a.get();
+		else
+			return null;	
+	}
+
+	@Override
+	public void Create(Accomodation a) {
+		accomodationRepository.save(a);
+	}
+
+	@Override
+	public void Update(Accomodation a) {
+		Optional<Accomodation> atemp = accomodationRepository.findById(a.getId());
+		if(atemp.isPresent()) {
+			atemp.get().setCapacity(a.getCapacity());
+			atemp.get().setLocation(a.getLocation());
+		}
 	}
 
 }
