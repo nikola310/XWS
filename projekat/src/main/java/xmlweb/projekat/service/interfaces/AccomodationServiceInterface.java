@@ -3,7 +3,9 @@ package xmlweb.projekat.service.interfaces;
 import java.util.List;
 
 import xmlweb.projekat.model.Reservation;
+import xmlweb.projekat.model.dtos.AccomodationAdminDTO;
 import xmlweb.projekat.model.dtos.AccomodationDTO;
+import xmlweb.projekat.model.dtos.CategoryDTO;
 
 public interface AccomodationServiceInterface {
 
@@ -18,4 +20,8 @@ public interface AccomodationServiceInterface {
 	List<AccomodationDTO> findAccomodationsByType(long typeId);
 	
 	List<AccomodationDTO> findAccomodationsByCategory(int categoryId);
+	
+	List<AccomodationAdminDTO> forAdmin();
+	
+	boolean setCategory(CategoryDTO dto);
 }

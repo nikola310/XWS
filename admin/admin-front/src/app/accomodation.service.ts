@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Http, Response } from "@angular/http";
 import { Observable } from 'rxjs/Rx';
-import { UserInterface } from "../app/user-interface";
 import { Accomodation } from "../app/accomodation";
+import { AccRank } from "../app/acc-rank";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ import { Accomodation } from "../app/accomodation";
 export class AccomodationService {
 
   private baseUrl = "http://localhost:8089/booking/types";
+  private accType = "http://localhost:8089/booking";
 
   constructor(private http: HttpClient) { }
 
@@ -42,9 +43,19 @@ export class AccomodationService {
     return this.http.put(this.baseUrl, body, options).catch(this.handleError);
   }
 
+  public getAccomodations(): Observable<AccRank[]>{
+    return this.http.get<AccRank[]>(this.accType + '/acc_admin').catch(this.handleError);
+  }
+  
+  public setRank(dto: string){
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Token': sessionStorage.getItem('Token') })
+    };
+    return this.http.post(this.accType + '/acc_category', dto, options).catch(this.handleError);
+  }
+
   private handleError(error: Response) {
     return Observable.throw(error.statusText);
   }
-
 
 }

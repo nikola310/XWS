@@ -1,0 +1,81 @@
+input {
+    display: block;
+  }
+  
+  button {
+      padding: 2px;
+  }
+  
+  button:hover {
+      cursor: pointer;
+  }
+  
+  .tabela-agenti{
+    text-align: center;
+    align-content: center;
+  }
+  
+  .tabela-agenti th{
+    background-color: #2885C4; //#393939;
+    border-color: black;//#2885C4;
+  }
+  
+  
+  .tabela-agenti tbody{
+    width: 100%;
+  }
+  
+  .tabela-agenti tbody td{
+    background-color: #3FA0E1;
+  }
+  
+  .tabela-agenti tr{
+    width: 100%;
+    align-items: center;
+    align-content: center;
+  }
+  
+  .table
+  {
+    width: 100%;
+      display:table;
+      border-collapse:separate;
+    border-spacing:2px;
+    align-items: center;
+    align-content: center;
+  }
+  .thead
+  {
+      display:table-header-group;
+      color:white;
+      font-weight:bold;
+      background-color:grey;
+  }
+  .tbody
+  {
+      display:table-row-group;
+  }
+  .tr
+  {
+    display:table-row;
+    align-items: center;
+    align-content: center;
+  }
+  .td
+  {
+    display:table-cell;
+    align-items: center;
+    align-content: center;
+      border:1px solid black;
+    padding:1px;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .tr.editing .td INPUT
+  {
+      width:100px;
+  }
+  
+  .td input {
+    margin: 0 auto;
+  }

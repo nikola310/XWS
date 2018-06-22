@@ -8,7 +8,10 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,22 +19,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import xmlweb.projekat.model.Price;
 import xmlweb.projekat.model.Reservation;
+import xmlweb.projekat.model.dtos.AccomodationAdminDTO;
 import xmlweb.projekat.model.dtos.AccomodationDTO;
 import xmlweb.projekat.model.dtos.AvailableAccomodationDTO;
+import xmlweb.projekat.model.dtos.CategoryDTO;
 import xmlweb.projekat.model.dtos.ReservationDTO;
+import xmlweb.projekat.security.TokenValidator;
 import xmlweb.projekat.service.interfaces.AccomodationServiceInterface;
 import xmlweb.projekat.service.interfaces.ReservationServiceInterface;
 
 @RestController
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4300" })
 public class AccomodationController {
 
 	@Autowired
 	private AccomodationServiceInterface service;
-	
+
 	@Autowired
 	private ReservationServiceInterface reservationService;
 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
 	public List<AvailableAccomodationDTO> findAccomodationsByParameters(
 			@RequestParam(value = "destination", required = true) String destination,
@@ -44,7 +50,7 @@ public class AccomodationController {
 
 		List<AccomodationDTO> accomodations = service.findAccomodationByDestination(destination);
 
-		//=====================provjera bonus servisa=======================
+		// =====================provjera bonus servisa=======================
 		if (bonus != null) {
 
 			String[] bservices = bonus.split(",");
@@ -84,15 +90,13 @@ public class AccomodationController {
 				}
 			}
 		}
-		//=====================kraj provjere bonus servisa=======================
-		
-		
-		
-		//=====================provjera tipa smjestaja===========================		
-		if(type != null){
+		// =====================kraj provjere bonus servisa=======================
+
+		// =====================provjera tipa smjestaja===========================
+		if (type != null) {
 			List<AccomodationDTO> accomodationsByType = new ArrayList<AccomodationDTO>();
 			accomodationsByType = service.findAccomodationsByType(Long.parseLong(type));
-			
+
 			for (int i = accomodations.size() - 1; i >= 0; i--) {
 				boolean flag2 = false;
 				for (int j = 0; j < accomodationsByType.size(); j++) {
@@ -108,14 +112,13 @@ public class AccomodationController {
 				}
 			}
 		}
-		//=====================kraj provjere tipa smjestaja======================
-		
-		
-		//=====================provjera kategorije smjestaja=====================
-		if(category != null){
+		// =====================kraj provjere tipa smjestaja======================
+
+		// =====================provjera kategorije smjestaja=====================
+		if (category != null) {
 			List<AccomodationDTO> accomodationsByCategory = new ArrayList<AccomodationDTO>();
 			accomodationsByCategory = service.findAccomodationsByCategory(Integer.parseInt(category));
-			
+
 			for (int i = accomodations.size() - 1; i >= 0; i--) {
 				boolean flag2 = false;
 				for (int j = 0; j < accomodationsByCategory.size(); j++) {
@@ -131,64 +134,62 @@ public class AccomodationController {
 				}
 			}
 		}
-		//=====================kraj provjere kategorije smjestaja=====================
-		
-		//=====================provjera slobodnih smjestaja===========================
+		// =====================kraj provjere kategorije smjestaja=====================
+
+		// =====================provjera slobodnih smjestaja===========================
 		long checkInDate = Long.parseLong(checkin);
 		long checkOutDate = Long.parseLong(checkout);
-		
+
 		List<ReservationDTO> reservations = reservationService.findReservationsBetweenDates(checkInDate, checkOutDate);
 		Map<AccomodationDTO, List<ReservationDTO>> accomodationReservations = new HashMap<AccomodationDTO, List<ReservationDTO>>();
-		
-		for(AccomodationDTO a:accomodations){
+
+		for (AccomodationDTO a : accomodations) {
 			List<ReservationDTO> res = new ArrayList<ReservationDTO>();
-			for(int i = 0; i < reservations.size(); i++){		
-				if(a.getId() == reservations.get(i).getAccomodation()){
+			for (int i = 0; i < reservations.size(); i++) {
+				if (a.getId() == reservations.get(i).getAccomodation()) {
 					res.add(reservations.get(i));
 				}
 			}
-			
+
 			accomodationReservations.put(a, res);
 		}
-		
-		
+
 		List<AccomodationDTO> freeAccomodations = new ArrayList<AccomodationDTO>();
-		
-		for(Map.Entry<AccomodationDTO, List<ReservationDTO>> entry : accomodationReservations.entrySet()){
+
+		for (Map.Entry<AccomodationDTO, List<ReservationDTO>> entry : accomodationReservations.entrySet()) {
 			boolean flag = true;
-			for(long i = checkInDate; i < checkOutDate; i+=86400000){
+			for (long i = checkInDate; i < checkOutDate; i += 86400000) {
 				int capacity = entry.getKey().getCapacity();
 				List<ReservationDTO> validReservations = new ArrayList<ReservationDTO>();
-				
-				for(ReservationDTO r : entry.getValue()){
-					if(r.getStartDate() <= i && r.getEndDate() > i){
+
+				for (ReservationDTO r : entry.getValue()) {
+					if (r.getStartDate() <= i && r.getEndDate() > i) {
 						validReservations.add(r);
 					}
 				}
-				
+
 				int reserved = 0;
-				for(ReservationDTO r:validReservations){
-					reserved+=r.getNumberOfPersons();
+				for (ReservationDTO r : validReservations) {
+					reserved += r.getNumberOfPersons();
 				}
-				
+
 				int free = capacity - reserved;
-				
-				if(free < Integer.parseInt(guests)){
+
+				if (free < Integer.parseInt(guests)) {
 					flag = false;
 				}
 			}
-			if(flag==true){
+			if (flag == true) {
 				freeAccomodations.add(entry.getKey());
 			}
-			
+
 		}
-		
+
 		System.out.println("Koliko ima slobodnih smjestaja? " + freeAccomodations.size());
-		for(int i = 0; i < freeAccomodations.size(); i++){
+		for (int i = 0; i < freeAccomodations.size(); i++) {
 			System.out.println("Smjestaj " + freeAccomodations.get(i).getId());
 		}
-		
-		
+
 		for (int i = accomodations.size() - 1; i >= 0; i--) {
 			boolean flag3 = false;
 			for (int j = 0; j < freeAccomodations.size(); j++) {
@@ -203,37 +204,36 @@ public class AccomodationController {
 				accomodations.remove(i);
 			}
 		}
-		
-		//=====================kraj provjere slobodnih smjestaja==========================
-		
-		
-		//=====================racunanje cijene smjestaja=================================
+
+		// =====================kraj provjere slobodnih
+		// smjestaja==========================
+
+		// =====================racunanje cijene
+		// smjestaja=================================
 		List<AvailableAccomodationDTO> availableAccomodations = new ArrayList<AvailableAccomodationDTO>();
-		
-		for(AccomodationDTO a : accomodations){
+
+		for (AccomodationDTO a : accomodations) {
 			int accPrice = 0;
-			for(long i = checkInDate; i < checkOutDate; i+=86400000){
-				for(Price p : a.getPrices()){
-					if((i>=p.getStartDate()) && (i<p.getEndDate())){
-						accPrice+=p.getPrice();
+			for (long i = checkInDate; i < checkOutDate; i += 86400000) {
+				for (Price p : a.getPrices()) {
+					if ((i >= p.getStartDate()) && (i < p.getEndDate())) {
+						accPrice += p.getPrice();
 						break;
 					}
 				}
-				
+
 			}
 			System.out.println("Cijena smjestaja: " + accPrice);
-			
-			AvailableAccomodationDTO aa = new AvailableAccomodationDTO(a.getId(), a.getName(), a.getType(), a.getCategory(), a.getBonusServices(), a.getComments(), accPrice, a.getLocation());
+
+			AvailableAccomodationDTO aa = new AvailableAccomodationDTO(a.getId(), a.getName(), a.getType(),
+					a.getCategory(), a.getBonusServices(), a.getComments(), accPrice, a.getLocation());
 			availableAccomodations.add(aa);
 		}
-		
-		
-	
+
 		return availableAccomodations;
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/accomodations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
 	public List<AccomodationDTO> findAllAccomodations() {
 
@@ -281,18 +281,31 @@ public class AccomodationController {
 		}
 		return accomodations;
 	}
-	
-	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@RequestMapping(value = "/reservationsdates", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
 	public List<ReservationDTO> findAllReservationsBetweenDates(
 			@RequestParam(value = "checkin", required = false) String checkin,
 			@RequestParam(value = "checkout", required = false) String checkout) {
-		
+
 		long checkInDate = Long.parseLong(checkin);
 		long checkOutDate = Long.parseLong(checkout);
-		
+
 		return reservationService.findReservationsBetweenDates(checkInDate, checkOutDate);
-		
 	}
+
+	@RequestMapping(value = "/acc_admin", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+	public List<AccomodationAdminDTO> getAccomodations() {
+		return service.forAdmin();
+	}
+
+	@RequestMapping(value = "/acc_category", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
+	public boolean setCategory(@RequestHeader(value = "User-Agent", required = true) String userAgent,
+			@RequestHeader(value = "Token", required = true) String token, @Validated @RequestBody CategoryDTO dto) {
+
+		if (!TokenValidator.validateAdmin(userAgent, token)) {
+			return false;
+		}
+		return service.setCategory(dto);
+	}
+
 }

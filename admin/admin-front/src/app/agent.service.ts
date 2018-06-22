@@ -25,7 +25,7 @@ export class AgentService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Token' : token})
     };
-    console.log(httpOptions.toString());
+    
 	  return this.http.post(this.baseUrl + '/agent?user=' + id, data, httpOptions).catch(this.handleError);
   }
 }

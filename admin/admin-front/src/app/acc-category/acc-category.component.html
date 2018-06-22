@@ -1,3 +1,57 @@
-<p>
-  acc-category works!
-</p>
+<head>
+  <title>Manage users</title>
+</head>
+
+<ul>
+  <li>
+    <a routerLink="../users">Users</a>
+  </li>
+  <li>
+    <a routerLink="../agents">Agents</a>
+  </li>
+  <li>
+    <a routerLink="../comments">Comments</a>
+  </li>
+  <li>
+    <a routerLink="../acc-type">Accomodation Types</a>
+  </li>
+  <li>
+    <a routerLink="../acc-category">Accomodation categories</a>
+  </li>
+</ul>
+
+<div class="table">
+  <div class="thead">
+    <div class="tr">
+      <div class="td">Name</div>
+      <div class="td">Type</div>
+      <div class="td">Capacity</div>
+      <div class="td">Location</div>
+      <div class="td">Category</div>
+      <div class="td">Change to</div>
+      <div class="td">Action</div>
+    </div>
+  </div>
+  <div class="tbody" *ngFor="let acc of accomodations; let i = index">
+    <form class="tr" #data="ngForm">
+      <div class="td">{{ acc.accomodationName }}</div>
+      <div class="td">{{ acc.accomodationType }}</div>
+      <div class="td">{{ acc.capacity }}</div>
+      <div class="td">{{ acc.location }}</div>
+      <div class="td">{{ acc.category }}</div>
+      <div class="td">
+        <select [(ngModel)]="data.category" name="category">
+          <option value="0">No category</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <div class="td action">
+        <button (click)="setCategory(acc.id, data.category, acc.version)">EDIT</button>
+      </div>
+    </form>
+  </div>
+</div>

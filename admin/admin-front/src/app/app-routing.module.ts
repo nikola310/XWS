@@ -5,6 +5,8 @@ import { UsersComponent } from './users/users.component';
 import { AgentsComponent } from "./agents/agents.component";
 import { CommentsComponent } from "./comments/comments.component";
 import { AccomodationTypeComponent } from "./accomodation-type/accomodation-type.component";
+import { AccCategoryComponent } from "./acc-category/acc-category.component";
+import { BonusTypesComponent } from "./bonus-types/bonus-types.component";
 
 const routes: Routes = [
   {
@@ -26,6 +28,13 @@ const routes: Routes = [
   {
     path: 'comments',
     component: CommentsComponent
+  },
+  {
+    path: 'acc-category',
+    component: AccCategoryComponent
+  },{
+    path: 'bonus-types',
+    component: BonusTypesComponent
   }
 ];
 
