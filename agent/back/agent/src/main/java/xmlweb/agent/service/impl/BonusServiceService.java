@@ -82,8 +82,13 @@ public class BonusServiceService implements BonusServiceInterface{
 
 	@Override
 	public boolean Delete(long id) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			repository.deleteById(id);
+			return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	

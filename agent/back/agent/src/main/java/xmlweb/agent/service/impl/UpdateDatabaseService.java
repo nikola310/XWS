@@ -143,7 +143,7 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 		System.out.println("Puca 2");
 		this.UpdateBonusServices();
 		System.out.println("Puca 3");
-		this.UpdateAccomodations();
+		//this.UpdateAccomodations();
 		System.out.println("Puca 4");
 		this.UpdateAccomodationBonusServices();
 		System.out.println("Puca 5");
@@ -398,22 +398,24 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 	public void UpdateAccomodationTypes() {
 		ArrayList<AccomodationType> queryList = accomodationTypeService.ReadAll();
 		GetAccomodationTypeRequest glreq = new GetAccomodationTypeRequest();
-		
+		System.out.println("dsfsdfsfdsf");
 		for(AccomodationType at : queryList) {
 			AccomodationTypeRequest atr = new AccomodationTypeRequest();
 			atr.setEntityId((int) at.getId());
 			atr.setEntityVersion(at.getVersion());	
 			glreq.getRequestEntity().add(atr);
 		}
-		
+		System.out.println("dsfsdfsfdsf2");
 		WebServiceTemplate wst = new WebServiceTemplate();
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+		System.out.println("dsfsdfsfdsf3");
 		marshaller.setContextPath("xmlweb.agent.soap.models.accomodation_type");
 		wst.setDefaultUri("http://localhost:8089/booking/ws/accomodation_type.wsdl");
 		wst.setMarshaller(marshaller);
 		wst.setUnmarshaller(marshaller);
+		System.out.println("dsfsdfsfdsf3.5");
 		GetAccomodationTypeResponse glres = (GetAccomodationTypeResponse) wst.marshalSendAndReceive(glreq);
-		
+		System.out.println("dsfsdfsfdsf4");
 		for(AccomodationTypeSOAP ats : glres.getEntity()) {
 			AccomodationType at = new AccomodationType();
 			at.setId(ats.getAccomodationTypeId());
@@ -513,21 +515,25 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 		
 		WebServiceTemplate wst = new WebServiceTemplate();
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		marshaller.setContextPath("xmlweb.agent.soap.models.bonus_servuce");
+		marshaller.setContextPath("xmlweb.agent.soap.models.bonus_service");
 		wst.setDefaultUri("http://localhost:8089/booking/ws/bonus_service.wsdl");
 		wst.setMarshaller(marshaller);
 		wst.setUnmarshaller(marshaller);
 		
 		GetBonusServiceResponse glres = (GetBonusServiceResponse) wst.marshalSendAndReceive(glreq);
 		
+		ArrayList<BonusService> lista = new ArrayList<>();
 		for(BonusServiceSOAP bss : glres.getEntity()) {
 			BonusService bs = new BonusService();
 			bs.setId(bss.getBonusServiceId());
 			bs.setVersion(bss.getEntityVersion());
 			bs.setName(bss.getName());
 			
-			bonusServiceRepo.save(bs);
+			//bonusServiceRepo.save(bs);
+			lista.add(bs);
 		}
+		
+		bonusServiceRepo.saveAll(lista);
 		
 	}
 	@Override

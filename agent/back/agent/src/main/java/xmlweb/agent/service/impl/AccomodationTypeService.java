@@ -46,14 +46,12 @@ public class AccomodationTypeService implements AccomodationTypeServiceInterface
 
 	@Override
 	public AccomodationType Read(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getOne(id);
 	}
 
 	@Override
 	public ArrayList<AccomodationType> ReadAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (ArrayList<AccomodationType>)repository.findAll();
 	}
 
 	@Override

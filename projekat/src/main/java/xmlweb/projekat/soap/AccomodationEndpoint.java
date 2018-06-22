@@ -27,7 +27,7 @@ public class AccomodationEndpoint {
 		this.service = service;
 	}
 	
-	@PayloadRoot(namespace = "http://xmlweb/projekat/soap/models/accomodation", localPart = "getAccomodataionRequest")
+	@PayloadRoot(namespace = "http://xmlweb/projekat/soap/models/accomodation", localPart = "getAccomodationRequest")
 	@ResponsePayload
 	public GetAccomodationResponse getAccomodation(@RequestPayload GetAccomodationRequest request) {
 		GetAccomodationResponse response = new GetAccomodationResponse();
