@@ -1,6 +1,7 @@
 package xmlweb.projekat.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +111,12 @@ public class MessageService implements MessageServiceInterface {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public List<Message> findMessagesByUser(long id) {
+		// TODO Auto-generated method stub
+		return repository.findMessagesByUser(id);
 	}
 
 }

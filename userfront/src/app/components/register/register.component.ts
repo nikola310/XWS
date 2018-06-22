@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
              + " \"password\":\"" + data.password + "\","
              + " \"firstName\":\"" + data.firstname + "\"," 
              + " \"lastName\":\"" + data.lastname + "\"," 
-             + " \"version\":1,"                    
+             + " \"version\":0,"                    
              + " \"userType\":\"USER\"}";
     
     this.dataService.register(this.data).subscribe((response: boolean) => 

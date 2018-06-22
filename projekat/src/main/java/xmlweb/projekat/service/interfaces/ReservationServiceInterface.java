@@ -2,6 +2,7 @@ package xmlweb.projekat.service.interfaces;
 
 import java.util.List;
 
+import xmlweb.projekat.model.Reservation;
 import xmlweb.projekat.model.dtos.ReservationDTO;
 
 /**
@@ -11,4 +12,6 @@ import xmlweb.projekat.model.dtos.ReservationDTO;
 public interface ReservationServiceInterface extends ServiceInterface<ReservationDTO> {
 	
 	List<ReservationDTO> findReservationsBetweenDates(long checkInDate, long checkOutDate);
+	
+	List<Reservation> findReservationsByUser(long id);
 }

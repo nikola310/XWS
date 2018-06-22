@@ -8,13 +8,13 @@ import javax.validation.constraints.NotNull;
  */
 public class CommentDTO {
 
-	@NotNull
+	
 	private long id;
 	@NotNull
 	private String content;
 	@NotNull
 	private int rating;
-	@NotNull
+	
 	private Boolean approved;
 	@NotNull
 	private long accomodation;
@@ -25,8 +25,11 @@ public class CommentDTO {
 	
 	private String authorName;
 	private String accomodationName;
-
-	public CommentDTO(@NotNull long id, @NotNull String content, @NotNull int rating, @NotNull Boolean approved,
+	
+	public CommentDTO(){
+		
+	}
+	public CommentDTO(long id, @NotNull String content, @NotNull int rating, Boolean approved,
 			@NotNull long accomodation, @NotNull int version, @NotNull long author) {
 		super();
 		this.id = id;

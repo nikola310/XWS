@@ -4,19 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import xmlweb.agent.service.interfaces.LoginServiceInterface;
-import xmlweb.agent.service.interfaces.SoapClientServiceInterface;
+import xmlweb.agent.service.interfaces.UpdateDatabaseServiceInterface;
 
 @Service
 public class LoginService implements LoginServiceInterface {
 
 	@Autowired
-	private SoapClientServiceInterface soapService;
+	private UpdateDatabaseServiceInterface updateDatabaseService;
 	
 	@Override
 	public String loginUser(String username, String password) {
 		// ako je ok generisemo token i updateujemo bazu
 		
-		soapService.SyncDB();
+		updateDatabaseService.SyncDB();
 		
 		//ako nije vracamo null
 		

@@ -44,7 +44,7 @@ public class LoginController {
 		String token = TokenGenerator.createJWT(user.getUserName(), 7200000, userAgent);
 		System.out.println(token);
 
-		return "{ \"status\":\"success\", \"info\":\"" + token + "\"}";
+		return "{ \"status\":\"success\", \"info\":\"" + token + "\", \"userId\":" + user.getId() +"}";
 	}
 
 	@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4300"})

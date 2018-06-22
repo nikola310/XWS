@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="http://xmlweb/projekat/soap/models"
-    targetNamespace="http://xmlweb/projekat/soap/models" elementFormDefault="qualified">
+    xmlns:tns="http://xmlweb/projekat/soap/models/bonus_service"
+    targetNamespace="http://xmlweb/projekat/soap/models/bonus_service" elementFormDefault="qualified">
     <xs:element name="getBonusServiceRequest">
         <xs:complexType>
             <xs:sequence>

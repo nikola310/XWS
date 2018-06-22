@@ -72,6 +72,11 @@ export class SearchComponent implements OnInit {
   
     this.checkIn = new Date(data.checkin);
     this.checkOut = new Date(data.checkout);
+
+    this._dataService.setSearchCheckIn(this.checkIn.valueOf());
+    this._dataService.setSearchCheckOut(this.checkOut.valueOf());
+    this._dataService.setGuests(data.guests);
+    
     this.url = 'http://localhost:8089/booking/search?destination='+data.destination+'&checkin='+this.checkIn.valueOf()+'&checkout='+this.checkOut.valueOf()+'&guests='+data.guests;
     
 

@@ -36,7 +36,7 @@ public class CommentController {
 		this.service = service;
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
 	public boolean createComment(@Validated @RequestBody CommentDTO c) {
 		return service.Create(c);
 	}
@@ -51,7 +51,7 @@ public class CommentController {
 		return service.ReadAll();
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.PUT)
 	public boolean updateComment(@Validated @RequestBody CommentDTO c) {
 		return service.Update(c);
 	}

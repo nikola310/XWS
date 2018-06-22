@@ -123,7 +123,7 @@
 					<outputDirectory>${project.basedir}/src/main/java</outputDirectory>
 					<clearOutputDir>false</clearOutputDir>
 				</configuration>
-</plugin>
+			</plugin>
 		</plugins>
 	</build>
 

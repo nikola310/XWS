@@ -11,10 +11,10 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import xmlweb.projekat.model.dtos.ReservationDTO;
 import xmlweb.projekat.service.interfaces.ReservationServiceInterface;
-import xmlweb.projekat.soap.models.GetReservationRequest;
-import xmlweb.projekat.soap.models.GetReservationResponse;
-import xmlweb.projekat.soap.models.ReservationRequest;
-import xmlweb.projekat.soap.models.ReservationSOAP;
+import xmlweb.projekat.soap.models.reservation.GetReservationRequest;
+import xmlweb.projekat.soap.models.reservation.GetReservationResponse;
+import xmlweb.projekat.soap.models.reservation.ReservationRequest;
+import xmlweb.projekat.soap.models.reservation.ReservationSOAP;
 
 /**
  * @author Nikola
@@ -31,7 +31,7 @@ public class ReservationEndpoint {
 		this.service = service;
 	}
 	
-	@PayloadRoot(namespace = UserEndpoint.NAMESPACE_URI, localPart = "getReservationRequest")
+	@PayloadRoot(namespace = "http://xmlweb/projekat/soap/models/reservation", localPart = "getReservationRequest")
 	@ResponsePayload
 	public GetReservationResponse getReservation(@RequestPayload GetReservationRequest request) {
 		GetReservationResponse response = new GetReservationResponse();

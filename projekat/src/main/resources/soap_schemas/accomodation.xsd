@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="http://xmlweb/projekat/soap/models"
-    targetNamespace="http://xmlweb/projekat/soap/models" elementFormDefault="qualified">
+    xmlns:tns="http://xmlweb/projekat/soap/models/accomodation"
+    targetNamespace="http://xmlweb/projekat/soap/models/accomodation" elementFormDefault="qualified">
     <xs:complexType name="AccomodationSOAP">
         <xs:sequence>
             <xs:element name="accomodation_id">
@@ -27,9 +27,10 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="accomodation_type">
-                <xs:simpleType>
-                    <xs:restriction base="xs:int">
+            <xs:element name="accomodation_type" type="xs:string"/>
+            <xs:element name="version">
+            	<xs:simpleType>
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>

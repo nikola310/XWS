@@ -10,11 +10,11 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import xmlweb.projekat.model.dtos.MessageDTO;
-import xmlweb.projekat.model.soap.GetMessageRequest;
-import xmlweb.projekat.model.soap.GetMessageResponse;
-import xmlweb.projekat.model.soap.MessageRequest;
-import xmlweb.projekat.model.soap.MessageSOAP;
 import xmlweb.projekat.service.interfaces.MessageServiceInterface;
+import xmlweb.projekat.soap.models.message.GetMessageRequest;
+import xmlweb.projekat.soap.models.message.GetMessageResponse;
+import xmlweb.projekat.soap.models.message.MessageRequest;
+import xmlweb.projekat.soap.models.message.MessageSOAP;
 
 /**
  * @author Nikola
@@ -31,7 +31,7 @@ public class MessageEndpoint {
 		this.service = service;
 	}
 
-	@PayloadRoot(namespace = UserEndpoint.NAMESPACE_URI, localPart = "getMessageRequest")
+	@PayloadRoot(namespace = "http://xmlweb/projekat/soap/models/message", localPart = "getMessageRequest")
 	@ResponsePayload
 	public GetMessageResponse getMessage(@RequestPayload GetMessageRequest request) {
 		GetMessageResponse response = new GetMessageResponse();

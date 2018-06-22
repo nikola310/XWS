@@ -6,12 +6,14 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import xmlweb.projekat.model.Picture;
 import xmlweb.projekat.model.dtos.PictureDTO;
 import xmlweb.projekat.service.interfaces.PictureServiceInterface;
 
@@ -50,5 +52,11 @@ public class PictureController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public boolean deletePicture(@PathVariable long id) {
 		return service.Delete(id);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(value="accomodation/{id}", method = RequestMethod.GET)
+	public List<Picture> readPicturesByAccomodation(@PathVariable long id) {
+		return service.findPicturesByAccomodation(id);
 	}
 }

@@ -11,15 +11,13 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import xmlweb.projekat.model.dtos.UserDTO;
 import xmlweb.projekat.service.interfaces.UserServiceInterface;
-import xmlweb.projekat.soap.models.GetUserRequest;
-import xmlweb.projekat.soap.models.GetUserResponse;
-import xmlweb.projekat.soap.models.UserRequest;
-import xmlweb.projekat.soap.models.UserSOAP;
+import xmlweb.projekat.soap.models.user.GetUserRequest;
+import xmlweb.projekat.soap.models.user.GetUserResponse;
+import xmlweb.projekat.soap.models.user.UserRequest;
+import xmlweb.projekat.soap.models.user.UserSOAP;
 
 @Endpoint
 public class UserEndpoint {
-
-	public static final String NAMESPACE_URI = "http://xmlweb/projekat/model/soap";
 
 	private UserServiceInterface service;
 
@@ -28,7 +26,7 @@ public class UserEndpoint {
 		this.service = service;
 	}
 
-	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserRequest")
+	@PayloadRoot(namespace = "http://xmlweb/projekat/soap/models/user", localPart = "getUserRequest")
 	@ResponsePayload
 	public GetUserResponse getUser(@RequestPayload GetUserRequest request) {
 		GetUserResponse response = new GetUserResponse();

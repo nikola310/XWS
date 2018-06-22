@@ -19,6 +19,7 @@ public class AccomodationDTO {
 	private List<Price> prices;
 	private int capacity;
 	private Location location;
+	private long version;
 	
 	
 	public AccomodationDTO(long id, String name, AccomodationType type, int category, List<BonusService> bonusServices,
@@ -87,6 +88,12 @@ public class AccomodationDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public long getVersion() {
+		return version;
+	}
+	public void setVersion(long version) {
+		this.version = version;
 	}
 	
 }

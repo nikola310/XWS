@@ -6,16 +6,10 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UserService {
 
-  private jsonToken:string = null;
-  public serviceMessages:Observable<String>;
+  private jsonToken: string = null;
+  public serviceMessages: Observable<String>;
 
-  constructor(public http:Http) { }
-
-  ngOnInit() { }
-
-  getServiceMessages() {
-    return this.serviceMessages;
-  }
+  constructor(public http: Http) { }
 
   testHttp() {
     return this.http.get('http://localhost:5000/login').map(res => res.json());
@@ -23,22 +17,16 @@ export class UserService {
 
   testHttp2() {
     this.testHttp().subscribe(res => {
-      console.log(res.data)
+      console.log(res.data);
     });
   }
 
-  login(username, password) {
-  	// http service
-    this.testHttp2();
-
-    this.serviceMessages = new Observable(observer => {
-      observer.next('user_status,online');
-      observer.complete();
-    });
+  login(login_data) {
+    return this.http.post('http://localhost:8090/agent/user/login', login_data).map(res => res.json());
   }
 
   logout() {
-  	console.log('User logout.');
+    console.log('User logout.');
     this.jsonToken = '';
     this.serviceMessages = new Observable(observer => {
       observer.next('user_status,offline');
