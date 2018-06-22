@@ -5,6 +5,7 @@ import java.util.List;
 import xmlweb.projekat.model.BonusService;
 import xmlweb.projekat.model.Comment;
 import xmlweb.projekat.model.Location;
+import xmlweb.projekat.model.Picture;
 
 public class AvailableAccomodationDTO {
 	
@@ -16,10 +17,10 @@ public class AvailableAccomodationDTO {
 	private List<Comment> comments;
 	private int price;
 	private Location location;
-	
+	private List<Picture> pictures;
 	
 	public AvailableAccomodationDTO(long id, String name, String type, int category, List<BonusService> bonusServices,
-			List<Comment> comments, int price, Location location) {
+			List<Comment> comments, int price, Location location, List<Picture> pictures) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -29,6 +30,13 @@ public class AvailableAccomodationDTO {
 		this.comments = comments;
 		this.price = price;
 		this.location = location;
+		this.pictures = pictures;
+	}
+	public List<Picture> getPictures() {
+		return pictures;
+	}
+	public void setPictures(List<Picture> pictures) {
+		this.pictures = pictures;
 	}
 	public long getId() {
 		return id;

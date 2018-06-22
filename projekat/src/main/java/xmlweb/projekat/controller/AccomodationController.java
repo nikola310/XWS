@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import xmlweb.projekat.model.Picture;
 import xmlweb.projekat.model.Price;
 import xmlweb.projekat.model.Reservation;
 import xmlweb.projekat.model.dtos.AccomodationDTO;
 import xmlweb.projekat.model.dtos.AvailableAccomodationDTO;
 import xmlweb.projekat.model.dtos.ReservationDTO;
 import xmlweb.projekat.service.interfaces.AccomodationServiceInterface;
+import xmlweb.projekat.service.interfaces.PictureServiceInterface;
 import xmlweb.projekat.service.interfaces.ReservationServiceInterface;
 
 @RestController
@@ -27,6 +29,9 @@ public class AccomodationController {
 
 	@Autowired
 	private AccomodationServiceInterface service;
+	
+	@Autowired
+	private PictureServiceInterface pictureService;
 	
 	@Autowired
 	private ReservationServiceInterface reservationService;
@@ -222,8 +227,9 @@ public class AccomodationController {
 				
 			}
 			System.out.println("Cijena smjestaja: " + accPrice);
-			
-			AvailableAccomodationDTO aa = new AvailableAccomodationDTO(a.getId(), a.getName(), a.getType(), a.getCategory(), a.getBonusServices(), a.getComments(), accPrice, a.getLocation());
+			List<Picture> pictures = pictureService.findPicturesByAccomodation(a.getId());
+			accPrice = accPrice*Integer.parseInt(guests);
+			AvailableAccomodationDTO aa = new AvailableAccomodationDTO(a.getId(), a.getName(), a.getType(), a.getCategory(), a.getBonusServices(), a.getComments(), accPrice, a.getLocation(), pictures);
 			availableAccomodations.add(aa);
 		}
 		

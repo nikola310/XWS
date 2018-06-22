@@ -11,34 +11,37 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
 
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1
+        <li class="dropdown" *ngIf="this.dataService.getLogged()">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">My profile
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             <li>
-              <a href="#">Page 1-1</a>
+              <a routerLink="/reservations">My reservations</a>
             </li>
             <li>
-              <a href="#">Page 1-2</a>
-            </li>
-            <li>
-              <a href="#">Page 1-3</a>
+              <a routerLink="/messages">My messages</a>
             </li>
           </ul>
         </li>
+       
         <li>
           <a routerLink="/accomodations">Accomodations</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
+        <li *ngIf="!this.dataService.getLogged()">
           <a routerLink="/register">
             <span class="glyphicon glyphicon-user"></span> Sign Up</a>
         </li>
-        <li>
+        <li *ngIf="!this.dataService.getLogged()">
           <a routerLink="/login">
             <span class="glyphicon glyphicon-log-in"></span> Login</a>
+        </li>
+
+        <li *ngIf="this.dataService.getLogged()">
+          <a routerLink="/" (click)="logOut()">
+            <span class="glyphicon glyphicon-log-out"></span> Logout</a>
         </li>
       </ul>
     </div>

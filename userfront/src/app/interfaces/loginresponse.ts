@@ -1,4 +1,5 @@
 export interface ILoginResponse{
     status: string,
-    info: string
+    info: string,
+    userId: string
 }

@@ -12,14 +12,16 @@ public class ReservationDTO {
 	private int numberOfPersons;
 	private long startDate;
 	private long endDate;
+	private int price;
 	private int version;
 	private Boolean realized;
+	private Boolean reviewed;
 
 	public ReservationDTO() {
 	}
 
 	public ReservationDTO(long id, long user, long accomodation, int numberOfPersons, long startDate, long endDate,
-			Boolean realized, int version) {
+			int price, Boolean realized, Boolean reviewed, int version) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -29,6 +31,8 @@ public class ReservationDTO {
 		this.endDate = endDate;
 		this.realized = realized;
 		this.version = version;
+		this.price = price;
+		this.reviewed = reviewed;
 	}
 
 	public long getId() {
@@ -94,5 +98,20 @@ public class ReservationDTO {
 	public void setRealized(Boolean realized) {
 		this.realized = realized;
 	}
+	
+	public int getPrice() {
+		return price;
+	}
 
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public Boolean getReviewed() {
+		return reviewed;
+	}
+
+	public void setReviewed(Boolean reviewed) {
+		this.reviewed = reviewed;
+	}
 }

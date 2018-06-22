@@ -37,6 +37,12 @@ public class Reservation implements Serializable {
 	@Column(name = "end_date", nullable = false)
 	private long endDate;
 	
+	@Column(name = "price", nullable = false)
+	private int price;
+	
+	@Column(name = "reviewed", nullable = false)
+	private Boolean reviewed;
+	
 	@ManyToOne(optional = false)
 	@JoinColumn(name="accomodation")
 	private Accomodation accomodation;
@@ -112,6 +118,22 @@ public class Reservation implements Serializable {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public Boolean getReviewed() {
+		return reviewed;
+	}
+
+	public void setReviewed(Boolean reviewed) {
+		this.reviewed = reviewed;
 	}
 	
 }

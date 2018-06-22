@@ -63,8 +63,8 @@ public class ReservationService implements ReservationServiceInterface {
 		try {
 			Reservation res = repository.getOne(id);
 			ReservationDTO dto = new ReservationDTO(res.getId(), res.getUser().getId(), res.getAccomodation().getId(),
-					res.getNumberOfPersons(), res.getStartDate(), res.getEndDate(), res.getRealized(),
-					res.getVersion());
+					res.getNumberOfPersons(), res.getStartDate(), res.getEndDate(), res.getPrice(), res.getRealized(),
+					res.getReviewed(), res.getVersion());
 			return dto;
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -81,7 +81,7 @@ public class ReservationService implements ReservationServiceInterface {
 			try {
 				ReservationDTO dto = new ReservationDTO(res.getId(), res.getUser().getId(),
 						res.getAccomodation().getId(), res.getNumberOfPersons(), res.getStartDate(), res.getEndDate(),
-						res.getRealized(), res.getVersion());
+						res.getPrice(), res.getRealized(), res.getReviewed(), res.getVersion());
 				listDTO.add(dto);
 			} catch (Exception exc) {
 				exc.printStackTrace();
@@ -105,7 +105,9 @@ public class ReservationService implements ReservationServiceInterface {
 			toUpdate.setStartDate(dto.getStartDate());
 			toUpdate.setEndDate(dto.getEndDate());
 			toUpdate.setRealized(dto.getRealized());
-
+			if(dto.getReviewed() != null){
+				toUpdate.setReviewed(dto.getReviewed());
+			}
 			repository.save(toUpdate);
 
 		} catch (Exception exc) {
@@ -134,11 +136,17 @@ public class ReservationService implements ReservationServiceInterface {
 
 		for (Reservation r : reservations) {
 			ReservationDTO rdto = new ReservationDTO(r.getId(), r.getUser().getId(), r.getAccomodation().getId(),
-					r.getNumberOfPersons(), r.getStartDate(), r.getEndDate(), r.getRealized(), r.getVersion());
+					r.getNumberOfPersons(), r.getStartDate(), r.getEndDate(), r.getPrice(), r.getRealized(), r.getReviewed(), r.getVersion());
 			reservationsDTO.add(rdto);
 		}
 
 		return reservationsDTO;
 	}
+
+	@Override
+	public List<Reservation> findReservationsByUser(long id) {
+		// TODO Auto-generated method stub
+		return repository.findReservationsByUser(id);
+	}	
 
 }

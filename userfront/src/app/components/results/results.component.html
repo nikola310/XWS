@@ -1,22 +1,121 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Type</th>
-      <th scope="col">Name</th>
-      <th scope="col">Price</th>
-      <th scope="col" colspan="4">Location</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let accomodation of accomodations">
-      <td>{{accomodation.type}}</td>
-      <td>{{accomodation.name}}</td>
-      <td>{{accomodation.price}}</td>
-      <td>{{accomodation.location.state}}</td>
-      <td>{{accomodation.location.city}}</td>
-      <td>{{accomodation.location.streetName}}</td>
-      <td>{{accomodation.location.streetNumber}}</td>
-      <td><button (click)="book(accomodation.id)">Book</button></td>
-    </tr>
-  </tbody>
+<br>
+<br>
+<div class="dropdown dropright">
+  <button type="button" class="btn" data-toggle="dropdown">
+    Order by
+  </button>
+  <div class="dropdown-menu">
+    <button class="btn btn-link" (click)="orderByPriceDescending()">Price(descending)</button>
+    <br>
+    <button class="btn btn-link" (click)="orderByPriceAscending()">Price(ascending)</button>
+    <br>
+    <button class="btn btn-link" (click)="orderByRatingDescending()">Rating(descending)</button>
+    <br>
+    <button class="btn btn-link" (click)="orderByRatingAscending()">Rating(ascending)</button>
+    <br>
+    <button class="btn btn-link" (click)="orderByCategoryDescending()">Category(descending)</button>
+    <br>
+    <button class="btn btn-link" (click)="orderByCategoryAscending()">Category(ascending)</button>
+    <br>
+  </div>
+</div>
+<br>
+
+
+<div *ngFor="let accomodation of accomodations; let i=index">
+  <label>Accomodation description</label>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td scope="col">Type</td>
+        <td style="font-weight:bold">{{accomodation.type}}</td>
+        <td rowspan="5">
+
+          <div style="position: relative;" *ngIf="accomodation.pictures != []">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+              <ol class="carousel-indicators">
+                <li data-target="#myCarousel" *ngFor="let x of accomodation.pictures;let i = index" [attr.data-slide-to]="i" ngClass="i == 0 ? 'active' : ''"></li>
+              </ol>
+
+              <div class="carousel-inner" role="listbox">
+                <div *ngFor="let j of accomodation.pictures; let k = index" [ngClass]="k == 0 ? 'item active' : 'item'">
+                  <img src={{j.content}} alt="Event Image">
+                </div>
+              </div>
+
+              <div *ngFor="let a of accomodation.pictures; let d = index">
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td scope="col">Name</td>
+        <td style="font-weight:bold">{{accomodation.name}}</td>
+      </tr>
+      <tr>
+        <td scope="col">Price</td>
+        <td style="font-weight:bold">{{accomodation.price}}</td>
+      </tr>
+      <tr>
+        <td scope="col">Category</td>
+        <td style="font-weight:bold" *ngIf="accomodation.category > 0">{{accomodation.category}}*</td>
+        <td style="font-weight:bold" *ngIf="accomodation.category == 0">No category</td>
+
+      </tr>
+      <tr>
+        <td scope="col">Location</td>
+        <td style="font-weight:bold">{{accomodation.location.city}}, {{accomodation.location.streetName}} {{accomodation.location.streetNumber}}, {{accomodation.location.state}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>
+          <button style="float:right" class="btn btn-success" (click)="book(accomodation.id)" *ngIf="this.dataService.getLogged()">Book</button>
+          <button style="float:right" type="button" class="btn btn-link">Read more...</button>
+        </td>
+      </tr>
+
+
+    </tbody>
+  </table>
+  <hr style=" border: 0;
+      height: 1px;
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+  <br>
+  <label (click)="showComments(i)">Comments and ratings
+    <img src='../../../assets/triangle.png' height="21" width="21" *ngIf="!show(i)" />
+    <img src='../../../assets/triangleup.png' height="21" width="21" *ngIf="show(i)" />
+  </label>
+  <div *ngIf="show(i)">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>Author</td>
+          <td>Comment</td>
+          <td>Rating</td>
+        </tr>
+        <tr *ngFor="let comment of accomodation.comments">
+          <td style="font-weight:bold">{{comment.author.userName}}</td>
+          <td style="font-weight:bold" *ngIf="comment.approved">{{comment.content}}</td>
+          <td style="font-weight:bold" *ngIf="!comment.approved"></td>
+
+          <td style="font-weight:bold">{{comment.rating}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr style="height: 12px;
+  border: 0;
+  box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5)">
+  <br>

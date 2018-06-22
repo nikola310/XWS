@@ -11,13 +11,20 @@ import { RegisterComponent } from './components/register/register.component';
 import { ResultsComponent } from './components/results/results.component';
 import { DataService } from './services/data.service';
 import { AccomodationsComponent } from './components/accomodations/accomodations.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ReservationsComponent } from './components/reservations/reservations.component';
+import { MessagesComponent } from './components/messages/messages.component';
+
 
 const appRoutes: Routes = [
   { path: '', component: SearchComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'results', component: ResultsComponent },
-  { path: 'accomodations', component: AccomodationsComponent}
+  { path: 'accomodations', component: AccomodationsComponent},
+  { path: 'profile', component: ProfileComponent},
+  { path: 'reservations', component: ReservationsComponent},
+  { path: 'messages', component: MessagesComponent}
 ];
 
 
@@ -29,7 +36,10 @@ const appRoutes: Routes = [
     LoginComponent,
     RegisterComponent,
     ResultsComponent,
-    AccomodationsComponent
+    AccomodationsComponent,
+    ProfileComponent,
+    ReservationsComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
