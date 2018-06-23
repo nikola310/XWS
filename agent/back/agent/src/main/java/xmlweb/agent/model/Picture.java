@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Picture implements Serializable {
@@ -29,7 +30,8 @@ public class Picture implements Serializable {
 	private Accomodation accomodation;
 	
 	@Column(name = "content", nullable = false)
-	private byte[] content;
+	@Size(max=100000)
+	private String content;
 //	private String content;
 	
 	@Version
@@ -54,14 +56,6 @@ public class Picture implements Serializable {
 		this.accomodation = accomodation;
 	}
 
-	public byte[] getContent() {
-		return content;
-	}
-
-	public void setContent(byte[] content) {
-		this.content = content;
-	}
-
 	public int getVersion() {
 		return version;
 	}
@@ -69,6 +63,16 @@ public class Picture implements Serializable {
 	public void setVersion(int version) {
 		this.version = version;
 	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
+	
 	
 	
 }

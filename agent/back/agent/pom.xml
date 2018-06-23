@@ -100,6 +100,12 @@
 		    <version>2.2-promoted-b65</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.7.0</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

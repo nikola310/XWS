@@ -31,14 +31,12 @@ public class AccomodationBonusServiceEndpoint {
 	@PayloadRoot(namespace = "http://xmlweb/projekat/soap/models/accomodation_bonus_service", localPart = "getAccomodationBonusServiceRequest")
 	@ResponsePayload
 	public GetAccomodationBonusServiceResponse getAccomodationBonusService(@RequestPayload GetAccomodationBonusServiceRequest request) {
-		
 		GetAccomodationBonusServiceResponse response = new GetAccomodationBonusServiceResponse();
-		
 		ArrayList<AccomodationBonusDTO> lista = (ArrayList<AccomodationBonusDTO>) service.findAllAccomodationBonus();
-		ArrayList<AccomodationBonusServiceSOAP> retVal = new ArrayList<>();
+		ArrayList<AccomodationBonusServiceSOAP> retVal = new ArrayList<AccomodationBonusServiceSOAP>();
 		
 		for(AccomodationBonusDTO dto : lista) {
-			AccomodationBonusServiceSOAP a = new AccomodationBonusServiceSOAP();
+			AccomodationBonusServiceSOAP a = new AccomodationBonusServiceSOAP();	
 			a.setAccomodationId(dto.getAccomodationId());
 			a.setBonusServiceId(dto.getBonusId());
 			retVal.add(a);
@@ -56,7 +54,7 @@ public class AccomodationBonusServiceEndpoint {
 			
 		}
 		
-		//response.getAccomodationBonusServiceResponse().addAll(retVal);
+		response.getAccomodationBonusServiceResponse().addAll(retVal);
 		return response;
 	}
 

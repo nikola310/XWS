@@ -42,7 +42,7 @@ public class PictureEndpoint {
 		for(PictureDTO dto : listaDTO) {
 			PictureSOAP sp = new PictureSOAP();
 			sp.setAccomodationId(dto.getAccomodation());
-			//sp.setContent(dto.getContent());
+			sp.setContent(dto.getContent());
 			sp.setEntityVersion(dto.getVersion());
 			sp.setPictureId(dto.getId());
 			retVal.add(sp);

@@ -18,7 +18,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="content" type="xs:base64Binary"/>
+            <xs:element name="content" type="xs:string"/>
             <xs:element name="entity_version">
                 <xs:simpleType>
                     <xs:restriction base="xs:int">

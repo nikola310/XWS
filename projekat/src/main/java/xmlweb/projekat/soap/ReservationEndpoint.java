@@ -47,6 +47,8 @@ public class ReservationEndpoint {
 			sp.setReservationId(dto.getId());
 			sp.setEntityVersion(dto.getVersion());
 			sp.setNumberOfPersons(dto.getNumberOfPersons());
+			sp.setRealised(dto.getRealized());
+			sp.setUserId(dto.getUser());
 			retVal.add(sp);
 		}
 		
