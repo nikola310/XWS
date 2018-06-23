@@ -30,7 +30,7 @@
       <div class="td">First name</div>
       <div class="td">Last name</div>
       <div class="td">Business number</div>
-      <div class="td">Address</div>
+      <div class="td">Address id</div>
       <div class="td">Action</div>
     </div>
   </div>
@@ -50,5 +50,32 @@
         <button (click)="rejectAgent(data.pid, data.address, agent.id, agent)">DECLINE</button>
       </div>
     </form>
+  </div>
+</div>
+
+<br />
+<br />
+
+<div class="table100 ver3 m-b-110">
+  <div class="table100-head">
+    <table>
+      <thead>
+        <tr class="row100 head">
+          <th class="cell100 column1">Address</th>
+          <th class="cell100 column2">Id</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div class="table100-body js-pscroll">
+    <table>
+      <tbody>
+        <tr class="row100 body" *ngFor="let ad of adrese; ">
+          <td class="cell100 column1"> {{ ad.state }}, {{ ad.city }}, {{ ad.streetName }}, {{ad.streetNumber}} </td>
+          <td class="cell100 column2"> {{ ad.id }} </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

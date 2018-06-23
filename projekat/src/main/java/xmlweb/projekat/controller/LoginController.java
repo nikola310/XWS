@@ -19,6 +19,7 @@ import xmlweb.projekat.service.interfaces.UserServiceInterface;
 
 @RestController
 @RequestMapping(value = "/login")
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4300" })
 public class LoginController {
 
 	@Autowired
@@ -26,7 +27,6 @@ public class LoginController {
 
 	private String secret = "1w4j9w81i0l15li6g3tyy7op02ft";
 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String login(@RequestHeader(value = "User-Agent") String userAgent, @RequestBody UserDTO u) {
 		System.out.println(u.getUserName());
@@ -47,7 +47,6 @@ public class LoginController {
 		return "{ \"status\":\"success\", \"info\":\"" + token + "\", \"userId\":" + user.getId() +"}";
 	}
 
-	@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4300"})
 	@RequestMapping(value = "/admin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> adminLogin(@RequestHeader(value = "User-Agent") String userAgent,
 			@RequestBody UserDTO dto) {

@@ -19,6 +19,7 @@ import xmlweb.projekat.service.interfaces.MessageServiceInterface;
 
 @RestController
 @RequestMapping(value = "/message")
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4300" })
 public class MessageController {
 
 	private MessageServiceInterface service;
@@ -29,7 +30,6 @@ public class MessageController {
 		this.service = service;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
 	public boolean createMessage(@Validated @RequestBody MessageDTO u) {
 		return service.Create(u);
@@ -55,7 +55,6 @@ public class MessageController {
 		return service.Delete(id);
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value="/inbox/{id}", method = RequestMethod.GET)
 	public List<Message> findMessagesByUser(@PathVariable long id) {
 		return service.findMessagesByUser(id);

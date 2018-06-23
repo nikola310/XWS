@@ -132,7 +132,7 @@ public class AccomodationService implements AccomodationServiceInterface {
 				dto.setCategory(acc.getCategory());
 				dto.setId(acc.getId());
 				dto.setVersion(acc.getVersion());
-				dto.setAccomdoationType(acc.getAccomodationType().getName());
+				dto.setAccomodationType(acc.getAccomodationType().getName());
 				Location loc = acc.getLocation();
 				dto.setLocation(
 						loc.getState() + " " + loc.getCity() + " " + loc.getStreetName() + " " + loc.getStreetNumber());

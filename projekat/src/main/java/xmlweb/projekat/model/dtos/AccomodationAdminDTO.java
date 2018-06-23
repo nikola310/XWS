@@ -30,11 +30,11 @@ public class AccomodationAdminDTO {
 		this.accomodationName = accomodationName;
 	}
 
-	public String getAccomdoationType() {
+	public String getAccomodationType() {
 		return accomodationType;
 	}
 
-	public void setAccomdoationType(String accomdoationType) {
+	public void setAccomodationType(String accomdoationType) {
 		this.accomodationType = accomdoationType;
 	}
 

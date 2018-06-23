@@ -9,7 +9,6 @@ INSERT INTO message(message_id, receiver_id, sender_id, content, entity_version)
 INSERT INTO message(message_id, receiver_id, sender_id, content, entity_version) VALUES (3, 2, 3, 'Pozdrav 2 proba', 0);
 INSERT INTO message(message_id, receiver_id, sender_id, content, entity_version) VALUES (4, 3, 2, 'Proba 3', 0);
 
-
 /* MESTO */
 INSERT INTO location(location_id, state, city, street_name, street_number, entity_version) VALUES (1, 'Republika Srbija', 'Novi Sad', 'Bulevar cara Lazara', '11', 0);
 INSERT INTO location(location_id, state, city, street_name, street_number, entity_version) VALUES (2, 'Republika Srbija', 'Beograd', 'Jurija Gagarina', '8', 0);
@@ -61,5 +60,5 @@ INSERT INTO accomodation_bonus_services(bonus_service_id, accomodation_id) VALUE
 
 /* KOMENTARI */
 INSERT INTO comment(comment_id, approved, content, rating, entity_version, accomodation_id, author) VALUES (1, 1, 'Nista ne valja.', 1, 1, 1, 2);
-INSERT INTO comment(comment_id, approved, content, rating, entity_version, accomodation_id, author) VALUES (2, 1, 'Super.', 5, 1, 1, 3);
-INSERT INTO comment(comment_id, approved, content, rating, entity_version, accomodation_id, author) VALUES (3, 1, 'Super.', 5, 1, 2, 3);
+INSERT INTO comment(comment_id, approved, content, rating, entity_version, accomodation_id, author) VALUES (2, null, 'Super.', 5, 1, 1, 3);
+INSERT INTO comment(comment_id, approved, content, rating, entity_version, accomodation_id, author) VALUES (3, null, 'Super.', 5, 1, 2, 3);
