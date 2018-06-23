@@ -31,4 +31,6 @@ public interface AccomodationServiceInterface {
 	
 	boolean createAccomodation(Accomodation acco);
 	
+	AccomodationDTO getOne(long id);
+	
 }
