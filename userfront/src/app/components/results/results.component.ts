@@ -16,29 +16,44 @@ export class ResultsComponent implements OnInit {
   private searching: Boolean = false;
 
   private comments: Boolean[];
+  private rating: number[];
   private resPrice: number;
 
   constructor(private dataService: DataService, private router: Router) {
     this.comments = [];
     this.accomodations = [];
+    this.rating = [];
   }
 
   ngOnInit() {
     this.dataService.search()
       .subscribe(data => {
         this.accomodations = data;
-        
-        
+
+
+        for (var i = 0; i < this.accomodations.length; i++) {
+          this.accomodations[i].rating = 0;
+          for (var j = 0; j < this.accomodations[i].comments.length; j++) {
+            this.accomodations[i].rating += this.accomodations[i].comments[j].rating;
+          }
+          if (this.accomodations[i].rating != 0) {
+            this.accomodations[i].rating = this.accomodations[i].rating / this.accomodations[i].comments.length;
+          }
+        }
+
       });
     for (var i = 0; i < this.accomodations.length; i++) {
       this.comments[i] = false;
     }
 
+
+
+
   }
 
   book(id) {
-    for(var i = 0; i < this.accomodations.length; i++){
-      if(this.accomodations[i].id == id){
+    for (var i = 0; i < this.accomodations.length; i++) {
+      if (this.accomodations[i].id == id) {
         this.resPrice = this.accomodations[i].price;
         break;
       }
@@ -77,7 +92,7 @@ export class ResultsComponent implements OnInit {
   }
 
   orderByPriceDescending() {
-  
+
     this.orderByPriceAscending();
     this.accomodations.reverse();
   }
@@ -100,6 +115,24 @@ export class ResultsComponent implements OnInit {
     this.accomodations.reverse();
   }
 
+  orderByRatingAscending(){
+    for (var j = 0; j < this.accomodations.length - 1; j++) {
+      for (var i = 0; i < this.accomodations.length - 1; i++) {
+        if (this.accomodations[i].rating > this.accomodations[i + 1].rating) {
+          var tempValue = this.accomodations[i];
+          this.accomodations[i] = this.accomodations[i + 1];
+          this.accomodations[i + 1] = tempValue;
+        }
+      }
+    }
+  }
+  
+
+  orderByRatingDescending(){
+    this.orderByRatingAscending()
+    this.accomodations.reverse();
+  }
+
   showComments(i) {
     if (this.comments[i] == true) {
       this.comments[i] = false;
@@ -113,5 +146,9 @@ export class ResultsComponent implements OnInit {
     return this.comments[i];
   }
 
+  getRating(i) {
+    console.log("ratinggg" + this.rating[i]);
+    return this.rating[i];
+  }
 
 }

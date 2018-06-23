@@ -15,6 +15,8 @@ export class ReservationsComponent implements OnInit {
   today: number;
   data;
   reservationToUpdate;
+  message: String;
+  agentReceiver;
 
   constructor(private dataService: DataService, private router: Router) {
     this.today = new Date().valueOf();
@@ -72,5 +74,22 @@ export class ReservationsComponent implements OnInit {
 
   setReservation(reservation){
     this.reservationToUpdate = reservation;
+  }
+
+  contactAgent(message, accomodation){
+    this.message = "{\"sender\":" + this.dataService.getUserId() + ","
+    + " \"receiver\":" + this.agentReceiver + ","
+    + " \"content\":\"" + message + "\","
+    + " \"version\":0}";
+    console.log(this.message);
+    this.dataService.sendMessage(this.message).subscribe(res => console.log(res));
+
+  }
+
+  setAgentReceiver(accomodation){
+    console.log(accomodation);
+    this.dataService.setAccomodationAgentReceiver(accomodation.id).subscribe(res => 
+      this.agentReceiver = res
+     );
   }
 }

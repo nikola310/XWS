@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    
+
     <tr *ngFor="let reservation of myReservations">
       <td>{{reservation.accomodation.accomodationName}}</td>
       <td>{{reservation.startDate | date:'dd/MM/yyyy'}}</td>
@@ -20,6 +20,36 @@
       <td>
         <button class="btn btn-danger" (click)="cancelReservation(reservation.id)" *ngIf="reservation.startDate>today">Cancel</button>
 
+
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myMsg" 
+          *ngIf="reservation.startDate>today" (click)="setAgentReceiver(reservation.accomodation)">Contact agent</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myMsg" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" (click)="msg.message=''">&times;</button>
+                <h4 class="modal-title">Contact accomodation agent</h4>
+              </div>
+              <div class="modal-body">
+                <form #msg="ngForm" id="msgform">
+                  <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea form="msgform" [(ngModel)]="msg.message" name="message" class="form-control" rows="5" id="comment" required></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="contactAgent(msg.message, reservation.accomodation)" [disabled]="!msg.valid"
+                  data-dismiss="modal">Send</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
         <div *ngIf="reservation.endDate<today">
           <!-- Rate your stay:
           <button type="button" class="btn btn-primary">1</button>
@@ -27,7 +57,8 @@
           <button type="button" class="btn btn-primary">3</button>
           <button type="button" class="btn btn-primary">4</button>
           <button type="button" class="btn btn-primary">5</button> -->
-          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" (click)="setReservation(reservation)" *ngIf="!reservation.reviewed && reservation.realized">Write a review</button>
+          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" (click)="setReservation(reservation)"
+            *ngIf="!reservation.reviewed && reservation.realized">Write a review</button>
           <label *ngIf="reservation.reviewed">Reviewed</label>
 
           <!-- Modal -->
@@ -46,20 +77,21 @@
                       <label for="comment">Comment:</label>
                       <textarea form="commform" [(ngModel)]="data.comment" name="comment" class="form-control" rows="5" id="comment" required></textarea>
                     </div>
-                    <div  name="rating" class="btn-group-sm">
-                        <select id="selectbasic" [(ngModel)]="data.rating" name="selectbasic" class="form-control" required>
-                            <option></option>
-                            <option value="1">*</option>
-                            <option value="2">**</option>
-                            <option value="3">***</option>
-                            <option value="4">****</option>
-                            <option value="5">*****</option>
-                        </select>
+                    <div name="rating" class="btn-group-sm">
+                      <select id="selectbasic" [(ngModel)]="data.rating" name="selectbasic" class="form-control" required>
+                        <option></option>
+                        <option value="1">*</option>
+                        <option value="2">**</option>
+                        <option value="3">***</option>
+                        <option value="4">****</option>
+                        <option value="5">*****</option>
+                      </select>
                     </div>
                   </form>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" (click)="leaveReview(data, reservation.accomodation, reservation)" [disabled]="!data.valid" data-dismiss="modal">OK</button>
+                  <button type="button" class="btn btn-default" (click)="leaveReview(data, reservation.accomodation, reservation)" [disabled]="!data.valid"
+                    data-dismiss="modal">OK</button>
                 </div>
               </div>
 
@@ -69,6 +101,6 @@
 
       </td>
     </tr>
-  
+
   </tbody>
 </table>

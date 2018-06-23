@@ -1,23 +1,23 @@
-<form>
+<form #data="ngForm">
 
   <div class="form-group">
     <label>Username</label>
-    <input type="text" class="form-control" placeholder="Enter username">
+    <input type="text" [(ngModel)]="data.username" name="username" class="form-control" placeholder="Enter username" required>
   </div>
 
   <div class="form-group">
     <label>Buisness id</label>
-    <input type="text" class="form-control" placeholder="Enter bid">
+    <input type="text" [(ngModel)]="data.bid" name="bid" class="form-control" placeholder="Enter bid" required>
   </div>
   
   <div class="form-group">
     <label>Firstname</label>
-    <input type="text" class="form-control" placeholder="Enter firstname">
+    <input type="text" [(ngModel)]="data.firstname" name="firstname" class="form-control" placeholder="Enter firstname" required>
   </div>
   
   <div class="form-group">
     <label>Lastname</label>
-    <input type="text" class="form-control" placeholder="Enter lastname">
+    <input type="text" [(ngModel)]="data.lastname" name="lastname" class="form-control" placeholder="Enter lastname" required>
   </div>
   
  <div class="form-group">
@@ -25,19 +25,19 @@
     
     <div class="form-row">
 	    <div class="col-md-3 mb-3">
-		    <input type="text" class="form-control" placeholder="Enter state">
+		    <input type="text" [(ngModel)]="data.state" name="state" class="form-control" placeholder="Enter state" required>
 	    </div>
 
 	    <div class="col-md-3 mb-3">
-		    <input type="text" class="form-control" placeholder="Enter city">
+		    <input type="text" [(ngModel)]="data.city" name="city" class="form-control" placeholder="Enter city" required>
 	    </div>
 
 	    <div class="col-md-3 mb-3">
-		    <input type="text" class="form-control" placeholder="Enter address name">
+		    <input type="text" [(ngModel)]="data.address" name="address" class="form-control" placeholder="Enter address name" required>
 	    </div>
 
 	    <div class="col-md-3 mb-3">
-	    	<input type="text" class="form-control" placeholder="Enter addres number">
+	    	<input type="text" [(ngModel)]="data.addrnum" name="addrnum" class="form-control" placeholder="Enter addres number" required>
 	    </div>
     </div>
 
@@ -45,13 +45,8 @@
 
   <div class="form-group">
     <label>Password</label>
-    <input type="password" class="form-control" placeholder="Password">
+    <input type="password" [(ngModel)]="data.password" name="password" class="form-control" placeholder="Password" required>
   </div>
 
-
-  <div class="form-group">
-    <input type="password" class="form-control" placeholder="Confirm password">
-  </div>
-
-  <button type="submit" class="btn btn-primary">Register</button>
+  <button type="submit" class="btn btn-primary" (click)="register(data)" [disabled]="!data.valid">Register</button>
 </form>

@@ -1,47 +1,45 @@
-<div class="containter" >
+<div class="containter">
 	<h4> New Accomodation: </h4>
-	<form>
+	<form #accomodation="ngForm">
 		<div class="form-group">
 			<label>Accomodation name</label>
-			<input type="text" class="form-control" placeholder="Enter name">
+			<input type="text" [(ngModel)]="accomodation.name" name="name" class="form-control" placeholder="Enter name" required>
 		</div>
 		<div class="form-group">
 			<label>Address</label>
 
 			<div class="form-row">
 				<div class="col-md-3 mb-3">
-					<input type="text" class="form-control" placeholder="Enter state">
+					<input type="text" [(ngModel)]="accomodation.state" name="state" class="form-control" placeholder="Enter state" required>
 				</div>
 
 				<div class="col-md-3 mb-3">
-					<input type="text" class="form-control" placeholder="Enter city">
+					<input type="text" [(ngModel)]="accomodation.city" name="city" class="form-control" placeholder="Enter city" required>
 				</div>
 
 				<div class="col-md-3 mb-3">
-					<input type="text" class="form-control" placeholder="Enter address name">
+					<input type="text" [(ngModel)]="accomodation.streetName" name="streetName" class="form-control" placeholder="Enter address name" required>
 				</div>
 
 				<div class="col-md-3 mb-3">
-					<input type="text" class="form-control" placeholder="Enter addres number">
+					<input type="text" class="form-control" [(ngModel)]="accomodation.streetNumber" name="streetNumber" placeholder="Enter addres number" required>
 				</div>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label>Type</label>
-			<select class="custom-select" required>
+			<select class="custom-select" [(ngModel)]="accomodation.type" name="type" required>
 				<option value="">Open this select menu</option>
-				<option value="1">One</option>
-				<option value="2">Two</option>
-				<option value="3">Three</option>
+				<option *ngFor="let type of accomodationTypes" value={{type.id}}>{{type.name}}</option>
 			</select>
 			<div class="invalid-feedback">Example invalid custom select feedback</div>
-		</div>	
+		</div>
 
 		<div class="form-group">
 			<label>Description</label>
-			<input type="text" class="form-control" placeholder="Enter bid">
-		</div>	
+			<input type="text" class="form-control" placeholder="Enter description">
+		</div>
 
 
 		<div class="form-group">
@@ -52,41 +50,31 @@
 				<div class="invalid-feedback">Example invalid custom file feedback</div>
 			</div>
 
-			<div> 
+			<div>
 				Image preview
 
 			</div>
 
 
-		</div>	
+		</div>
 
 
 		<div class="form-group">
 			<label>Capacity</label>
-			<input type="text" class="form-control" placeholder="Enter bid">
-		</div>	
+			<input type="text" [(ngModel)]="accomodation.capacity" name="capacity" class="form-control" placeholder="Enter capacity" required>
+		</div>
 
 
 		<div class="form-group">
 			<label>Bonus services</label>
-			
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<div class="input-group-text">
-						<input type="checkbox" aria-label="Checkbox for following text input">
-					</div>
-				</div>
-				<input type="text" class="form-control" aria-label="Text input with checkbox">
-			</div>
-
 
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
-					<div class="input-group-text">
-						<input type="checkbox" aria-label="Checkbox for following text input">
+					<div class="input-group-text" *ngFor="let bs of bonusServices">
+						<input type="checkbox" [(ngModel)]="accomodation[bs.name]" value={{bs.id}} name="bonus" aria-label="Checkbox for following text input">{{bs.name}}
+						<br>
 					</div>
 				</div>
-				<input type="text" class="form-control" aria-label="Text input with checkbox">
 			</div>
 
 		</div>
@@ -96,38 +84,35 @@
 		<div class="form-group">
 			<label>Prices</label>
 			<div class="form-group">
-				<button type="button" class="btn btn-primary">New price</button>
+				<button type="button" (click)="addNewPrice()" class="btn btn-primary">New price</button>
 			</div>
-			<div class="form-group">		
+			<div class="form-group">
 
-			<div class="form-row">
-				<div class="col-md-3 mb-3">
-					<input type="date" class="form-control" placeholder="Enter state">
+
+				<div *ngFor="let price of prices; let i = index" class="form-row">
+					<div class="col-md-3 mb-3">
+						<input type="date" [(ngModel)]="prices[i].priceStartDate" name="priceStartDate" class="form-control" placeholder="Enter price start date" required>
+					</div>
+
+					<div class="col-md-3 mb-3">
+						<input type="date" [(ngModel)]="prices[i].priceEndDate" name="priceEndDate" class="form-control" placeholder="Enter price end date" required>
+					</div>
+
+					<div class="col-md-3 mb-3">
+						<input type="text" [(ngModel)]="prices[i].price" name="price" class="form-control" placeholder="Enter price" required>
+					</div>
+
+					<div class="col-md-3 mb-3">
+						<button type="button" (click)="removePrice(i)" class="btn btn-primary">Delete</button>
+					</div>
+
 				</div>
-
-				<div class="col-md-3 mb-3">
-					<input type="date" class="form-control" placeholder="Enter city">
-				</div>
-
-				<div class="col-md-3 mb-3">
-					<input type="text" class="form-control" placeholder="Enter address name">
-				</div>
-
-				<div class="col-md-3 mb-3">
-					<button type="button" class="btn btn-primary">Delete</button>
-				</div>
-
-
-			</div>
-
-
-
 
 			</div>
 
-		</div>	
+		</div>
 
-		  <button type="submit" class="btn btn-primary">Add accomodation</button>
+		<button type="submit" class="btn btn-primary" (click)="addAccomodation(accomodation)">Add accomodation</button>
 
 	</form>
 </div>

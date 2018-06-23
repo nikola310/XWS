@@ -181,4 +181,8 @@ export class DataService {
     }
     return this.http.post('http://localhost:8089/booking/message', messageData, config);
   }
+
+  setAccomodationAgentReceiver(accId){
+    return this.http.get('http://localhost:8089/booking/'+accId+'/agent');
+  }
 }

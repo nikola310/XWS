@@ -8,7 +8,8 @@ export class UserService {
 
   private jsonToken: string = null;
   public serviceMessages: Observable<String>;
-
+  private logged: Boolean = false;
+  
   constructor(public http: Http) { }
 
   testHttp() {
@@ -32,6 +33,10 @@ export class UserService {
       observer.next('user_status,offline');
       observer.complete();
     });
+  }
+
+  register(userData, locationData){
+
   }
 
 }

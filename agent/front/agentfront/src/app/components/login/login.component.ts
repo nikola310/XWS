@@ -15,6 +15,7 @@ export class LoginComponent {
 
   onSubmit() {
     let login_data = { 'username':this.username, 'password':this.password };
+    console.log(login_data);
   	this.userService.login(login_data).subscribe(res => console.log(res));
   	this.username = '';
   	this.password = '';

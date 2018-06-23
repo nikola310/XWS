@@ -12,4 +12,5 @@ export interface IAccomodation {
     capacity: number,
     location: Array<any>,
     pictures: Array<IPicture>
+    rating: number
 }

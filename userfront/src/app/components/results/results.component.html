@@ -77,6 +77,11 @@
         <td style="font-weight:bold">{{accomodation.location.city}}, {{accomodation.location.streetName}} {{accomodation.location.streetNumber}}, {{accomodation.location.state}}</td>
       </tr>
       <tr>
+        <td scope="col">Rating</td>
+        <td style="font-weight:bold" *ngIf="accomodation.rating > 0">{{accomodation.rating | number : '1.2-2'}}</td>
+        <td style="font-weight:bold" *ngIf="accomodation.rating == 0">Not rated</td>
+      </tr>
+      <tr>
         <td></td>
         <td></td>
         <td>
