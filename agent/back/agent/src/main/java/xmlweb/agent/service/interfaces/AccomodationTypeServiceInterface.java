@@ -10,5 +10,7 @@ public interface AccomodationTypeServiceInterface extends ServiceInterface<Accom
 	
 	AccomodationType findOne(Long id);
 	
+	AccomodationType finyByName(String typeName);
+	
 	
 }

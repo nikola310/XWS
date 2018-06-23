@@ -11,6 +11,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import xmlweb.projekat.model.dtos.AccomodationBonusDTO;
 import xmlweb.projekat.service.interfaces.AccomodationServiceInterface;
+import xmlweb.projekat.soap.models.accomodation_bonus_service.AccomodationBonusServiceRequest;
 import xmlweb.projekat.soap.models.accomodation_bonus_service.AccomodationBonusServiceSOAP;
 import xmlweb.projekat.soap.models.accomodation_bonus_service.GetAccomodationBonusServiceRequest;
 import xmlweb.projekat.soap.models.accomodation_bonus_service.GetAccomodationBonusServiceResponse;
@@ -29,7 +30,7 @@ public class AccomodationBonusServiceEndpoint {
 	
 	@PayloadRoot(namespace = "http://xmlweb/projekat/soap/models/accomodation_bonus_service", localPart = "getAccomodationBonusServiceRequest")
 	@ResponsePayload
-	public GetAccomodationBonusServiceResponse getAccomodationBonus (@RequestPayload GetAccomodationBonusServiceRequest request) {
+	public GetAccomodationBonusServiceResponse getAccomodationBonusService(@RequestPayload GetAccomodationBonusServiceRequest request) {
 		GetAccomodationBonusServiceResponse response = new GetAccomodationBonusServiceResponse();
 		
 		ArrayList<AccomodationBonusDTO> lista = (ArrayList<AccomodationBonusDTO>) service.findAllAccomodationBonus();
@@ -42,7 +43,7 @@ public class AccomodationBonusServiceEndpoint {
 			retVal.add(a);
 		}
 		
-		for(AccomodationBonusServiceSOAP req : request.getAccomodationBonusServiceRequest()) {
+		for(AccomodationBonusServiceRequest req : request.getAccomodationBonusServiceRequest()) {
 			Iterator<AccomodationBonusServiceSOAP> itr = retVal.iterator();
 			while(itr.hasNext()) {
 				AccomodationBonusServiceSOAP u = itr.next();
@@ -54,7 +55,7 @@ public class AccomodationBonusServiceEndpoint {
 			
 		}
 		
-		response.getEntity().addAll(retVal);
+		response.getAccomodationBonusServiceResponse().addAll(retVal);
 		return response;
 	}
 

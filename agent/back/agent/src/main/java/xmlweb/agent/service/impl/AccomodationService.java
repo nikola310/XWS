@@ -118,17 +118,17 @@ public class AccomodationService implements AccomodationServiceInterface {
 	}
 
 	@Override
-	public void Create(Accomodation a) {
-		accomodationRepository.save(a);
+	public boolean Create(Accomodation a) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
-	public void Update(Accomodation a) {
-		Optional<Accomodation> atemp = accomodationRepository.findById(a.getId());
-		if(atemp.isPresent()) {
-			atemp.get().setCapacity(a.getCapacity());
-			atemp.get().setLocation(a.getLocation());
-		}
+	public boolean Update(Accomodation a) {
+		// TODO Auto-generated method stub
+		return false;
 	}
+
+
 
 }

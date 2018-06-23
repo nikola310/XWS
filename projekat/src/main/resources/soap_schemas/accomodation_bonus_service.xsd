@@ -2,22 +2,25 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:tns="http://xmlweb/projekat/soap/models/accomodation_bonus_service"
     targetNamespace="http://xmlweb/projekat/soap/models/accomodation_bonus_service" elementFormDefault="qualified">
+    
     <xs:element name="getAccomodationBonusServiceRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element maxOccurs="unbounded" minOccurs="0" name="accomodation_bonus_service_request"
-                    type="tns:AccomodationBonusServiceSOAP"/>
+                    type="tns:AccomodationBonusServiceRequest"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    
     <xs:element name="getAccomodationBonusServiceResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="entity"
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="accomodation_bonus_service_response"
                     type="tns:AccomodationBonusServiceSOAP"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    
     <xs:complexType name="AccomodationBonusServiceSOAP">
         <xs:sequence>
             <xs:element name="bonus_service_id">
@@ -36,4 +39,24 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+    
+      <xs:complexType name="AccomodationBonusServiceRequest">
+        <xs:sequence>
+            <xs:element name="bonus_service_id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="accomodation_id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
 </xs:schema>

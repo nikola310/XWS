@@ -1,6 +1,7 @@
 package xmlweb.agent.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -15,19 +16,13 @@ import xmlweb.agent.model.BonusService;
 import xmlweb.agent.model.Comment;
 import xmlweb.agent.model.Location;
 import xmlweb.agent.model.UserType;
-import xmlweb.agent.model.dtos.BonusServiceDTO;
 import xmlweb.agent.model.dtos.MessageDTO;
 import xmlweb.agent.model.dtos.PictureDTO;
 import xmlweb.agent.model.dtos.PriceDTO;
 import xmlweb.agent.model.dtos.ReservationDTO;
 import xmlweb.agent.model.dtos.UserDTO;
-import xmlweb.agent.repository.AccomodationAgentRepository;
 import xmlweb.agent.repository.AccomodationRepository;
-import xmlweb.agent.repository.AccomodationTypeRepository;
-import xmlweb.agent.repository.BonusServiceRepository;
-import xmlweb.agent.repository.CommentRepository;
-import xmlweb.agent.repository.LocationRepository;
-import xmlweb.agent.repository.UserRepository;
+import xmlweb.agent.service.interfaces.AccomodationBonusServiceServiceInterface;
 import xmlweb.agent.service.interfaces.AccomodationServiceInterface;
 import xmlweb.agent.service.interfaces.AccomodationTypeServiceInterface;
 import xmlweb.agent.service.interfaces.BonusServiceInterface;
@@ -42,10 +37,10 @@ import xmlweb.agent.soap.models.accomodation.AccomodationRequest;
 import xmlweb.agent.soap.models.accomodation.AccomodationSOAP;
 import xmlweb.agent.soap.models.accomodation.GetAccomodationRequest;
 import xmlweb.agent.soap.models.accomodation.GetAccomodationResponse;
-import xmlweb.agent.soap.models.accomodation_agent.AccomodationAgentRequest;
-import xmlweb.agent.soap.models.accomodation_agent.AccomodationAgentSOAP;
-import xmlweb.agent.soap.models.accomodation_agent.GetAccomodationAgentRequest;
-import xmlweb.agent.soap.models.accomodation_agent.GetAccomodationAgentResponse;
+import xmlweb.agent.soap.models.accomodation_bonus_service.AccomodationBonusServiceRequest;
+import xmlweb.agent.soap.models.accomodation_bonus_service.AccomodationBonusServiceSOAP;
+import xmlweb.agent.soap.models.accomodation_bonus_service.GetAccomodationBonusServiceRequest;
+import xmlweb.agent.soap.models.accomodation_bonus_service.GetAccomodationBonusServiceResponse;
 import xmlweb.agent.soap.models.accomodation_type.AccomodationTypeRequest;
 import xmlweb.agent.soap.models.accomodation_type.AccomodationTypeSOAP;
 import xmlweb.agent.soap.models.accomodation_type.GetAccomodationTypeRequest;
@@ -54,10 +49,6 @@ import xmlweb.agent.soap.models.bonus_service.BonusServiceRequest;
 import xmlweb.agent.soap.models.bonus_service.BonusServiceSOAP;
 import xmlweb.agent.soap.models.bonus_service.GetBonusServiceRequest;
 import xmlweb.agent.soap.models.bonus_service.GetBonusServiceResponse;
-import xmlweb.agent.soap.models.comment.CommentRequest;
-import xmlweb.agent.soap.models.comment.CommentSOAP;
-import xmlweb.agent.soap.models.comment.GetCommentRequest;
-import xmlweb.agent.soap.models.comment.GetCommentResponse;
 import xmlweb.agent.soap.models.location.GetLocationRequest;
 import xmlweb.agent.soap.models.location.GetLocationResponse;
 import xmlweb.agent.soap.models.location.LocationRequest;
@@ -111,56 +102,33 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 	private BonusServiceInterface bonusService;
 	
 	@Autowired
+	private AccomodationBonusServiceServiceInterface accomodationBonusServiceService;
+	
+	@Autowired
 	private AccomodationServiceInterface accomodationService;
 	
 	@Autowired
 	private AccomodationRepository accomodationRepo;
 	
-	@Autowired
-	private AccomodationTypeRepository accomodationTypeRepo;
-	
-	@Autowired
-	private LocationRepository locationRepo;
-	
-	@Autowired
-	private BonusServiceRepository bonusServiceRepo;
-	
-	@Autowired
-	private AccomodationAgentRepository accomodationAgentRepo;
-	
-	@Autowired
-	private UserRepository userRepo;
-	
-	@Autowired
-	private CommentRepository commentRepo;
-	
 	@Override
-	public void SyncDB() {
-		System.out.println("Krenuo 0");
+	public void SyncDB() {	
 		this.UpdateAccomodationTypes();
-		System.out.println("Puca 1");
 		this.UpdateLocations();
-		System.out.println("Puca 2");
 		this.UpdateBonusServices();
-		System.out.println("Puca 3");
-		//this.UpdateAccomodations();
+		this.UpdateAccomodations();
 		System.out.println("Puca 4");
 		this.UpdateAccomodationBonusServices();
 		System.out.println("Puca 5");
-		this.UpdatePrices();
+		//this.UpdatePrices();
 		System.out.println("Puca 6");
-		this.UpdatePictures();
+		//this.UpdatePictures();
 		System.out.println("Puca 7");
-		this.UpdateUsers();
-		System.out.println("Puca 8");
-		this.UpdateReservations();
-		System.out.println("Puca 9");
-		this.UpdateAccomodationAgents();
-		System.out.println("Puca 10");
-		this.UpdateComments();
-		System.out.println("Puca 11");
-		this.UpdateMessages();
-		System.out.println("Puca 12");
+//		this.UpdateUsers();
+//		this.UpdateReservations();
+//		this.UpdateAccomodationAgents();
+//		this.UpdateComments();
+		//this.UpdateMessages();
+		
 	}
 
 	@Override
@@ -174,7 +142,6 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 			lr.setEntityVersion(location.getVersion());
 			glreq.getLocationRequest().add(lr);
 		}
-		
 		WebServiceTemplate wst = new WebServiceTemplate();
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
 		marshaller.setContextPath("xmlweb.agent.soap.models.location");
@@ -183,7 +150,6 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 		wst.setUnmarshaller(marshaller);
 		GetLocationResponse glres = (GetLocationResponse) wst.marshalSendAndReceive(glreq);
 		for(LocationSOAP loc : glres.getEntity()) {
-			
 			Location dto = new Location();
 			dto.setId(loc.getLocationId());
 			dto.setVersion(loc.getEntityVersion());
@@ -192,7 +158,6 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 			dto.setStreetName(loc.getStreetName());
 			dto.setStreetNumber(loc.getStreetNumber());
 			dto.setAccomodations(new ArrayList<>());
-			
 			if(locationService.Read(loc.getLocationId()) == null) {
 				locationService.Create(dto);
 			} else {
@@ -203,7 +168,9 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 
 	@Override
 	public void UpdateMessages() {
+		System.out.println("ocacea");
 		ArrayList<MessageDTO> queryList = messageService.ReadAll();
+		System.out.println("puba 00");
 		GetMessageRequest glreq = new GetMessageRequest();
 		
 		for(MessageDTO m : queryList) {
@@ -212,7 +179,7 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 			mr.setEntityVersion(m.getVersion());
 			glreq.getMessage().add(mr);
 		}
-		
+		System.out.println("pucoo 01");
 		WebServiceTemplate wst = new WebServiceTemplate();
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
 		marshaller.setContextPath("xmlweb.agent.soap.models.message");
@@ -229,6 +196,7 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 			mdto.setReceiver(m.getReceiverId());
 			mdto.setSender(m.getSenderId());
 			mdto.setVersion(m.getEntityVersion());
+			System.out.println("kraj puca 012");
 			if(messageService.Read(m.getMessageId()) == null) {
 				messageService.Create(mdto);
 			} else {
@@ -318,6 +286,7 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 
 	@Override
 	public void UpdatePrices() {
+		System.out.println("puca 000");
 		ArrayList<PriceDTO> queryList = priceService.ReadAll();
 		GetPriceRequest glreq = new GetPriceRequest();
 		
@@ -327,15 +296,16 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 			pr.setEntityVersion(pd.getVersion());
 			glreq.getPriceRequest().add(pr);
 		}
-		
+		System.out.println("puca 001");
 		WebServiceTemplate wst = new WebServiceTemplate();
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
 		marshaller.setContextPath("xmlweb.agent.soap.models.price");
 		wst.setDefaultUri("http://localhost:8089/booking/ws/price.wsdl");
 		wst.setMarshaller(marshaller);
 		wst.setUnmarshaller(marshaller);
-		
+		System.out.println("puca 002");
 		GetPriceResponse glres = (GetPriceResponse) wst.marshalSendAndReceive(glreq);
+		System.out.println("puca 0022");
 		for(PriceSOAP ps :  glres.getEntity()) {
 			PriceDTO pd = new PriceDTO();
 			pd.setAccomodation(ps.getAccomodationId());
@@ -344,7 +314,7 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 			ps.setPrice(ps.getPrice());
 			ps.setPriceId(ps.getPriceId());
 			ps.setStartDate(ps.getStartDate());
-			
+			System.out.println("puca 003");
 			if(priceService.Read(ps.getPriceId()) == null) {
 				priceService.Create(pd);
 			} else {
@@ -398,46 +368,39 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 	public void UpdateAccomodationTypes() {
 		ArrayList<AccomodationType> queryList = accomodationTypeService.ReadAll();
 		GetAccomodationTypeRequest glreq = new GetAccomodationTypeRequest();
-		System.out.println("dsfsdfsfdsf");
 		for(AccomodationType at : queryList) {
 			AccomodationTypeRequest atr = new AccomodationTypeRequest();
 			atr.setEntityId((int) at.getId());
 			atr.setEntityVersion(at.getVersion());	
 			glreq.getRequestEntity().add(atr);
 		}
-		System.out.println("dsfsdfsfdsf2");
 		WebServiceTemplate wst = new WebServiceTemplate();
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		System.out.println("dsfsdfsfdsf3");
 		marshaller.setContextPath("xmlweb.agent.soap.models.accomodation_type");
 		wst.setDefaultUri("http://localhost:8089/booking/ws/accomodation_type.wsdl");
 		wst.setMarshaller(marshaller);
 		wst.setUnmarshaller(marshaller);
-		System.out.println("dsfsdfsfdsf3.5");
 		GetAccomodationTypeResponse glres = (GetAccomodationTypeResponse) wst.marshalSendAndReceive(glreq);
-		System.out.println("dsfsdfsfdsf4");
 		for(AccomodationTypeSOAP ats : glres.getEntity()) {
 			AccomodationType at = new AccomodationType();
 			at.setId(ats.getAccomodationTypeId());
 			at.setName(ats.getName());
 			at.setVersion(ats.getEntityVersion());
 			
-			if(accomodationTypeService.Read(ats.getAccomodationTypeId()) == null) {
+			if(accomodationTypeService.findOne(ats.getAccomodationTypeId()) == null) {
 				accomodationTypeService.Create(at);
 			} else {
 				accomodationTypeService.Update(at);
 			}
-			
 		}
-
 	}
 
 	@Override
 	public void UpdateBonusServices() {
-		ArrayList<BonusServiceDTO> queryList = (ArrayList<BonusServiceDTO>) bonusService.findAllBonusServices();
+		ArrayList<BonusService> queryList = (ArrayList<BonusService>) bonusService.findAllBonusServices();
 		GetBonusServiceRequest glreq = new GetBonusServiceRequest();
 		
-		for(BonusServiceDTO bsd : queryList) {
+		for(BonusService bsd : queryList) {
 			BonusServiceRequest bsr = new BonusServiceRequest();
 			bsr.setEntityId((int) bsd.getId());
 			bsr.setEntityVersion(bsd.getVersion());
@@ -453,12 +416,12 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 		GetBonusServiceResponse glres = (GetBonusServiceResponse) wst.marshalSendAndReceive(glreq);
 		
 		for(BonusServiceSOAP bs : glres.getEntity()) {
-			BonusServiceDTO bst = new BonusServiceDTO(); 
+			BonusService bst = new BonusService(); 
 			bst.setId(bs.getBonusServiceId());
 			bst.setName(bs.getName());
 			bst.setVersion(bs.getEntityVersion());
 			
-			if(bonusService.Read(bs.getBonusServiceId()) == null) {
+			if(bonusService.findById(bs.getBonusServiceId()) == null) {
 				bonusService.Create(bst);
 			} else {
 				bonusService.Update(bst);
@@ -466,11 +429,11 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 		}
 		
 	}
+	
 	@Override
 	public void UpdateAccomodations() {
 		ArrayList<Accomodation> queryList = (ArrayList<Accomodation>) accomodationRepo.findAll();
 		GetAccomodationRequest glreq = new GetAccomodationRequest();
-		
 		for(Accomodation ad : queryList) {
 			AccomodationRequest ar = new AccomodationRequest();
 			ar.setEntityId((int) ad.getId());
@@ -484,124 +447,130 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 		wst.setDefaultUri("http://localhost:8089/booking/ws/accomodation.wsdl");
 		wst.setMarshaller(marshaller);
 		wst.setUnmarshaller(marshaller);
-		
 		GetAccomodationResponse glres = (GetAccomodationResponse) wst.marshalSendAndReceive(glreq);
 		
 		for(AccomodationSOAP as : glres.getEntity()) {
 			Accomodation ad = new Accomodation();
 			
-			//ad.setAccomodationAgent(as.get);
+			
+			ad.setAccomodationAgent(new ArrayList<AccomodationAgent>());
 			ad.setAccomodationName(as.getAccomodationName());
-			//ad.setAccomodationType(accomodationTypeRepo.getOne(as.getAccomodationType()));
+			ad.setAccomodationType(accomodationTypeService.finyByName(as.getAccomodationType()));
+			ad.setBonusServices(new ArrayList<BonusService>());
 			ad.setCapacity(as.getCapacity());
 			ad.setCategory(as.getCategory());
-			ad.setLocation(locationRepo.getOne(as.getAccomodationId()));
+			ad.setComments(new ArrayList<Comment>());
+			
+			ad.setLocation(locationService.Read(as.getLocationId()));
+			//ad.setPrices(new ArrayList<Price>());
 			ad.setVersion((int) as.getVersion());
 			
-			accomodationRepo.save(ad);
+			if(accomodationService.findOne(as.getAccomodationId()) == null) {
+				accomodationService.Create(ad);
+			} else {
+				accomodationService.Update(ad);
+			}
 		}
 	}
+	
 	@Override
 	public void UpdateAccomodationBonusServices() {
-		ArrayList<BonusService> queryList = (ArrayList<BonusService>) bonusServiceRepo.findAll();
-		GetBonusServiceRequest glreq = new GetBonusServiceRequest();
+		HashMap<Long, ArrayList<Long>> queryList = accomodationBonusServiceService.findAll();
+		GetAccomodationBonusServiceRequest glreq = new GetAccomodationBonusServiceRequest();
 		
-		for(BonusService bs : queryList) {
-			BonusServiceRequest bsr = new BonusServiceRequest(); 
-			bsr.setEntityId((int) bs.getId());
-			bsr.setEntityVersion(bs.getVersion());
-			glreq.getBonusServiceRequest().add(bsr);
+		for(Long accL : queryList.keySet()) {
+			for(Long bnsL : queryList.get(accL)) {
+				AccomodationBonusServiceRequest as = new AccomodationBonusServiceRequest();
+				as.setAccomodationId(accL);
+				as.setBonusServiceId(bnsL);
+				glreq.getAccomodationBonusServiceRequest().add(as);
+			}
 		}
 		
 		WebServiceTemplate wst = new WebServiceTemplate();
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		marshaller.setContextPath("xmlweb.agent.soap.models.bonus_service");
-		wst.setDefaultUri("http://localhost:8089/booking/ws/bonus_service.wsdl");
+		marshaller.setContextPath("xmlweb.agent.soap.models.accomodation_bonus_service");
+		wst.setDefaultUri("http://localhost:8089/booking/ws/accomodation_bonus_service.wsdl");
 		wst.setMarshaller(marshaller);
 		wst.setUnmarshaller(marshaller);
 		
-		GetBonusServiceResponse glres = (GetBonusServiceResponse) wst.marshalSendAndReceive(glreq);
-		
-		ArrayList<BonusService> lista = new ArrayList<>();
-		for(BonusServiceSOAP bss : glres.getEntity()) {
-			BonusService bs = new BonusService();
-			bs.setId(bss.getBonusServiceId());
-			bs.setVersion(bss.getEntityVersion());
-			bs.setName(bss.getName());
+		System.out.println("puca 00000");
+		GetAccomodationBonusServiceResponse glres = (GetAccomodationBonusServiceResponse) wst.marshalSendAndReceive(glreq);
+		System.out.println("puca 000111");
+		for(AccomodationBonusServiceSOAP abs : glres.getAccomodationBonusServiceResponse()) {
+			System.out.println("puca 1111111");
+			accomodationBonusServiceService.Create(abs.getAccomodationId(), abs.getBonusServiceId());
 			
-			//bonusServiceRepo.save(bs);
-			lista.add(bs);
 		}
-		
-		bonusServiceRepo.saveAll(lista);
-		
 	}
+
 	@Override
 	public void UpdateAccomodationAgents() {
-		ArrayList<AccomodationAgent> queryList = (ArrayList<AccomodationAgent>) accomodationAgentRepo.findAll();
-		GetAccomodationAgentRequest glreq = new GetAccomodationAgentRequest();
-		
-		for(AccomodationAgent aa : queryList) {
-			AccomodationAgentRequest aar = new AccomodationAgentRequest();
-			aar.setEntityId((int) aa.getId());
-			aar.setEntityVersion(aa.getVersion());
-			glreq.getAccomodationAgent().add(aar);
-		}
-		
-		WebServiceTemplate wst = new WebServiceTemplate();
-		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		marshaller.setContextPath("xmlweb.agent.soap.models.accomodation_agent");
-		wst.setDefaultUri("http://localhost:8089/booking/ws/accomodation_agent.wsdl");
-		wst.setMarshaller(marshaller);
-		wst.setUnmarshaller(marshaller);
-		
-		GetAccomodationAgentResponse glres = (GetAccomodationAgentResponse) wst.marshalSendAndReceive(glreq);
-		for(AccomodationAgentSOAP aas : glres.getAccomodationAgent()) {
-			AccomodationAgent aa = new AccomodationAgent();
-			aa.setAccomodation(accomodationRepo.getOne(aas.getAccomodationId()));
-			aa.setAgent(userRepo.getOne(aas.getAccomodationAgentId()));
-			aa.setId(aas.getAccomodationAgentId());
-			aa.setMainAgent(aas.isMainAgent());
-			aa.setVersion(aas.getEntityVersion());
-			accomodationAgentRepo.save(aa);
-		}
-		
+//		ArrayList<AccomodationAgent> queryList = (ArrayList<AccomodationAgent>) accomodationAgentRepo.findAll();
+//		GetAccomodationAgentRequest glreq = new GetAccomodationAgentRequest();
+//		
+//		for(AccomodationAgent aa : queryList) {
+//			AccomodationAgentRequest aar = new AccomodationAgentRequest();
+//			aar.setEntityId((int) aa.getId());
+//			aar.setEntityVersion(aa.getVersion());
+//			glreq.getAccomodationAgent().add(aar);
+//		}
+//		
+//		WebServiceTemplate wst = new WebServiceTemplate();
+//		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+//		marshaller.setContextPath("xmlweb.agent.soap.models.accomodation_agent");
+//		wst.setDefaultUri("http://localhost:8089/booking/ws/accomodation_agent.wsdl");
+//		wst.setMarshaller(marshaller);
+//		wst.setUnmarshaller(marshaller);
+//		
+//		GetAccomodationAgentResponse glres = (GetAccomodationAgentResponse) wst.marshalSendAndReceive(glreq);
+//		for(AccomodationAgentSOAP aas : glres.getAccomodationAgent()) {
+//			AccomodationAgent aa = new AccomodationAgent();
+//			aa.setAccomodation(accomodationRepo.getOne(aas.getAccomodationId()));
+//			aa.setAgent(userRepo.getOne(aas.getAccomodationAgentId()));
+//			aa.setId(aas.getAccomodationAgentId());
+//			aa.setMainAgent(aas.isMainAgent());
+//			aa.setVersion(aas.getEntityVersion());
+//			accomodationAgentRepo.save(aa);
+//		}
+//		
 	}
+	
 	@Override
 	public void UpdateComments() {
-		ArrayList<Comment> queryList = (ArrayList<Comment>) commentRepo.findAll();
-		GetCommentRequest glreq = new GetCommentRequest();
-		
-		for(Comment c : queryList) {
-			CommentRequest cr = new CommentRequest();
-			cr.setEntityId((int) c.getId());
-			cr.setEntityVersion(c.getVersion());
-			glreq.getComment().add(cr);
-		}
-		
-		WebServiceTemplate wst = new WebServiceTemplate();
-		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		marshaller.setContextPath("xmlweb.agent.soap.models.comment");
-		wst.setDefaultUri("http://localhost:8089/booking/ws/comment.wsdl");
-		wst.setMarshaller(marshaller);
-		wst.setUnmarshaller(marshaller);
-		
-		GetCommentResponse glres = (GetCommentResponse) wst.marshalSendAndReceive(glreq);
-		
-		for(CommentSOAP cs : glres.getComment()) {
-			Comment c = new Comment();
-			
-			c.setAccomodation(accomodationRepo.getOne(cs.getAccomodationId()));
-			//c.setApproved(aaa);
-			c.setAuthor(userRepo.getOne((long) cs.getAuthor()));
-			c.setContent(cs.getContent());
-			c.setId(cs.getCommentId());
-			c.setRating(cs.getRating());
-			c.setVersion(cs.getEntityVersion());
-			
-			commentRepo.save(c);
-		}
-		
+//		ArrayList<Comment> queryList = (ArrayList<Comment>) commentRepo.findAll();
+//		GetCommentRequest glreq = new GetCommentRequest();
+//		
+//		for(Comment c : queryList) {
+//			CommentRequest cr = new CommentRequest();
+//			cr.setEntityId((int) c.getId());
+//			cr.setEntityVersion(c.getVersion());
+//			glreq.getComment().add(cr);
+//		}
+//		
+//		WebServiceTemplate wst = new WebServiceTemplate();
+//		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+//		marshaller.setContextPath("xmlweb.agent.soap.models.comment");
+//		wst.setDefaultUri("http://localhost:8089/booking/ws/comment.wsdl");
+//		wst.setMarshaller(marshaller);
+//		wst.setUnmarshaller(marshaller);
+//		
+//		GetCommentResponse glres = (GetCommentResponse) wst.marshalSendAndReceive(glreq);
+//		
+//		for(CommentSOAP cs : glres.getComment()) {
+//			Comment c = new Comment();
+//			
+//			c.setAccomodation(accomodationRepo.getOne(cs.getAccomodationId()));
+//			//c.setApproved(aaa);
+//			c.setAuthor(userRepo.getOne((long) cs.getAuthor()));
+//			c.setContent(cs.getContent());
+//			c.setId(cs.getCommentId());
+//			c.setRating(cs.getRating());
+//			c.setVersion(cs.getEntityVersion());
+//			
+//			commentRepo.save(c);
+//		}
+//		
 	}
 	
 }

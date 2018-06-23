@@ -178,4 +178,15 @@ public class AccomodationService implements AccomodationServiceInterface {
 		return retVal;
 	}
 
+	@Override
+	public boolean createAccomodation(Accomodation acco) {
+		try {
+			accomodationRepository.save(acco);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

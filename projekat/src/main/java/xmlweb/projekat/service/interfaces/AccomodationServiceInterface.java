@@ -2,6 +2,7 @@ package xmlweb.projekat.service.interfaces;
 
 import java.util.List;
 
+import xmlweb.projekat.model.Accomodation;
 import xmlweb.projekat.model.Reservation;
 import xmlweb.projekat.model.dtos.AccomodationAdminDTO;
 import xmlweb.projekat.model.dtos.AccomodationBonusDTO;
@@ -27,5 +28,7 @@ public interface AccomodationServiceInterface {
 	boolean setCategory(CategoryDTO dto);
 
 	List<AccomodationBonusDTO> findAllAccomodationBonus();
+	
+	boolean createAccomodation(Accomodation acco);
 	
 }
