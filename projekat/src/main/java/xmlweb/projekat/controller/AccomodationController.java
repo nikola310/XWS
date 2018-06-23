@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import xmlweb.projekat.model.AccomodationAgent;
 import xmlweb.projekat.model.Picture;
 import xmlweb.projekat.model.Price;
 import xmlweb.projekat.model.Reservation;

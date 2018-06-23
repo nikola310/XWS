@@ -6,6 +6,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import xmlweb.projekat.service.interfaces.PriceServiceInterface;
 
 @RestController
 @RequestMapping(value = "/price")
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4300" })
 public class PriceController {
 
 	private PriceServiceInterface service;

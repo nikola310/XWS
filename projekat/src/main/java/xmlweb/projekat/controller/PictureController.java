@@ -19,6 +19,7 @@ import xmlweb.projekat.service.interfaces.PictureServiceInterface;
 
 @RestController
 @RequestMapping(value = "/picture")
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4300" })
 public class PictureController {
 
 	private PictureServiceInterface service;
@@ -54,7 +55,6 @@ public class PictureController {
 		return service.Delete(id);
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value="accomodation/{id}", method = RequestMethod.GET)
 	public List<Picture> readPicturesByAccomodation(@PathVariable long id) {
 		return service.findPicturesByAccomodation(id);
