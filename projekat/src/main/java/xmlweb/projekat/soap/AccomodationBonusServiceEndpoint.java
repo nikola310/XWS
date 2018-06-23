@@ -31,6 +31,7 @@ public class AccomodationBonusServiceEndpoint {
 	@PayloadRoot(namespace = "http://xmlweb/projekat/soap/models/accomodation_bonus_service", localPart = "getAccomodationBonusServiceRequest")
 	@ResponsePayload
 	public GetAccomodationBonusServiceResponse getAccomodationBonusService(@RequestPayload GetAccomodationBonusServiceRequest request) {
+		
 		GetAccomodationBonusServiceResponse response = new GetAccomodationBonusServiceResponse();
 		
 		ArrayList<AccomodationBonusDTO> lista = (ArrayList<AccomodationBonusDTO>) service.findAllAccomodationBonus();
@@ -55,7 +56,7 @@ public class AccomodationBonusServiceEndpoint {
 			
 		}
 		
-		response.getAccomodationBonusServiceResponse().addAll(retVal);
+		//response.getAccomodationBonusServiceResponse().addAll(retVal);
 		return response;
 	}
 

@@ -117,9 +117,9 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 		this.UpdateBonusServices();
 		this.UpdateAccomodations();
 		System.out.println("Puca 4");
-		this.UpdateAccomodationBonusServices();
+		//this.UpdateAccomodationBonusServices();
 		System.out.println("Puca 5");
-		//this.UpdatePrices();
+		this.UpdatePrices();
 		System.out.println("Puca 6");
 		//this.UpdatePictures();
 		System.out.println("Puca 7");
@@ -478,6 +478,7 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 		HashMap<Long, ArrayList<Long>> queryList = accomodationBonusServiceService.findAll();
 		GetAccomodationBonusServiceRequest glreq = new GetAccomodationBonusServiceRequest();
 		
+		System.out.println("lista duzina " + queryList.size());
 		for(Long accL : queryList.keySet()) {
 			for(Long bnsL : queryList.get(accL)) {
 				AccomodationBonusServiceRequest as = new AccomodationBonusServiceRequest();
@@ -495,9 +496,11 @@ public class UpdateDatabaseService extends WebServiceGatewaySupport implements U
 		wst.setUnmarshaller(marshaller);
 		
 		System.out.println("puca 00000");
-		GetAccomodationBonusServiceResponse glres = (GetAccomodationBonusServiceResponse) wst.marshalSendAndReceive(glreq);
+		GetAccomodationBonusServiceResponse glres =  (GetAccomodationBonusServiceResponse) wst.marshalSendAndReceive(glreq);
+		
 		System.out.println("puca 000111");
 		for(AccomodationBonusServiceSOAP abs : glres.getAccomodationBonusServiceResponse()) {
+			
 			System.out.println("puca 1111111");
 			accomodationBonusServiceService.Create(abs.getAccomodationId(), abs.getBonusServiceId());
 			

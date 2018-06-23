@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:tns="http://xmlweb/projekat/soap/models/accomodation_bonus_service"
-    targetNamespace="http://xmlweb/projekat/soap/models/accomodation_bonus_service" elementFormDefault="qualified">
-    
+    targetNamespace="http://xmlweb/projekat/soap/models/accomodation_bonus_service" 
+    elementFormDefault="qualified">
     <xs:element name="getAccomodationBonusServiceRequest">
         <xs:complexType>
             <xs:sequence>
