@@ -43,7 +43,10 @@
         <tr class="row100 body" *ngFor="let user of users; ">
           <td class="cell100 column1"> {{ user.userName }} </td>
           <td class="cell100 column2"> {{ user.userType }} </td>
-          <td class="cell100 column3"> {{ user.active }} </td>
+          <td class="cell100 column3">
+            <div *ngIf="user.active; then thenTemplateName; else elseTemplateName">
+            </div>
+          </td>
           <td class="cell100 column4">
             <button value="BLOCK" (click)="blockUser(user.id, user.version)">BLOCK</button>
             &nbsp; &nbsp;
@@ -56,3 +59,10 @@
     </table>
   </div>
 </div>
+
+<ng-template #thenTemplateName>
+  ACTIVE
+</ng-template>
+<ng-template #elseTemplateName>
+  BLOCKED
+</ng-template>

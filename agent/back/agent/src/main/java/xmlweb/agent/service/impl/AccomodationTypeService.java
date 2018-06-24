@@ -77,6 +77,16 @@ public class AccomodationTypeService implements AccomodationTypeServiceInterface
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public AccomodationType finyByName(String typeName) {
+		List<AccomodationType> list = repository.findAll();
+		for(AccomodationType a : list) {
+			if(a.getName().equals(typeName))
+				return a;
+		}
+		return null;
+	}
 	
 	
 

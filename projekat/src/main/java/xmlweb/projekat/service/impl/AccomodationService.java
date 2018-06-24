@@ -27,7 +27,7 @@ public class AccomodationService implements AccomodationServiceInterface {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
-	
+
 	@Autowired
 	private BonusServiceRepository bonusServiceRepository;
 
@@ -132,7 +132,7 @@ public class AccomodationService implements AccomodationServiceInterface {
 				dto.setCategory(acc.getCategory());
 				dto.setId(acc.getId());
 				dto.setVersion(acc.getVersion());
-				dto.setAccomdoationType(acc.getAccomodationType().getName());
+				dto.setAccomodationType(acc.getAccomodationType().getName());
 				Location loc = acc.getLocation();
 				dto.setLocation(
 						loc.getState() + " " + loc.getCity() + " " + loc.getStreetName() + " " + loc.getStreetNumber());
@@ -164,18 +164,43 @@ public class AccomodationService implements AccomodationServiceInterface {
 
 	public List<AccomodationBonusDTO> findAllAccomodationBonus() {
 		List<AccomodationBonusDTO> retVal = new ArrayList<AccomodationBonusDTO>();
-		
-		for(BonusService bs : bonusServiceRepository.findAll()) {
+
+		for (BonusService bs : bonusServiceRepository.findAll()) {
 			List<Accomodation> accList = accomodationRepository.findAccomodationByBonusService(bs.getId());
-			for(Accomodation a : accList) {
+			for (Accomodation a : accList) {
 				AccomodationBonusDTO ab = new AccomodationBonusDTO();
 				ab.setAccomodationId(a.getId());
 				ab.setBonusId(bs.getId());
 				retVal.add(ab);
 			}
 		}
-		
+
 		return retVal;
+	}
+
+	@Override
+	public boolean createAccomodation(Accomodation acco) {
+		try {
+			accomodationRepository.save(acco);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public AccomodationDTO getOne(long id) {
+		try {
+			Accomodation a = accomodationRepository.getOne(id);
+			AccomodationDTO aDTO = new AccomodationDTO(a.getId(), a.getAccomodationName(), a.getAccomodationType(),
+					a.getCategory(), a.getBonusServices(), a.getComments(), a.getPrices(), a.getCapacity(),
+					a.getLocation());
+			return aDTO;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

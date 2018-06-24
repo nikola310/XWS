@@ -54,7 +54,8 @@ public class AccomodationService implements AccomodationServiceInterface {
 	@Override
 	public List<Reservation> findReservationsByAccomodation(Long id) {
 		// TODO Auto-generated method stub
-		return reservationRepository.findReservationsByAccomodation(id);
+		//return reservationRepository.findReservationsByAccomodation(id);
+		return null;
 	}
 
 	@Override
@@ -118,17 +119,27 @@ public class AccomodationService implements AccomodationServiceInterface {
 	}
 
 	@Override
-	public void Create(Accomodation a) {
-		accomodationRepository.save(a);
+	public boolean Create(Accomodation a) {
+		try {
+			accomodationRepository.save(a);
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
-	public void Update(Accomodation a) {
-		Optional<Accomodation> atemp = accomodationRepository.findById(a.getId());
-		if(atemp.isPresent()) {
-			atemp.get().setCapacity(a.getCapacity());
-			atemp.get().setLocation(a.getLocation());
+	public boolean Update(Accomodation a) {
+		try {
+			accomodationRepository.save(a);
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
+
+
 
 }

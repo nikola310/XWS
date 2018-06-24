@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http, Response } from "@angular/http";
 import { Observable } from 'rxjs/Rx';
 import { UserInterface } from "../app/user-interface";
+import { Location } from "../app/location";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { UserInterface } from "../app/user-interface";
 export class AgentService {
 
   private baseUrl = "http://localhost:8089/booking/user";
+  private adreseUrl = "http://localhost:8089/booking/location";
 
   constructor(private http: HttpClient) { }
 
@@ -28,4 +30,9 @@ export class AgentService {
     
 	  return this.http.post(this.baseUrl + '/agent?user=' + id, data, httpOptions).catch(this.handleError);
   }
+
+  getAdresses(): Observable<Location[]>{
+    return this.http.get<Location[]>(this.adreseUrl).catch(this.handleError);
+  }
+
 }

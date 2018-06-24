@@ -223,5 +223,74 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
 	public XsdSchema userSchema() {
 		return new SimpleXsdSchema(new ClassPathResource("soap_schemas/user.xsd"));
 	}
+	
+	// SERVICES
+	
+	// new accomodation
+	@Bean(name = "new_accomodation")
+	public DefaultWsdl11Definition defaultNewAccomodationDefinition(XsdSchema newAccomodationSchema) {
+		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+		wsdl11Definition.setPortTypeName("NewAccomodationPort");
+		wsdl11Definition.setLocationUri("/ws");
+		wsdl11Definition.setTargetNamespace(namespace);
+		wsdl11Definition.setSchema(newAccomodationSchema);
+		return wsdl11Definition;
+	}
+
+	@Bean
+	public XsdSchema newAccomodationSchema() {
+		return new SimpleXsdSchema(new ClassPathResource("soap_schemas/new_accomodation.xsd"));
+	}	
+	
+	// realised reservation
+	@Bean(name = "realised_reservation")
+	public DefaultWsdl11Definition defaultRealisedReservationDefinition(XsdSchema realiserReservationSchema) {
+		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+		wsdl11Definition.setPortTypeName("RealisedReservationPort");
+		wsdl11Definition.setLocationUri("/ws");
+		wsdl11Definition.setTargetNamespace(namespace);
+		wsdl11Definition.setSchema(realiserReservationSchema);
+		return wsdl11Definition;
+	}
+
+	@Bean
+	public XsdSchema realiserReservationSchema() {
+		return new SimpleXsdSchema(new ClassPathResource("soap_schemas/realised_reservation.xsd"));
+	}	
+	
+	
+	// reserve accomodation
+	@Bean(name = "reserve_accomodation")
+	public DefaultWsdl11Definition defaultReserveAccomodationDefinition(XsdSchema reserveAccomodationSchema) {
+		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+		wsdl11Definition.setPortTypeName("ReserveAccomodationPort");
+		wsdl11Definition.setLocationUri("/ws");
+		wsdl11Definition.setTargetNamespace(namespace);
+		wsdl11Definition.setSchema(reserveAccomodationSchema);
+		return wsdl11Definition;
+	}
+
+	@Bean
+	public XsdSchema reserveAccomodationSchema() {
+		return new SimpleXsdSchema(new ClassPathResource("soap_schemas/reserve_accomodation.xsd"));
+	}		
+	
+
+	// reserve accomodation
+	@Bean(name = "send_message")
+	public DefaultWsdl11Definition defaultSendMessageDefinition(XsdSchema sendMessageSchema) {
+		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+		wsdl11Definition.setPortTypeName("SendMessagePort");
+		wsdl11Definition.setLocationUri("/ws");
+		wsdl11Definition.setTargetNamespace(namespace);
+		wsdl11Definition.setSchema(sendMessageSchema);
+		return wsdl11Definition;
+	}
+
+	@Bean
+	public XsdSchema sendMessageSchema() {
+		return new SimpleXsdSchema(new ClassPathResource("soap_schemas/send_message.xsd"));
+	}		
+		
 
 }

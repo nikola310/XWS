@@ -2,19 +2,18 @@ package xmlweb.agent.service.interfaces;
 
 import java.util.List;
 
-import xmlweb.agent.model.dtos.CommentDTO;
+import xmlweb.agent.model.Comment;
 
 /**
  * 
  * @author Nikola
  *
  */
-public interface CommentServiceInterface extends ServiceInterface<CommentDTO> {
+public interface CommentServiceInterface {
 
-	public List<CommentDTO> getNotManaged();
-	
-	public boolean acceptComment(long id, int version);
-	
-	public boolean rejectComment(long id, int version);
+	List<Comment> getAll();
+	Comment getById(Long id);
+	boolean Create(Comment c);
+	boolean Update(Comment c);
 	
 }

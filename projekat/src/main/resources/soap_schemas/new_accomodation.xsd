@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://xmlweb/projekat/soap/services/new_accomodation"
+    targetNamespace="http://xmlweb/projekat/soap/services/new_accomodation" elementFormDefault="qualified">
+
+    <xs:complexType name="NewAccomodationSOAP">
+        <xs:sequence>
+            <xs:element name="new_message_response" type="xs:boolean" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="getAccomodationRequest">
+        <xs:complexType>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element name="new_accomodation_request" type="tns:NewAccomodationRequest"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="NewAccomodationRequest">
+        <xs:sequence>
+           <xs:element name="agent_id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="accomodation_id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="accomodation_name" type="xs:string"/>
+            <xs:element name="capacity">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="category">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="5"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="accomodation_type" type="xs:string"/>
+            <xs:element name="version">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="location_id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="getNewAccomodationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="1" minOccurs="1" name="entity"
+                    type="tns:NewAccomodationSOAP"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

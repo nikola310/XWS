@@ -1,7 +1,13 @@
 package xmlweb.agent.service.interfaces;
 
-import xmlweb.agent.model.dtos.PictureDTO;
+import java.util.ArrayList;
 
-public interface PictureServiceInterface extends ServiceInterface<PictureDTO> {
+import xmlweb.agent.model.Picture;
 
+public interface PictureServiceInterface {
+
+	ArrayList<Picture> readAll();
+	Picture readOne(Long id);
+	boolean Create(Picture p);
+	boolean Update(Picture p);
 }

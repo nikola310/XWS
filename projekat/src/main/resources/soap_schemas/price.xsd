@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="http://xmlweb/projekat/soap/models/price"
-    targetNamespace="http://xmlweb/projekat/soap/models/price" elementFormDefault="qualified">
+	xmlns:tns="http://xmlweb/projekat/soap/models/price"
+	targetNamespace="http://xmlweb/projekat/soap/models/price"
+	elementFormDefault="qualified">
     <xs:complexType name="PriceRequest">
         <xs:sequence>
             <xs:element name="entity_version">
@@ -20,6 +21,7 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+   
     <xs:element name="getPriceRequest">
         <xs:complexType>
             <xs:sequence>
@@ -28,13 +30,15 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    
     <xs:element name="getPriceResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="entity" type="tns:PriceSOAP"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="price_response" type="tns:PriceSOAP"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+   
     <xs:complexType name="PriceSOAP">
         <xs:sequence>
             <xs:element name="price_id">

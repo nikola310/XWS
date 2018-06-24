@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommentService } from "../comment.service";
 import { CommentInterface } from "../comment-interface";
-import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-comments',
@@ -48,4 +47,5 @@ export class CommentsComponent implements OnInit {
       }
     });
   }
+  
 }

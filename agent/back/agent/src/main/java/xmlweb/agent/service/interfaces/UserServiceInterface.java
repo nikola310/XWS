@@ -3,19 +3,13 @@ package xmlweb.agent.service.interfaces;
 import java.util.List;
 
 import xmlweb.agent.model.User;
-import xmlweb.agent.model.UserType;
-import xmlweb.agent.model.dtos.AgentRequestDTO;
-import xmlweb.agent.model.dtos.UserDTO;
 
-public interface UserServiceInterface extends ServiceInterface<UserDTO> {
-
-	public List<UserDTO> getUserByType(UserType type);
-
-	public boolean manageAgent(AgentRequestDTO dto, long id);
-
-	public boolean manageUser(long id, int version, boolean status);
+public interface UserServiceInterface {
 	
-	public User getRegularUserByUsername(String username);
-	
-	public User getAdminByUsername(String username);
+	public List<User> getAll();
+	public User getByUsername(String username);
+	public User getById(Long id);
+	boolean Create(User u);
+	boolean Update(User u);
+
 }

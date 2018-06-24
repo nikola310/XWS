@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://xmlweb/projekat/soap/services/realised_reservation"
+    targetNamespace="http://xmlweb/projekat/soap/services/realised_reservation" elementFormDefault="qualified">
+
+    <xs:element name="getRealisedReservationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="1" minOccurs="1" name="realised_reservation_request"
+                    type="tns:RealisedReservationRequest"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="getRealisedReservationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="1" minOccurs="1" name="realised_reservation_response"
+                    type="tns:RealisedReservationSOAP"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="RealisedReservationSOAP">
+         <xs:sequence>
+            <xs:element name="realised_reservation_response" type="xs:boolean" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RealisedReservationRequest">
+        <xs:sequence>
+            <xs:element name="reservation_id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

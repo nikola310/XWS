@@ -19,6 +19,7 @@ import xmlweb.projekat.service.interfaces.ReservationServiceInterface;
 
 @RestController
 @RequestMapping(value = "/reservation")
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4300" })
 public class ReservationController {
 
 	@Autowired

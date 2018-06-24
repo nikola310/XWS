@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../users.service';
 import { UserInterface } from "../user-interface";
-import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-users',
@@ -12,19 +11,34 @@ export class UsersComponent implements OnInit {
 
   users: UserInterface[];
 
-  constructor(private userService: UsersService, private _data: DataService) { }
+  constructor(private userService: UsersService) { }
 
   ngOnInit() {
+    this.loadUsers();
+  }
+
+  loadUsers(): any{
     this.userService.getUsers().subscribe(data => this.users = data);
-    console.log(this.users);
   }
 
   activateUser(id: number, version: number) {
-    this.userService.activate(id, version, sessionStorage.getItem('Token')).subscribe(data => console.log(data));
+    this.userService.activate(id, version, sessionStorage.getItem('Token')).subscribe(data => {
+      if(data){
+        this.loadUsers();
+      }else{
+        window.alert('Error occurred.');
+      }
+    });
   }
 
   blockUser(id: number, version: number) {
-    this.userService.block(id, version, sessionStorage.getItem('Token')).subscribe(data => console.log(data));
+    this.userService.block(id, version, sessionStorage.getItem('Token')).subscribe(data => {
+      if(data){
+        this.loadUsers();
+      }else{
+        window.alert('Error occurred.');
+      }
+    });
   }
 
   deleteUser(id: number, objectForRemoval: any) {

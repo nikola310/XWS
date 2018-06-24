@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
@@ -19,6 +20,7 @@ import xmlweb.projekat.soap.models.price.PriceSOAP;
  * @author Nikola
  *
  */
+@Endpoint
 public class PriceEndpoint {
 
 	private PriceServiceInterface service;
@@ -59,7 +61,7 @@ public class PriceEndpoint {
 			}
 		}
 
-		response.getEntity().addAll(retVal);
+		response.getPriceResponse().addAll(retVal);
 		return response;
 	}
 }

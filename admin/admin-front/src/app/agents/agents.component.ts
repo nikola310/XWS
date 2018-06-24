@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AgentService } from "../agent.service";
 import { UserInterface } from "../user-interface";
-import { DataService } from '../data.service';
+import { Location } from "../location";
 
 @Component({
   selector: 'app-agents',
@@ -13,13 +13,13 @@ export class AgentsComponent implements OnInit {
 	private msg;
 
 	agents: UserInterface[];
+	adrese: Location[];
 
-	constructor(private agentService: AgentService, private _data: DataService) { }
+	constructor(private agentService: AgentService) { }
 
 	ngOnInit() {
-		console.log('sadasda');
 		this.agentService.getAgents().subscribe(data => this.agents = data);
-		console.log(this.agents);
+		this.agentService.getAdresses().subscribe(data => this.adrese = data);
 	}
 
 	acceptAgent(pid: any, address: any, id: number,  toRemove: any){

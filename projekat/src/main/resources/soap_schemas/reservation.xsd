@@ -46,6 +46,14 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element name="realised" type="xs:boolean"/>
+             <xs:element name="user_id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
     <xs:element name="getReservationRequest">

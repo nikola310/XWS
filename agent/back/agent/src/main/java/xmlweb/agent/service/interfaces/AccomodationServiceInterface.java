@@ -22,8 +22,8 @@ public interface AccomodationServiceInterface {
 	
 	Accomodation findOne(long id);
 	
-	void Create(Accomodation a);
+	boolean Create(Accomodation a);
 	
-	void Update(Accomodation a);
+	boolean Update(Accomodation a);
 	
 }
