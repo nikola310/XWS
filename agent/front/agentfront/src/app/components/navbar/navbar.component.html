@@ -1,27 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<ul class="navbar-nav mr-auto" *ngIf="logged">
+	<div class="expand navbar-expand" id="navbarSupportedContent">
+		<ul *ngIf="this.userService.getLogged()" class="navbar-nav mr-auto">
 			<li class="nav-item active">
-				<a class="nav-link" href="#" routerLink="home" >Accomodations <span class="sr-only">(current)</span></a>
+				<a class="nav-link" routerLink="/home">Accomodations
+					<span class="sr-only">(current)</span>
+				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" routerLink="new" >New Accomodation</a>
+				<a class="nav-link" routerLink="/new">New Accomodation</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" routerLink="messages" >Messages</a>
+				<a class="nav-link" routerLink="/messages">Messages</a>
+			</li>
+			<li class="nav-">
+				<a class="nav-link"  style="float:right" href="#" (click)="onLogout()">Logout</a>
 			</li>
 		</ul>
-		<ul class="navbar-nav" *ngIf="logged">
-			<li class="nav-">
-				<a class="nav-link " href="#" (click)="onLogout()" >Logout</a>
+		<ul *ngIf="!this.userService.getLogged()" class="navbar-nav">
+			<li style="float:right" class="nav-">
+				<a class="nav-link"  style="float:right" routerLink="/register">Register</a>
 			</li>
-		</ul>
-		<ul class="navbar-nav" *ngIf="!logged">
-			<li class="nav-">
-				<a class="nav-link " href="#" routerLink="register" >Register</a>
-			</li>
-			<li class="nav-">
-				<a class="nav-link " href="#" routerLink="login" >Login</a>
+			<li style="float:right" class="nav-">
+				<a class="nav-link"  style="float:right" routerLink="/login">Login</a>
 			</li>
 		</ul>
 	</div>

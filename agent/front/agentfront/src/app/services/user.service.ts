@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { ILoginResponse } from '../interfaces/loginres';
 
 @Injectable()
 export class UserService {
@@ -9,7 +10,8 @@ export class UserService {
   private jsonToken: string = null;
   public serviceMessages: Observable<String>;
   private logged: Boolean = false;
-  
+  private username: String;
+  private userId: String;
   constructor(public http: Http) { }
 
   testHttp() {
@@ -22,8 +24,10 @@ export class UserService {
     });
   }
 
-  login(login_data) {
-    return this.http.post('http://localhost:8090/agent/user/login', login_data).map(res => res.json());
+  login(login_data){
+    
+    //return this.http.post('http://localhost:8090/agent/user/login', login_data).map(res => res.json());
+    return this.http.post('http://localhost:8090/agent/loginagent', login_data).map(res => res.json());
   }
 
   logout() {
@@ -39,4 +43,23 @@ export class UserService {
 
   }
 
+  setLogged(){
+    this.logged = !this.logged;
+  }
+  setUserId(id){
+    this.userId = id;
+  }
+  setUsername(username){
+    this.username = username;
+  }
+
+  getLogged(){
+    return this.logged;
+  }
+  getUserId(){
+    return this.userId;
+  }
+  getUsername(){
+    return this.username;
+  }
 }

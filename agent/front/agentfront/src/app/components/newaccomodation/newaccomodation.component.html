@@ -30,28 +30,28 @@
 		<div class="form-group">
 			<label>Type</label>
 			<select class="custom-select" [(ngModel)]="accomodation.type" name="type" required>
-				<option value="">Open this select menu</option>
+				<option value=""></option>
 				<option *ngFor="let type of accomodationTypes" value={{type.id}}>{{type.name}}</option>
 			</select>
 			<div class="invalid-feedback">Example invalid custom select feedback</div>
 		</div>
 
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label>Description</label>
 			<input type="text" class="form-control" placeholder="Enter description">
-		</div>
+		</div> -->
 
 
 		<div class="form-group">
 			<label>Pictures</label>
 			<div class="custom-file">
-				<input type="file" class="custom-file-input" id="validatedCustomFile" required>
+				<input type="file" name="picture" class="custom-file-input" (change)="handleInputChange($event)" required>
 				<label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
 				<div class="invalid-feedback">Example invalid custom file feedback</div>
 			</div>
 
 			<div>
-				Image preview
+				<img src={{imageSrc}}>
 
 			</div>
 
@@ -65,7 +65,7 @@
 		</div>
 
 
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label>Bonus services</label>
 
 			<div class="input-group mb-3">
@@ -77,7 +77,7 @@
 				</div>
 			</div>
 
-		</div>
+		</div> -->
 
 
 
@@ -112,7 +112,7 @@
 
 		</div>
 
-		<button type="submit" class="btn btn-primary" (click)="addAccomodation(accomodation)">Add accomodation</button>
+		<button type="submit" class="btn btn-primary" (click)="addAccomodation(accomodation)" [disabled]="!accomodation.valid">Add accomodation</button>
 
 	</form>
 </div>

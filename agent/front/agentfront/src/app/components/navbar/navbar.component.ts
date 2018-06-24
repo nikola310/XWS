@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
 
   onLogout() {
   	this.userService.logout();
-    this.logged = false
+    this.logged = false;
   }
 
 }

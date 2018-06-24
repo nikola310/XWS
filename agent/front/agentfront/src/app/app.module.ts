@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -13,6 +13,7 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { NewaccomodationComponent } from './components/newaccomodation/newaccomodation.component';
 
 import { UserService } from './services/user.service';
+import { RestclientService } from './services/restclient.service';
 
 const appRoutes: Routes = [
   { path:'', component:LoginComponent },
@@ -37,10 +38,12 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    UserService
+    UserService,
+    RestclientService
   ],
   bootstrap: [AppComponent]
 })
