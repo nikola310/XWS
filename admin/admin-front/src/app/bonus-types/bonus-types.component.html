@@ -48,21 +48,22 @@
 <br />
 <br />
 
-<div class="table">
-  <div class="thead">
-    <div class="tr">
-      <div class="td">Add new bonus service</div>
-    </div>
-  </div>
-  <div class="tbody">
-    <form class="tr" #myForm="ngForm">
-      <div class="td">Name:</div>
-      <div class="td">
-        <input type="text" [(ngModel)]="myForm.bonusName" name="bonusName">
-      </div>
-      <div class="td action">
+<form class="tr" #myForm="ngForm">
+  <table>
+    <thead>
+      <tr>
+        <th>Add new bonus service</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Name:</td>
+        <td>
+          <input type="text" [(ngModel)]="myForm.bonusName" name="bonusName">
+        </td>
+        <td>
           <input type="submit" value="SUBMIT" (click)="newBonus(myForm.bonusName); myForm.reset();">
-      </div>
-    </form>
-  </div>
-</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>

@@ -49,22 +49,27 @@
 <br />
 
 <form #myForm="ngForm">
+  <div class="table100-head">
   <table>
     <thead>
-      <tr>
-        <th>
+      <tr class="row100 head">
+        <th class="cell100">
           Add new accomodation type
         </th>
       </tr>
     </thead>
+  </table>
+</div>
+<div class="table100-body js-pscroll">
+  <table>
     <tbody>
-      <tr>
-        <td>Name:</td>
-        <td>
+      <tr class="row100 body">
+        <td class="cell100 column1">Name:</td>
+        <td class="cell100 column2">
           <input type="text" [(ngModel)]="myForm.accTypeName" name="accTypeName">
         </td>
       </tr>
-      <tr>
+      <tr class="row100 body">
         <td>
         </td>
         <td>
@@ -73,4 +78,5 @@
       </tr>
     </tbody>
   </table>
+  </div>
 </form>
